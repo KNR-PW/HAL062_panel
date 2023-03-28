@@ -19,6 +19,7 @@ int main(void) {
 	SystemClock_Config();
 	eth_init();
 	eth_receive_massage();
+
 	/* Loop forever */
 	while (1) {
 	}
