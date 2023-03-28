@@ -13,8 +13,8 @@ UART_HandleTypeDef huart3;
 DMA_HandleTypeDef hdma_usart3_rx;
 DMA_HandleTypeDef hdma_usart3_tx;
 
-uint8_t ethTxBuffer[19];
-uint8_t ethRxBuffer[19];
+static uint8_t ethTxBuffer[19];
+static uint8_t ethRxBuffer[19];
 
 void eth_init() {
 	// TODO: test
@@ -30,6 +30,8 @@ void eth_init() {
 	  HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 0, 0);
 	  HAL_NVIC_EnableIRQ(DMA1_Stream1_IRQn);
 
+	  HAL_NVIC_SetPriority(USART3_IRQn, 0, 0);
+	  HAL_NVIC_EnableIRQ(USART3_IRQn);
 
 	 huart3.Instance = USART3;
 	  huart3.Init.BaudRate = 115200;
@@ -68,7 +70,7 @@ void eth_send_massage(uint8_t *frameID, uint8_t *msgData) {
 	for(uint8_t i = 0; i<2; i++) ethTxBuffer[i+1] = frameID[i];
 	for(uint8_t i = 0; i< 16; i++) ethTxBuffer[i+3] = msgData[i];
 
-	HAL_UART_Transmit(&huart3, ethTxBuffer, 19,1000);
+	HAL_UART_Transmit_DMA(&huart3, ethTxBuffer, 19);
 }
 
 void eth_receive_massage() {
@@ -94,4 +96,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 
 	HAL_UART_Receive_DMA(&huart3, ethRxBuffer,19);
 
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
+	huart->gState = HAL_UART_STATE_READY;
 }
