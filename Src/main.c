@@ -10,6 +10,7 @@
 #include <stdbool.h>
 #include "error_handlers/error_handlers.h"
 #include "ethernet/ethernet.h"
+#include "LED_switch/LED_switch.h"
 #include "joystick/joystick.h"
 #include "joystick/joystick_timer.h"
 
@@ -19,6 +20,9 @@ int main(void) {
 
 	HAL_Init();
 	SystemClock_Config();
+	LED_Init();
+	dupa();
+
 	Eth_Init();
 	I2C_Init();
 
