@@ -2,7 +2,7 @@
 #include "LED_switch.h"
 #include "error_handlers/error_handlers.h"
 
-I2C_HandleTypeDef hi2c4;
+I2C_HandleTypeDef hi2c1;
 
 typedef enum LEDS{
 	LIGHT25 = 0x1901,
@@ -24,44 +24,40 @@ typedef enum LEDS{
 	LIGHT17 = 0x0980,
 } addressLED;
 
-void LED_I2C4_Init(void)
+void LED_Init(void)
 {
 
-	GPIO_InitTypeDef GPIO_InitStruct = {0};
+	  hi2c1.Instance = I2C1;
+	  hi2c1.Init.Timing = 0x10707DBC;
+	  hi2c1.Init.OwnAddress1 = 0;
+	  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+	  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+	  hi2c1.Init.OwnAddress2 = 0;
+	  hi2c1.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
+	  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+	  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+	  if (HAL_I2C_Init(&hi2c1) != HAL_OK)
+	  {
+	    Error_Handler();
+	  }
 
-	/* Configure GPIO pins for I2C4 */
-	__HAL_RCC_GPIOB_CLK_ENABLE();
+	  /** Configure Analogue filter
+	  */
+	  if (HAL_I2CEx_ConfigAnalogFilter(&hi2c1, I2C_ANALOGFILTER_ENABLE) != HAL_OK)
+	  {
+	    Error_Handler();
+	  }
 
-	GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9;
-	GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-	GPIO_InitStruct.Alternate = GPIO_AF4_I2C4;
-	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+	  /** Configure Digital filter
+	  */
+	  if (HAL_I2CEx_ConfigDigitalFilter(&hi2c1, 0) != HAL_OK)
+	  {
+	    Error_Handler();
+	  }
+	  /* USER CODE BEGIN I2C1_Init 2 */
 
-	hi2c4.Instance = I2C4;
-	hi2c4.Init.Timing = 0x10707DBC;
-	hi2c4.Init.OwnAddress1 = 0;
-	hi2c4.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-	hi2c4.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-	hi2c4.Init.OwnAddress2 = 0;
-	hi2c4.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
-	hi2c4.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-	hi2c4.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
-	if (HAL_I2C_Init(&hi2c4) != HAL_OK)
-	{
-	Error_Handler();
-	}
+	  /* USER CODE END I2C1_Init 2 */
 
-	if (HAL_I2CEx_ConfigAnalogFilter(&hi2c4, I2C_ANALOGFILTER_ENABLE) != HAL_OK)
-	{
-	Error_Handler();
-	}
-
-	if (HAL_I2CEx_ConfigDigitalFilter(&hi2c4, 0) != HAL_OK)
-	{
-	Error_Handler();
-	}
 }
 
 /*
@@ -108,18 +104,22 @@ uint16_t getAddressLED(addressLED LED){
 	}
 }
 
+
 void setLED(addressLED LED, uint8_t setState){
 	uint16_t address = getAddressLED(LED);
 	if(setState == 1){
 		// nie mom pojecia jak sie zapala leda xddd
-		uint8_t setOn = 0x1111;
-		HAL_I2C_Mem_Write(&hi2c4, 0xa0, address, 1, (uint8_t*)&setOn, 8, HAL_MAX_DELAY);
+		uint8_t setOn = 0x08;
+		HAL_I2C_Mem_Write(&hi2c1, 0x42, 0x19, 1, (uint8_t*)&setOn, 1, HAL_MAX_DELAY);;
 	}
 	else{
 		uint8_t setOff = 0x0000;
-		HAL_I2C_Mem_Write(&hi2c4, 0xa0, address, 1, (uint8_t*)&setOff, 8, HAL_MAX_DELAY);
+		HAL_I2C_Mem_Write(&hi2c1, 0x42, address, 1, (uint8_t*)&setOff, 8, HAL_MAX_DELAY);
 	}
 }
 
-
+void dupa(void){
+	uint8_t setOn = 0x08;
+	HAL_I2C_Mem_Write_IT(&hi2c1, 0x42, 0x19, 1, (uint8_t*)&setOn, 1);
+}
 
