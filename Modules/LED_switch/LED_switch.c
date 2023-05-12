@@ -1,28 +1,11 @@
 
 #include "LED_switch.h"
 #include "error_handlers/error_handlers.h"
+#include "LED_const.h"
 
 I2C_HandleTypeDef hi2c1;
-
-typedef enum LEDS{
-	LIGHT25 = 0x1901,
-	LIGHT26 = 0x1902,
-	LIGHT27 = 0x1904,
-	LIGHT28 = 0x1908,
-	LIGHT29 = 0x1910,
-	LIGHT30 = 0x1920,
-	LIGHT31 = 0x1940,
-	LIGHT32 = 0x1980,
-
-	LIGHT24 = 0x0901,
-	LIGHT23 = 0x0902,
-	LIGHT22 = 0x0904,
-	LIGHT21 = 0x0908,
-	LIGHT20 = 0x0910,
-	LIGHT19 = 0x0920,
-	LIGHT18 = 0x0940,
-	LIGHT17 = 0x0980,
-} addressLED;
+static uint8_t setOn = 0xFF;
+static struct currentLEDstate currentState;
 
 void LED_Init(void)
 {
@@ -57,69 +40,72 @@ void LED_Init(void)
 	  /* USER CODE BEGIN I2C1_Init 2 */
 
 	  /* USER CODE END I2C1_Init 2 */
+		uint8_t configAsOutput = 0x00;
+		uint8_t config = 0x3C;
+		HAL_StatusTypeDef s1;
+		uint8_t data = 19;
+		HAL_I2C_Mem_Read(&hi2c1, 0x40, 0x00,1, &data, 1, 1000);
 
-}
 
-/*
- * BANK = 1
- * GPIOB7 : 0x1980
- * GPIOB6 : 0x1940
- * GPIOB5 : 0x1920
- * GPIOB4 : 0x1910
- * GPIOB3 : 0x1908
- * GPIOB2 : 0x1904
- * GPIOB1 : 0x1902
- * GPIOB0 : 0x1901
- *
- * GPIOA7 : 0x0980
- * GPIOA6 : 0x0940
- * GPIOA5 : 0x0920
- * GPIOA4 : 0x0910
- * GPIOA3 : 0x0908
- * GPIOA2 : 0x0904
- * GPIOA1 : 0x0902
- * GPIOA0 : 0x0901
- */
-
-uint16_t getAddressLED(addressLED LED){
-	switch(LED){
-		case LIGHT25: return 0x1901;
-		case LIGHT26: return 0x1902;
-		case LIGHT27: return 0x1904;
-		case LIGHT28: return 0x1908;
-		case LIGHT29: return 0x1910;
-		case LIGHT30: return 0x1920;
-		case LIGHT31: return 0x1940;
-		case LIGHT32: return 0x1980;
-
-		case LIGHT24: return 0x0901;
-		case LIGHT23: return 0x0902;
-		case LIGHT22: return 0x0904;
-		case LIGHT21: return 0x0908;
-		case LIGHT20: return 0x0910;
-		case LIGHT19: return 0x0920;
-		case LIGHT18: return 0x0940;
-		case LIGHT17: return 0x0980;
-		default: return 0x0000;
-	}
+		HAL_Delay(200);
+		s1 = HAL_I2C_Mem_Write_IT(&hi2c1, 0x40, 0x0A, 1, (uint8_t*)&config, 1);
+		HAL_Delay(200);
+		s1 = HAL_I2C_Mem_Write_IT(&hi2c1, 0x40, 0x0B, 1, (uint8_t*)&config, 1);
+		HAL_Delay(200);
+		s1 = HAL_I2C_Mem_Write_IT(&hi2c1, 0x40, 0x00, 1, (uint8_t*)&configAsOutput, 1);
+		HAL_Delay(200);
+		s1 = HAL_I2C_Mem_Write_IT(&hi2c1, 0x40, 0x01, 1, (uint8_t*)&configAsOutput, 1);
+		HAL_Delay(200);
+		HAL_I2C_Mem_Read(&hi2c1, 0x40, 0x0A,1, &data, 1, 1000);
 }
 
 
-void setLED(addressLED LED, uint8_t setState){
-	uint16_t address = getAddressLED(LED);
-	if(setState == 1){
-		// nie mom pojecia jak sie zapala leda xddd
-		uint8_t setOn = 0x08;
-		HAL_I2C_Mem_Write(&hi2c1, 0x42, 0x19, 1, (uint8_t*)&setOn, 1, HAL_MAX_DELAY);;
+
+void setLED(uint32_t lightCode, uint8_t state){
+
+	uint8_t devAddr = (lightCode & 0xFF0000)>>16;
+	uint8_t memAddr = (lightCode & 0x00FF00)>>8;
+	uint8_t pinNum = 0x00;
+
+	if(state == 1){
+		if(devAddr == 0x40 && memAddr == 0x12){
+			uint8_t pinNum = (lightCode & 0x0000FF) | currentState.dev40portA;
+			currentState.dev40portA = pinNum;
+		}
+		else if(devAddr == 0x40 && memAddr == 0x13){
+			uint8_t pinNum = (lightCode & 0x0000FF) | currentState.dev40portB;
+			currentState.dev40portB = pinNum;
+				}
+		else if(devAddr == 0x42 && memAddr == 0x12){
+			uint8_t pinNum = (lightCode & 0x0000FF) | currentState.dev42portA;
+			currentState.dev42portA = pinNum;
+				}
+		else if(devAddr == 0x42 && memAddr == 0x13){
+			uint8_t pinNum = (lightCode & 0x0000FF) | currentState.dev42portB;
+			currentState.dev42portB = pinNum;
+				}
 	}
 	else{
-		uint8_t setOff = 0x0000;
-		HAL_I2C_Mem_Write(&hi2c1, 0x42, address, 1, (uint8_t*)&setOff, 8, HAL_MAX_DELAY);
+		if(devAddr == 0x40 && memAddr == 0x12){
+			uint8_t pinNum = ~(lightCode & 0x0000FF) & currentState.dev40portA;
+			currentState.dev40portA = pinNum;
+		}
+		else if(devAddr == 0x40 && memAddr == 0x13){
+			uint8_t pinNum = ~(lightCode & 0x0000FF) & currentState.dev40portB;
+			currentState.dev40portB = pinNum;
+				}
+		else if(devAddr == 0x42 && memAddr == 0x12){
+			uint8_t pinNum = ~(lightCode & 0x0000FF) & currentState.dev42portA;
+			currentState.dev42portA = pinNum;
+				}
+		else if(devAddr == 0x42 && memAddr == 0x13){
+			uint8_t pinNum = ~(lightCode & 0x0000FF) & currentState.dev42portB;
+			currentState.dev42portB = pinNum;
+				}
 	}
-}
-
-void dupa(void){
-	uint8_t setOn = 0x08;
-	HAL_I2C_Mem_Write_IT(&hi2c1, 0x42, 0x19, 1, (uint8_t*)&setOn, 1);
+	if(HAL_I2C_Mem_Write_IT(&hi2c1, devAddr, memAddr, 1, &pinNum, 1)!=HAL_OK)
+		{
+		Error_Handler();
+		}
 }
 

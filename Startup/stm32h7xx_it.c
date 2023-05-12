@@ -69,13 +69,9 @@ void SysTick_Handler(void)
 
 void I2C1_EV_IRQHandler(void)
 {
-  /* USER CODE BEGIN I2C1_EV_IRQn 0 */
 
-  /* USER CODE END I2C1_EV_IRQn 0 */
   HAL_I2C_EV_IRQHandler(&hi2c1);
-  /* USER CODE BEGIN I2C1_EV_IRQn 1 */
 
-  /* USER CODE END I2C1_EV_IRQn 1 */
 }
 
 /**
@@ -83,13 +79,8 @@ void I2C1_EV_IRQHandler(void)
   */
 void I2C1_ER_IRQHandler(void)
 {
-  /* USER CODE BEGIN I2C1_ER_IRQn 0 */
-
-  /* USER CODE END I2C1_ER_IRQn 0 */
   HAL_I2C_ER_IRQHandler(&hi2c1);
-  /* USER CODE BEGIN I2C1_ER_IRQn 1 */
-
-  /* USER CODE END I2C1_ER_IRQn 1 */
+}
 
 void I2C2_EV_IRQHandler(void){
 	HAL_I2C_EV_IRQHandler(&hi2c2);
@@ -103,5 +94,4 @@ void I2C2_ER_IRQHandler(void)
 void TIM7_IRQHandler(void)
 {
   HAL_TIM_IRQHandler(&htim7);
-
 }

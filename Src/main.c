@@ -11,6 +11,7 @@
 #include "error_handlers/error_handlers.h"
 #include "ethernet/ethernet.h"
 #include "LED_switch/LED_switch.h"
+#include "LED_switch/LED_const.h"
 #include "joystick/joystick.h"
 #include "joystick/joystick_timer.h"
 
@@ -21,7 +22,7 @@ int main(void) {
 	HAL_Init();
 	SystemClock_Config();
 	LED_Init();
-	dupa();
+
 
 	Eth_Init();
 	I2C_Init();
@@ -31,8 +32,14 @@ int main(void) {
 	I2C_Write_Conditions();
 	Eth_Receive_Massage();
 
+	setLED(LIGHT1,1);
+
 	while (1)
 	{
+		HAL_Delay(1500);
+		setLED(LIGHT1,1);
+		HAL_Delay(1500);
+		setLED(LIGHT1,0);
 
 	}
 }
