@@ -10,6 +10,7 @@
 #include <stdbool.h>
 #include "error_handlers/error_handlers.h"
 #include "ethernet/ethernet.h"
+#include "LED_switch/LED_switch.h"
 
 void SystemClock_Config(void);
 
@@ -19,6 +20,9 @@ int main(void) {
 	SystemClock_Config();
 	eth_init();
 	eth_receive_massage();
+	LED_Init();
+	dupa();
+
 
 	/* Loop forever */
 	while (1) {
