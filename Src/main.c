@@ -10,6 +10,8 @@
 #include <stdbool.h>
 #include "error_handlers/error_handlers.h"
 #include "ethernet/ethernet.h"
+#include "joystick/joystick.h"
+#include "joystick/joystick_timer.h"
 
 void SystemClock_Config(void);
 
@@ -17,14 +19,21 @@ int main(void) {
 
 	HAL_Init();
 	SystemClock_Config();
-	eth_init();
-	eth_receive_massage();
+	Eth_Init();
+	I2C_Init();
 
-	/* Loop forever */
-	while (1) {
+	Joystick_Timer_Init();
+
+	I2C_Write_Conditions();
+	Eth_Receive_Massage();
+
+	while (1)
+	{
+
 	}
 }
 
+// configuration of clock
 void SystemClock_Config(void) {
 	RCC_OscInitTypeDef RCC_OscInitStruct = { 0 };
 	RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
