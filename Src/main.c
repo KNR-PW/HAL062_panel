@@ -2,9 +2,33 @@
  ******************************************************************************
  * @file           : main.c
  * @author         : K. Czechowicz, A. Rybojad, S. Kołodziejczyk
- * @brief          : Main program body
+ * @brief          : Rover's operational body main program body
+ * version 1.0
  ******************************************************************************
+ * @details
+ * 			This is the main program body of HAL-062 rover's operational panel.
+ * 			The panel constitutes of several switches, potentiometers, lights and
+ * 			3 joysticks. The system uses communications standards like I2C, CAN, UART,
+ * 			and bluetooth and ethernet modules, which are supposed to engage communication
+ * 			with the rover.
+ *
+ * 			Project consists of files specifying operation of each module, which
+ * 			are located in /Modules folder.
+
+ *			Used communication standards and modules:
+ *				- I2C
+ *				- UART
+ *				- bluetooth
+ *				- ethernet - W7500S2E-R1
+ *
+ *			Used modules
+ *				- MAX11616EEE+ GPIO expander
+ *				- MCP23017 GPIO expander
+ *
+ ******************************************************************************
+ *
  */
+/* Includes ------------------------------------------ */
 
 #include <stm32h7xx_hal.h>
 #include <stdbool.h>
