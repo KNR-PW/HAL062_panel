@@ -1,17 +1,28 @@
+/**
+ ******************************************************************************
+ * @file           : LED_const.h
+ * @author         : K. Czechowicz, A. Rybojad, S. Kołodziejczyk
+ * @brief          : Switch do LEDs - important constant
+ ******************************************************************************
+ */
+
+#ifndef LED_CONST_LED_CONST_H_
+#define LED_CONST_LED_CONST_H_
+
 
 //dev 0x40 , port A, pins 0-7
-#define LIGHT1 0x401201
-#define LIGHT2 0x401202
-#define LIGHT3 0x401204
-#define LIGHT4 0x401208
-#define LIGHT5 0x401210
-#define LIGHT6 0x401220
-#define LIGHT7 0x401240
-#define LIGHT8 0x401280
+#define LIGHT1 	0x401201
+#define LIGHT2 	0x401202
+#define LIGHT3 	0x401204
+#define LIGHT4 	0x401208
+#define LIGHT5 	0x401210
+#define LIGHT6 	0x401220
+#define LIGHT7 	0x401240
+#define LIGHT8 	0x401280
 
 
 //dev 0x40 , port B, pins 0-7
-#define LIGHT9 0x401301
+#define LIGHT9 	0x401301
 #define LIGHT10 0x401302
 #define LIGHT11 0x401304
 #define LIGHT12 0x401308
@@ -42,9 +53,19 @@
 #define LIGHT31 0x401340
 #define LIGHT32 0x401380
 
+// defining devices and ports
+#define DEV_1 	0x40
+#define DEV_2	0x42
+#define PORT_A  0x12
+#define PORT_B	0x13
+
+
+//structure to remember state of LED
 struct currentLEDstate{
-	uint8_t dev40portA;
-	uint8_t dev40portB;
-	uint8_t dev42portA;
-	uint8_t dev42portB;
+	uint8_t dev1portA;
+	uint8_t dev1portB;
+	uint8_t dev2portA;
+	uint8_t dev2portB;
 };
+
+#endif //   LED_CONST_LED_CONST_H_

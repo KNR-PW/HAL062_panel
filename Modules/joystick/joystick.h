@@ -13,13 +13,13 @@
 
 
 // @brief Initializing I2C module: GPIO
-void I2C_Init(void);
+void Joystick_I2C_Init(void);
 
 // @brief configuring ADC inverter
-void I2C_Write_Conditions(void);
+void Joystick_Write_Conditions(void);
 
 // @brief setting flag - start receive joysticks value
-void I2C_Read_Joystick_Value_Start(void);
+void Joystick_Read_Value_Start(void);
 
 #endif // JOYSTICK_JOYSTICK_H
 

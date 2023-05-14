@@ -29,7 +29,8 @@ uint16_t joy1_z;
 uint16_t joy1_mid;
 int16_t y1_pos_x, y1_pos_y;
 
-void I2C_Init(void) {
+//FUNCTIONS DEFINITIONS:
+void Joystick_I2C_Init(void) {
 
 	__HAL_RCC_GPIOB_CLK_ENABLE();
 
@@ -55,7 +56,7 @@ void I2C_Init(void) {
 	}
 }
 
-void I2C_Write_Conditions(void) {
+void Joystick_Write_Conditions(void) {
 	uint8_t data[2];
 	data[0] = CONFIG_DATA;
 	data[1] = SETUP_DATA;
@@ -63,13 +64,12 @@ void I2C_Write_Conditions(void) {
 	HAL_I2C_Master_Transmit_IT(&hi2c2, address, data, 2);
 }
 
-void I2C_Read_Joystick_Value_Start(void) {
+void Joystick_Read_Value_Start(void) {
 	receiveIsReady = true;
 }
 
 void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c) {
-	I2C_Read_Joystick_Value_Start();
-
+	Joystick_Read_Value_Start();
 }
 
 void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c) {
