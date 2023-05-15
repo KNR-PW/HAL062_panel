@@ -7,7 +7,7 @@
  */
 
 #ifndef JOYSTICK_JOYSTICK_TIMER_H
-#define JOYSTICK_JOYSTICK__TIMER_H
+#define JOYSTICK_JOYSTICK_TIMER_H
 
 #include <stm32h7xx_hal.h>
 

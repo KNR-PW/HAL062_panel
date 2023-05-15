@@ -11,6 +11,7 @@
 #include "error_handlers/error_handlers.h"
 #include "joystick_const.h"
 #include "joystick_timer.h"
+#include "ethernet/ethernet.h"
 #include <stdbool.h>
 
 //VARIABLES DEFINITIONS:
@@ -125,15 +126,47 @@ void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c) {
 		gripperJoy.zPos = ((int16_t) gripperJoy.midVal
 				- (int16_t) gripperJoy.zVal) / 20;
 
+
+		//sending joysticks' readings
+		Joystick_Send_Readings();
+
 		//enabling receiving again
 		receiveIsReady = true;
 	}
 
 }
 
-// @brief timer interruption callback to receive again
-// @param TIM_HandleTypeDef *hitm handler to timer that burst interruption
-// @returns void
+void Joystick_Send_Readings(void) {
+	//sending info with speed
+	uint8_t id[2] = { 2, 0 };
+
+	//differential speed calculating
+	int8_t rightSpeed = motorJoy.xPos + motorJoy.yPos;
+	int8_t leftSpeed = motorJoy.xPos - motorJoy.yPos;
+
+	//checking if values are in range
+	if (rightSpeed > 100)
+		rightSpeed = 100;
+	if (leftSpeed > 100)
+		leftSpeed = 100;
+
+	if (rightSpeed < -100)
+		rightSpeed = -100;
+	if (leftSpeed < -100)
+		leftSpeed = -100;
+
+	// building frame
+	uint8_t msgData[16] = { (uint8_t) rightSpeed, (uint8_t) rightSpeed,
+			(uint8_t) rightSpeed, (uint8_t) leftSpeed, (uint8_t) leftSpeed,
+			(uint8_t) leftSpeed, 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x',
+			'x' };
+
+	//sending massage
+	Eth_Send_Massage(id, msgData);
+
+	//TODO: manipulator and gripper message
+}
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	if (htim->Instance == TIM7) {
 		if (receiveIsReady) {

@@ -83,11 +83,12 @@ void Eth_Receive_Massage() {
 
 void decode_UART() {
 	// TODO: implement functionality of decoding message
+	if(ethRxBuffer[0] != '#') Error_Handler();
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 
-	//TODO: obsługa ramek
+	decode_UART();
 	HAL_UART_Receive_DMA(&huart3, ethRxBuffer, 19);
 
 }
