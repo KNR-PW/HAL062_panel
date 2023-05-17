@@ -62,7 +62,7 @@ void LED_Set(uint32_t lightCode, uint8_t state) {
 	uint8_t devAddr = (lightCode & 0xFF0000) >> 16;
 	uint8_t memAddr = (lightCode & 0x00FF00) >> 8;
 
-	if (state == 1) {
+	if (state != 0U) {
 		if (devAddr == DEV_1 && memAddr == PORT_A) {
 			pinNum = (lightCode & 0x0000FF) | currentState.dev1portA;
 			currentState.dev1portA = pinNum;
@@ -91,9 +91,7 @@ void LED_Set(uint32_t lightCode, uint8_t state) {
 			currentState.dev2portB = pinNum;
 		}
 	}
-	if (HAL_I2C_Mem_Write_IT(&hi2c1, devAddr, memAddr, 1, &pinNum, 1)
-			!= HAL_OK) {
-		Error_Handler();
-	}
+	HAL_I2C_Mem_Write_IT(&hi2c1, devAddr, memAddr, 1, &pinNum, 1);
+
 }
 

@@ -3,7 +3,8 @@
 #include "ethernet/ethernet.h"
 #include "LED_switch/LED_switch.h"
 #include "joystick/joystick.h"
-#include "joystick/joystick_timer.h"
+#include "timers/joystick_timer.h"
+#include "timers/buttons_timer.h"
 
 extern DMA_HandleTypeDef hdma_usart3_rx;
 extern DMA_HandleTypeDef hdma_usart3_tx;
@@ -11,6 +12,7 @@ extern UART_HandleTypeDef huart3;
 extern UART_HandleTypeDef hi2c1;
 extern I2C_HandleTypeDef hi2c2;
 extern TIM_HandleTypeDef htim7;
+extern TIM_HandleTypeDef htim6;
 
 void NMI_Handler(void) {
 	while (1) {
@@ -95,3 +97,9 @@ void TIM7_IRQHandler(void)
 {
   HAL_TIM_IRQHandler(&htim7);
 }
+
+void TIM6_DAC_IRQHandler(void)
+{
+  HAL_TIM_IRQHandler(&htim6);
+}
+

@@ -16,6 +16,7 @@ enum errorCode{
 	CriticalSystemError = 3
 };
 
-void Error_Handler(enum errorCode code);
+//void Error_Handler(enum errorCode code);
+void Error_Handler(void);
 
 #endif /* ERROR_HANDLERS_ERROR_HANDLERS_H_ */

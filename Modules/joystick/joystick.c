@@ -10,13 +10,13 @@
 #include "joystick.h"
 #include "error_handlers/error_handlers.h"
 #include "joystick_const.h"
-#include "joystick_timer.h"
+#include "timers/joystick_timer.h"
 #include "ethernet/ethernet.h"
 #include <stdbool.h>
 
 //VARIABLES DEFINITIONS:
 I2C_HandleTypeDef hi2c2;
-static uint8_t receiveData[8];
+uint8_t receiveData[8];
 
 bool receiveIsReady = false;
 
@@ -167,14 +167,5 @@ void Joystick_Send_Readings(void) {
 	//TODO: manipulator and gripper message
 }
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-	if (htim->Instance == TIM7) {
-		if (receiveIsReady) {
-			receiveIsReady = false;
-			uint16_t address = (SLAVE_ADDRESS << 1) | 0x01;
-			HAL_I2C_Master_Receive_IT(&hi2c2, address, receiveData, 8);
 
-		}
-	}
-}
 

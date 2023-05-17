@@ -31,13 +31,16 @@
 /* Includes ------------------------------------------ */
 
 #include <stm32h7xx_hal.h>
+#include <stm32h7xx_hal_gpio.h>
 #include <stdbool.h>
 #include "error_handlers/error_handlers.h"
 #include "ethernet/ethernet.h"
 #include "LED_switch/LED_switch.h"
 #include "LED_switch/LED_const.h"
 #include "joystick/joystick.h"
-#include "joystick/joystick_timer.h"
+#include "timers/joystick_timer.h"
+#include "buttons/buttons.h"
+#include "timers/buttons_timer.h"
 
 void SystemClock_Config(void);
 
@@ -48,17 +51,21 @@ int main(void) {
 	SystemClock_Config();
 
 	//modules init
+	Buttons_Init();
 	LED_Init();
 	Eth_Init();
 	Joystick_I2C_Init();
 
 	//starting functionality
+	Buttons_Timer_Init();
 	Joystick_Timer_Init();
 	Joystick_Write_Conditions();
 	Eth_Receive_Massage();
 
+
 	while (1)
 	{
+
 	}
 }
 

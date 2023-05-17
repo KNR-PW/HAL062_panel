@@ -1,5 +1,7 @@
 #ifndef JOYSTICK_JOYSTICK_CONST_H
-#define JOYSTICK_JOYSTICK__CONST_H
+#define JOYSTICK_JOYSTICK_CONST_H
+
+#include <stm32h7xx_hal.h>
 
 #define SLAVE_ADDRESS 0x35
 #define CONFIG_DATA 0x17
@@ -14,6 +16,7 @@ struct Joystick{
 	int16_t xPos;
 	int16_t yPos;
 	int16_t zPos;
+
 };
 
 #endif // JOYSTICK_JOYSTICK_CONST_H
