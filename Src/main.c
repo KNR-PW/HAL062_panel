@@ -41,8 +41,11 @@
 #include "timers/joystick_timer.h"
 #include "buttons/buttons.h"
 #include "timers/buttons_timer.h"
+#include "watchdogs/watchdog.h"
 
 void SystemClock_Config(void);
+
+extern IWDG_HandleTypeDef hiwdg1;
 
 int main(void) {
 
@@ -62,9 +65,13 @@ int main(void) {
 	Joystick_Write_Conditions();
 	Eth_Receive_Massage();
 
+	//watchdog init
+	MX_IWDG1_Init();
 
 	while (1)
 	{
+		// refreshing watchdog to prevent reset
+		HAL_IWDG_Refresh(&hiwdg1);
 
 	}
 }
