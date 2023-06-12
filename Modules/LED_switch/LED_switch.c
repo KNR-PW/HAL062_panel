@@ -10,6 +10,7 @@
 #include "LED_switch.h"
 #include "error_handlers/error_handlers.h"
 #include "LED_const.h"
+#include <stdbool.h>
 
 //VARIABLES DEFINITIONS:
 I2C_HandleTypeDef hi2c1;
@@ -17,6 +18,8 @@ static struct currentLEDstate currentState;
 uint8_t pinNum = 0x00;
 uint8_t devAddr;
 uint8_t memAddr;
+
+bool i2cLedLineOpen = false;
 
 //FUNCTIONS DEFINITIONS:
 void LED_Init(void) {

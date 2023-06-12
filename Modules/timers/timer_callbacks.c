@@ -1,10 +1,10 @@
 #include <stdbool.h>
 #include "joystick/joystick_const.h"
-#include "joystick/joystick.h"
 #include "camera_switch/camera_switch.h"
+#include "joystick/joystick.h"
 
 extern bool receiveIsReady;
-extern uint8_t receiveData[8];
+uint8_t receiveData[24];
 extern I2C_HandleTypeDef hi2c2;
 extern struct cameraSwitch yellowCamera;
 extern struct cameraSwitch redCamera;
@@ -23,9 +23,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
 		//camera switch handling
 		Read_Camera_Switch_Value();
-		Check_Camera_State(yellowCamera);
-		Check_Camera_State(blueCamera);
-		Check_Camera_State(redCamera);
+//		Check_Camera_State(yellowCamera);
+//		Check_Camera_State(blueCamera);
+//		Check_Camera_State(redCamera);
 		Set_Camera_LED();
 		Send_Cameras_State();
 

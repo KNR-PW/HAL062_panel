@@ -8,6 +8,7 @@
 
 #include "ethernet.h"
 #include "error_handlers/error_handlers.h"
+#include <stdbool.h>
 
 UART_HandleTypeDef huart3;
 DMA_HandleTypeDef hdma_usart3_rx;
@@ -15,6 +16,10 @@ DMA_HandleTypeDef hdma_usart3_tx;
 
 static uint8_t ethTxBuffer[19];
 static uint8_t ethRxBuffer[19];
+
+bool ethTxLineOpen = true;
+
+
 
 void Eth_Init() {
 
@@ -66,7 +71,8 @@ void Eth_Init() {
 
 void Eth_Send_Massage(uint8_t *frameID, uint8_t *msgData) {
 
-	//TODO: checking size of sent data:
+	if(ethTxLineOpen){
+		ethTxLineOpen = false;
 
 	ethTxBuffer[0] = '#';
 	for (uint8_t i = 0; i < 2; i++)
@@ -74,11 +80,14 @@ void Eth_Send_Massage(uint8_t *frameID, uint8_t *msgData) {
 	for (uint8_t i = 0; i < 16; i++)
 		ethTxBuffer[i + 3] = msgData[i];
 
+
 	HAL_UART_Transmit_DMA(&huart3, ethTxBuffer, 19);
+	}
 }
 
 void Eth_Receive_Massage() {
 	HAL_UART_Receive_DMA(&huart3, ethRxBuffer, 19);
+
 }
 
 void decode_UART() {
@@ -95,4 +104,5 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
 	huart->gState = HAL_UART_STATE_READY;
+	ethTxLineOpen = true;
 }

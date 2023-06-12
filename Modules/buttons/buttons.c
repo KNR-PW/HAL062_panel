@@ -12,6 +12,7 @@ void Buttons_Init(void)
 	  __HAL_RCC_GPIOG_CLK_ENABLE();
 	  __HAL_RCC_GPIOE_CLK_ENABLE();
 	  __HAL_RCC_GPIOB_CLK_ENABLE();
+	  __HAL_RCC_GPIOC_CLK_ENABLE();
 
 
 	  /*Configure GPIO pins : MONO_BUTTON_JOY_RED_Pin MONO_BUTTON_JOY_BLUE_Pin MONO_BUTTON_JOY_GREEN_Pin MONO_BUTTON_RED_1_Pin */
@@ -30,32 +31,31 @@ void Buttons_Init(void)
 
 	  //cameras switches:
 
-	  /*Configure GPIO pins : CAM_SWITCH_1_A_Pin CAM_SWITCH_1_B_Pin CAM_SWITCH_1_C_Pin CAM_SWITCH_1_D_Pin
-	                             CAM_SWITCH_2_A_Pin */
-	    GPIO_InitStruct.Pin = CAM_SWITCH_1_A_Pin|CAM_SWITCH_1_B_Pin|CAM_SWITCH_1_C_Pin|CAM_SWITCH_1_D_Pin
-	                            |CAM_SWITCH_2_A_Pin;
-	    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-	    HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+	  /*Configure GPIO pin : CAM_SWITCH_3_A_Pin */
+	  GPIO_InitStruct.Pin = CAM_SWITCH_3_A_Pin;
+	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+	  HAL_GPIO_Init(CAM_SWITCH_3_A_GPIO_Port, &GPIO_InitStruct);
 
-	    /*Configure GPIO pins : CAM_SWITCH_2_B_Pin CAM_SWITCH_2_C_Pin CAM_SWITCH_2_D_Pin CAM_SWITCH_3_A_Pin */
-	    GPIO_InitStruct.Pin = CAM_SWITCH_2_B_Pin|CAM_SWITCH_2_C_Pin|CAM_SWITCH_2_D_Pin|CAM_SWITCH_3_A_Pin;
-	    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-	    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+	  /*Configure GPIO pins : CAM_SWITCH_3_B_Pin CAM_SWITCH_3_C_Pin */
+	  GPIO_InitStruct.Pin = CAM_SWITCH_3_B_Pin|CAM_SWITCH_3_C_Pin;
+	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+	  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
-	    /*Configure GPIO pins : CAM_SWITCH_3_B_Pin CAM_SWITCH_3_C_Pin */
-	     GPIO_InitStruct.Pin = CAM_SWITCH_3_B_Pin|CAM_SWITCH_3_C_Pin;
-	     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	     GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-	     HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+	  /*Configure GPIO pins : CAM_SWITCH_3_D_Pin CAM_SWITCH_2_A_Pin CAM_SWITCH_2_B_Pin CAM_SWITCH_2_C_Pin
+	                           CAM_SWITCH_2_D_Pin CAM_SWITCH_1_A_Pin CAM_SWITCH_1_B_Pin */
+	  GPIO_InitStruct.Pin = CAM_SWITCH_3_D_Pin|CAM_SWITCH_2_A_Pin|CAM_SWITCH_2_B_Pin|CAM_SWITCH_2_C_Pin
+	                          |CAM_SWITCH_2_D_Pin|CAM_SWITCH_1_A_Pin|CAM_SWITCH_1_B_Pin;
+	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+	  HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
-	     /*Configure GPIO pin : CAM_SWITCH_3_D_Pin */
-	     GPIO_InitStruct.Pin = CAM_SWITCH_3_D_Pin;
-	     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	     GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-	     HAL_GPIO_Init(CAM_SWITCH_3_D_GPIO_Port, &GPIO_InitStruct);
-
+	  /*Configure GPIO pins : CAM_SWITCH_1_C_Pin CAM_SWITCH_1_D_Pin */
+	  GPIO_InitStruct.Pin = CAM_SWITCH_1_C_Pin|CAM_SWITCH_1_D_Pin;
+	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+	  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 	  HAL_NVIC_SetPriority(EXTI4_IRQn, 0, 0);
 	  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
 

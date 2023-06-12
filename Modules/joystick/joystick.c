@@ -16,19 +16,16 @@
 
 //VARIABLES DEFINITIONS:
 I2C_HandleTypeDef hi2c2;
-uint8_t receiveData[8];
+extern uint8_t receiveData[24];
 
 bool receiveIsReady = false;
 
-struct Joystick motorJoy;
-struct Joystick manipJoy;
-struct Joystick gripperJoy;
+static struct Joystick motorJoy;
+static struct Joystick manipJoy;
+static struct Joystick gripperJoy;
 
-uint16_t joy1_x;
-uint16_t joy1_y;
-uint16_t joy1_z;
-uint16_t joy1_mid;
-int16_t y1_pos_x, y1_pos_y;
+uint8_t currentReading = 0;
+extern bool ethTxLineOpen;
 
 //FUNCTIONS DEFINITIONS:
 void Joystick_I2C_Init(void) {
@@ -138,7 +135,7 @@ void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c) {
 
 void Joystick_Send_Readings(void) {
 	//sending info with speed
-	uint8_t id[2] = { 2, 0 };
+	uint8_t id[2] = { '2', '1' };
 
 	//differential speed calculating
 	int8_t rightSpeed = motorJoy.xPos + motorJoy.yPos;
@@ -156,15 +153,31 @@ void Joystick_Send_Readings(void) {
 		leftSpeed = -100;
 
 	// building frame
+	if(currentReading == 0 && ethTxLineOpen){
 	uint8_t msgData[16] = { (uint8_t) rightSpeed, (uint8_t) rightSpeed,
 			(uint8_t) rightSpeed, (uint8_t) leftSpeed, (uint8_t) leftSpeed,
 			(uint8_t) leftSpeed, 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x',
 			'x' };
-
-	//sending massage
 	Eth_Send_Massage(id, msgData);
+	currentReading = 1;
+	}
+	else if(currentReading == 1 && ethTxLineOpen){
+	uint8_t msgData[16] = {(uint8_t) manipJoy.xPos,(uint8_t) manipJoy.yPos,(uint8_t) manipJoy.zPos,'x','x','x','x','x','x','x','x','x',
+			'x','x','x','x'};
+	Eth_Send_Massage(id, msgData);
+	currentReading = 2;
+	}
+	else if(currentReading == 2 && ethTxLineOpen){
+		uint8_t msgData[16] = {'x','x','x','x','x','x','x','x','x','x','x','x',
+				'x','x','x','x'};
+		Eth_Send_Massage(id, msgData);
+		currentReading = 0;
+	}
+	else{
+		Error_Handler();
+	}
 
-	//TODO: manipulator and gripper message
+
 }
 
 
