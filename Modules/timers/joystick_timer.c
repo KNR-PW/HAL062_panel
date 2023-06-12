@@ -1,7 +1,7 @@
 #include "joystick_timer.h"
-#include "joystick.h"
+#include "joystick/joystick.h"
 #include "stdbool.h"
-#include "joystick_const.h"
+#include "joystick/joystick_const.h"
 
 TIM_HandleTypeDef htim7;
 //extern I2C_HandleTypeDef hi2c2;
@@ -14,7 +14,7 @@ void Joystick_Timer_Init(void) {
 	htim7.Instance = TIM7;
 	htim7.Init.Prescaler = 6400-1;
 	htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
-	htim7.Init.Period = 10000-1;
+	htim7.Init.Period = 100-1;
 	htim7.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 	if (HAL_TIM_Base_Init(&htim7) != HAL_OK) {
 		Error_Handler();

@@ -10,12 +10,13 @@
 #include "joystick.h"
 #include "error_handlers/error_handlers.h"
 #include "joystick_const.h"
-#include "joystick_timer.h"
+#include "timers/joystick_timer.h"
+#include "ethernet/ethernet.h"
 #include <stdbool.h>
 
 //VARIABLES DEFINITIONS:
 I2C_HandleTypeDef hi2c2;
-static uint8_t receiveData[8];
+uint8_t receiveData[8];
 
 bool receiveIsReady = false;
 
@@ -29,7 +30,8 @@ uint16_t joy1_z;
 uint16_t joy1_mid;
 int16_t y1_pos_x, y1_pos_y;
 
-void I2C_Init(void) {
+//FUNCTIONS DEFINITIONS:
+void Joystick_I2C_Init(void) {
 
 	__HAL_RCC_GPIOB_CLK_ENABLE();
 
@@ -55,7 +57,7 @@ void I2C_Init(void) {
 	}
 }
 
-void I2C_Write_Conditions(void) {
+void Joystick_Write_Conditions(void) {
 	uint8_t data[2];
 	data[0] = CONFIG_DATA;
 	data[1] = SETUP_DATA;
@@ -63,13 +65,12 @@ void I2C_Write_Conditions(void) {
 	HAL_I2C_Master_Transmit_IT(&hi2c2, address, data, 2);
 }
 
-void I2C_Read_Joystick_Value_Start(void) {
+void Joystick_Read_Value_Start(void) {
 	receiveIsReady = true;
 }
 
 void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c) {
-	I2C_Read_Joystick_Value_Start();
-
+	Joystick_Read_Value_Start();
 }
 
 void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c) {
@@ -125,23 +126,46 @@ void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c) {
 		gripperJoy.zPos = ((int16_t) gripperJoy.midVal
 				- (int16_t) gripperJoy.zVal) / 20;
 
+
+		//sending joysticks' readings
+		Joystick_Send_Readings();
+
 		//enabling receiving again
 		receiveIsReady = true;
 	}
 
 }
 
-// @brief timer interruption callback to receive again
-// @param TIM_HandleTypeDef *hitm handler to timer that burst interruption
-// @returns void
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-	if (htim->Instance == TIM7) {
-		if (receiveIsReady) {
-			receiveIsReady = false;
-			uint16_t address = (SLAVE_ADDRESS << 1) | 0x01;
-			HAL_I2C_Master_Receive_IT(&hi2c2, address, receiveData, 8);
+void Joystick_Send_Readings(void) {
+	//sending info with speed
+	uint8_t id[2] = { 2, 0 };
 
-		}
-	}
+	//differential speed calculating
+	int8_t rightSpeed = motorJoy.xPos + motorJoy.yPos;
+	int8_t leftSpeed = motorJoy.xPos - motorJoy.yPos;
+
+	//checking if values are in range
+	if (rightSpeed > 100)
+		rightSpeed = 100;
+	if (leftSpeed > 100)
+		leftSpeed = 100;
+
+	if (rightSpeed < -100)
+		rightSpeed = -100;
+	if (leftSpeed < -100)
+		leftSpeed = -100;
+
+	// building frame
+	uint8_t msgData[16] = { (uint8_t) rightSpeed, (uint8_t) rightSpeed,
+			(uint8_t) rightSpeed, (uint8_t) leftSpeed, (uint8_t) leftSpeed,
+			(uint8_t) leftSpeed, 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x',
+			'x' };
+
+	//sending massage
+	Eth_Send_Massage(id, msgData);
+
+	//TODO: manipulator and gripper message
 }
+
+
 

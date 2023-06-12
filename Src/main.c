@@ -2,34 +2,66 @@
  ******************************************************************************
  * @file           : main.c
  * @author         : K. Czechowicz, A. Rybojad, S. Kołodziejczyk
- * @brief          : Main program body
+ * @brief          : Rover's operational body main program body
+ * version 1.0
  ******************************************************************************
+ * @details
+ * 			This is the main program body of HAL-062 rover's operational panel.
+ * 			The panel constitutes of several switches, potentiometers, lights and
+ * 			3 joysticks. The system uses communications standards like I2C, CAN, UART,
+ * 			and bluetooth and ethernet modules, which are supposed to engage communication
+ * 			with the rover.
+ *
+ * 			Project consists of files specifying operation of each module, which
+ * 			are located in /Modules folder.
+
+ *			Used communication standards and modules:
+ *				- I2C
+ *				- UART
+ *				- bluetooth
+ *				- ethernet - W7500S2E-R1
+ *
+ *			Used modules
+ *				- MAX11616EEE+ GPIO expander
+ *				- MCP23017 GPIO expander
+ *
+ ******************************************************************************
+ *
  */
+/* Includes ------------------------------------------ */
 
 #include <stm32h7xx_hal.h>
+#include <stm32h7xx_hal_gpio.h>
 #include <stdbool.h>
 #include "error_handlers/error_handlers.h"
 #include "ethernet/ethernet.h"
 #include "LED_switch/LED_switch.h"
+#include "LED_switch/LED_const.h"
 #include "joystick/joystick.h"
-#include "joystick/joystick_timer.h"
+#include "timers/joystick_timer.h"
+#include "buttons/buttons.h"
+#include "timers/buttons_timer.h"
 
 void SystemClock_Config(void);
 
 int main(void) {
 
+	//system init
 	HAL_Init();
 	SystemClock_Config();
+
+	//modules init
+	Buttons_Init();
 	LED_Init();
-	dupa();
-
 	Eth_Init();
-	I2C_Init();
+	Joystick_I2C_Init();
 
+	//starting functionality
+	Buttons_Timer_Init();
 	Joystick_Timer_Init();
-
-	I2C_Write_Conditions();
+	Joystick_Write_Conditions();
 	Eth_Receive_Massage();
+
 
 	while (1)
 	{
