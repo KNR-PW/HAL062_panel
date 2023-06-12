@@ -27,7 +27,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     PeriphClkInitStruct.Usart234578ClockSelection = RCC_USART234578CLKSOURCE_D2PCLK1;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
     {
-      Error_Handler();
+      Error_Handler(CriticalSystemError);
     }
 
     /* Peripheral clock enable */
@@ -62,7 +62,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     hdma_usart3_rx.Init.PeriphBurst = DMA_PBURST_SINGLE;
     if (HAL_DMA_Init(&hdma_usart3_rx) != HAL_OK)
     {
-      Error_Handler();
+      Error_Handler(CriticalSystemError);
     }
 
     __HAL_LINKDMA(huart,hdmarx,hdma_usart3_rx);
@@ -83,7 +83,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     hdma_usart3_tx.Init.PeriphBurst = DMA_PBURST_SINGLE;
     if (HAL_DMA_Init(&hdma_usart3_tx) != HAL_OK)
     {
-      Error_Handler();
+      Error_Handler(CriticalSystemError);
     }
 
     __HAL_LINKDMA(huart,hdmatx,hdma_usart3_tx);
@@ -127,7 +127,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c)
     PeriphClkInitStruct.I2c123ClockSelection = RCC_I2C123CLKSOURCE_D2PCLK1;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
     {
-      Error_Handler();
+      Error_Handler(CriticalSystemError);
     }
 
     __HAL_RCC_GPIOB_CLK_ENABLE();
@@ -160,7 +160,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c)
     PeriphClkInitStruct.I2c123ClockSelection = RCC_I2C123CLKSOURCE_D2PCLK1;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
     {
-      Error_Handler();
+      Error_Handler(CriticalSystemError);
     }
 
     __HAL_RCC_GPIOB_CLK_ENABLE();

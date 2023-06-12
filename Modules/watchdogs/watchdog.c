@@ -13,7 +13,7 @@ void MX_IWDG1_Init(void)
   hiwdg1.Init.Reload = 4095;
   if (HAL_IWDG_Init(&hiwdg1) != HAL_OK)
   {
-    Error_Handler();
+    Error_Handler(ReceivedFrameError);
   }
 
 }

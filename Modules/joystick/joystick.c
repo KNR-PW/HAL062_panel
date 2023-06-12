@@ -45,15 +45,15 @@ void Joystick_I2C_Init(void) {
 	hi2c2.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
 	hi2c2.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
 	if (HAL_I2C_Init(&hi2c2) != HAL_OK) {
-		Error_Handler();
+		Error_Handler(CriticalSystemError);
 	}
 
 	if (HAL_I2CEx_ConfigAnalogFilter(&hi2c2, I2C_ANALOGFILTER_ENABLE)
 			!= HAL_OK) {
-		Error_Handler();
+		Error_Handler(CriticalSystemError);
 	}
 	if (HAL_I2CEx_ConfigDigitalFilter(&hi2c2, 0) != HAL_OK) {
-		Error_Handler();
+		Error_Handler(CriticalSystemError);
 	}
 }
 

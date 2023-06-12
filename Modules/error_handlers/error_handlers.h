@@ -17,6 +17,7 @@ enum errorCode{
 };
 
 //void Error_Handler(enum errorCode code);
-void Error_Handler(void);
+//void Error_Handler(void);
+void Error_Handler(enum errorCode code);
 
 #endif /* ERROR_HANDLERS_ERROR_HANDLERS_H_ */

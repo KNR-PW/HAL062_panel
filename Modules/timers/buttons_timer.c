@@ -15,13 +15,13 @@ void Buttons_Timer_Init(void){
 	  htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 	  if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
 	  {
-	    Error_Handler();
+	    Error_Handler(CriticalSystemError);
 	  }
 	  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
 	  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
 	  if (HAL_TIMEx_MasterConfigSynchronization(&htim6, &sMasterConfig) != HAL_OK)
 	  {
-	    Error_Handler();
+	    Error_Handler(CriticalSystemError);
 	  }
 	  HAL_TIM_Base_Start_IT(&htim6);
 }

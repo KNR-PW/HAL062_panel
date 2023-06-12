@@ -49,18 +49,18 @@ void Eth_Init() {
 	huart3.Init.ClockPrescaler = UART_PRESCALER_DIV1;
 	huart3.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
 	if (HAL_UART_Init(&huart3) != HAL_OK) {
-		Error_Handler();
+		Error_Handler(CriticalSystemError);
 	}
 	if (HAL_UARTEx_SetTxFifoThreshold(&huart3, UART_TXFIFO_THRESHOLD_1_8)
 			!= HAL_OK) {
-		Error_Handler();
+		Error_Handler(CriticalSystemError);
 	}
 	if (HAL_UARTEx_SetRxFifoThreshold(&huart3, UART_RXFIFO_THRESHOLD_1_8)
 			!= HAL_OK) {
-		Error_Handler();
+		Error_Handler(CriticalSystemError);
 	}
 	if (HAL_UARTEx_EnableFifoMode(&huart3) != HAL_OK) {
-		Error_Handler();
+		Error_Handler(CriticalSystemError);
 	}
 }
 
@@ -83,7 +83,7 @@ void Eth_Receive_Massage() {
 
 void decode_UART() {
 	// TODO: implement functionality of decoding message
-	if(ethRxBuffer[0] != '#') Error_Handler();
+	if(ethRxBuffer[0] != '#') Error_Handler(CriticalSystemError);
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {

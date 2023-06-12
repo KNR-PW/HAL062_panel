@@ -31,16 +31,16 @@ void LED_Init(void) {
 	hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
 	hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
 	if (HAL_I2C_Init(&hi2c1) != HAL_OK) {
-		Error_Handler();
+		Error_Handler(CriticalSystemError);
 	}
 
 	if (HAL_I2CEx_ConfigAnalogFilter(&hi2c1, I2C_ANALOGFILTER_ENABLE)
 			!= HAL_OK) {
-		Error_Handler();
+		Error_Handler(CriticalSystemError);
 	}
 
 	if (HAL_I2CEx_ConfigDigitalFilter(&hi2c1, 0) != HAL_OK) {
-		Error_Handler();
+		Error_Handler(CriticalSystemError);
 	}
 
 	uint8_t configAsOutput = 0x00;

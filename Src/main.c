@@ -100,7 +100,7 @@ void SystemClock_Config(void) {
 	RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
 	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
-		Error_Handler();
+		Error_Handler(CriticalSystemError);
 	}
 
 	/** Initializes the CPU, AHB and APB buses clocks
@@ -117,7 +117,7 @@ void SystemClock_Config(void) {
 	RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV1;
 
 	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK) {
-		Error_Handler();
+		Error_Handler(CriticalSystemError);
 	}
 }
 
