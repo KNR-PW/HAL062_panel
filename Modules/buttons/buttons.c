@@ -148,4 +148,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 //	if(GPIO_Pin == MONO_BUTTON_JOY_RED_Pin){
 //		LED_Set(LIGHT1, 1);
 //	}
+	if(GPIO_Pin == MONO_BUTTON_BLACK_1_Pin){
+//		LED_Set(LIGHT1, 0);
+//		HAL_Delay(1000);
+		while(1){}
+	}
 }

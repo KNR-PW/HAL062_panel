@@ -68,7 +68,7 @@ int main(void) {
   
 	//watchdog init
 	MX_IWDG1_Init();
-
+//	LED_Set(LIGHT1, 1);
 	while (1)
 	{
 		// refreshing watchdog to prevent reset
