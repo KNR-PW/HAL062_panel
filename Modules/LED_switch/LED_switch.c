@@ -58,6 +58,14 @@ void LED_Init(void) {
 	HAL_Delay(200);
 	HAL_I2C_Mem_Write_IT(&hi2c1, DEV_1, 0x01, 1, (uint8_t*) &configAsOutput, 1);
 	HAL_Delay(200);
+	HAL_I2C_Mem_Write_IT(&hi2c1, DEV_2, 0x0A, 1, (uint8_t*) &config, 1);
+	HAL_Delay(200);
+	HAL_I2C_Mem_Write_IT(&hi2c1, DEV_2, 0x0B, 1, (uint8_t*) &config, 1);
+	HAL_Delay(200);
+	HAL_I2C_Mem_Write_IT(&hi2c1, DEV_2, 0x00, 1, (uint8_t*) &configAsOutput, 1);
+	HAL_Delay(200);
+	HAL_I2C_Mem_Write_IT(&hi2c1, DEV_2, 0x01, 1, (uint8_t*) &configAsOutput, 1);
+	HAL_Delay(200);
 }
 
 void LED_Set(uint32_t lightCode, uint8_t state) {

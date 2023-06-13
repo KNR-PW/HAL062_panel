@@ -3,4 +3,6 @@
 
 void Buttons_Init(void);
 
+void Set_LED_For_Bistable(void);
+
 #endif //BUTTON_BUTTON_H_

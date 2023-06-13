@@ -13,8 +13,8 @@ static struct cameraSwitch redCamera = {3,0,0,0,0};
 
 extern bool ethTxLineOpen;
 
-uint8_t cameraMsgID[2] = {4,1};
-uint8_t cameraMsgData[16] = {1,0,0,0,1,0,0,0,1,0,0,0,'x','x','x','x'};
+static uint8_t cameraMsgID[2] = {0x53,0x53};
+static uint8_t cameraMsgData[16];
 
 uint8_t currentCameraLight = 0;
 
@@ -58,25 +58,25 @@ void Read_Camera_Switch_Value(void){
 
 void Send_Cameras_State(void){
 
-	cameraMsgData[0] = (uint8_t)yellowCamera.channel_A;
-	cameraMsgData[1] = (uint8_t)yellowCamera.channel_B;
-	cameraMsgData[2] = (uint8_t)yellowCamera.channel_C;
-	cameraMsgData[3] = (uint8_t)yellowCamera.channel_D;
-	cameraMsgData[4] = (uint8_t)blueCamera.channel_A;
-	cameraMsgData[5] = (uint8_t)blueCamera.channel_B;
-	cameraMsgData[6] = (uint8_t)blueCamera.channel_C;
-	cameraMsgData[7] = (uint8_t)blueCamera.channel_D;
-	cameraMsgData[8] = (uint8_t)redCamera.channel_A;
-	cameraMsgData[9] = (uint8_t)redCamera.channel_B;
-	cameraMsgData[10] = (uint8_t)redCamera.channel_C;
-	cameraMsgData[11] = (uint8_t)redCamera.channel_D;
-	cameraMsgData[12] = (uint8_t)'x';
-	cameraMsgData[13] = (uint8_t)'x';
-	cameraMsgData[14] = (uint8_t)'x';
-	cameraMsgData[15] = (uint8_t)'x';
+	cameraMsgData[0] = (uint8_t)yellowCamera.channel_A+48;
+	cameraMsgData[1] = (uint8_t)yellowCamera.channel_B+48;
+	cameraMsgData[2] = (uint8_t)yellowCamera.channel_C+48;
+	cameraMsgData[3] = (uint8_t)yellowCamera.channel_D+48;
+	cameraMsgData[4] = (uint8_t)blueCamera.channel_A+48;
+	cameraMsgData[5] = (uint8_t)blueCamera.channel_B+48;
+	cameraMsgData[6] = (uint8_t)blueCamera.channel_C+48;
+	cameraMsgData[7] = (uint8_t)blueCamera.channel_D+48;
+	cameraMsgData[8] = (uint8_t)redCamera.channel_A+48;
+	cameraMsgData[9] = (uint8_t)redCamera.channel_B+48;
+	cameraMsgData[10] = (uint8_t)redCamera.channel_C+48;
+	cameraMsgData[11] = (uint8_t)redCamera.channel_D+48;
+	cameraMsgData[12] = 0x78;
+	cameraMsgData[13] = 0x78;
+	cameraMsgData[14] = 0x79;
+	cameraMsgData[15] = 0x78;
 
 	if(ethTxLineOpen){
-	Eth_Send_Massage(cameraMsgID, cameraMsgData);
+//	Eth_Send_Massage(cameraMsgID, cameraMsgData);
 	}
 
 }
