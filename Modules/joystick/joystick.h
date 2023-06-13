@@ -23,5 +23,8 @@ void Joystick_Read_Value_Start(void);
 // @brief sending do rover joystick values
 void Joystick_Send_Readings(void);
 
+// @brief reading value done
+void Jostick_Read_value_Done(void);
+
 #endif // JOYSTICK_JOYSTICK_H
 

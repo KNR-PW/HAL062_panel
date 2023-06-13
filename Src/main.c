@@ -44,6 +44,7 @@
 #include "watchdogs/watchdog.h"
 
 void SystemClock_Config(void);
+extern bool joyInitFinished;
 
 extern IWDG_HandleTypeDef hiwdg1;
 
@@ -54,17 +55,17 @@ int main(void) {
 	SystemClock_Config();
 
 	//modules init
-	Buttons_Init();
-	LED_Init();
-	Eth_Init();
 	Joystick_I2C_Init();
+	Buttons_Init();
+	Eth_Init();
+	LED_Init();
+	Joystick_Timer_Init();
+	Buttons_Timer_Init();
 
 	//starting functionality
-	Buttons_Timer_Init();
-	Joystick_Timer_Init();
 	Joystick_Write_Conditions();
 	Eth_Receive_Massage();
-
+  
 	//watchdog init
 	MX_IWDG1_Init();
 
