@@ -21,10 +21,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		}
 	}
 	if(htim->Instance == TIM6) {
-
-			Set_LED_For_Bistable();
-			Read_Camera_Switch_Value();
-			Send_Cameras_State();
+		Set_LED_For_Bistable();
+		Read_Camera_Switch_Value();
+		Send_Cameras_State();
 
 		//camera switch handling
 //		Check_Camera_State(yellowCamera);

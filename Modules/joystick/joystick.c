@@ -173,7 +173,7 @@ void Joystick_Send_Readings(void) {
 	currentReading = 1;
 	}
 	else if(currentReading == 1 && ethTxLineOpen){
-	uint8_t msgData[16] = {(uint8_t) motorJoy.xPos,(uint8_t) motorJoy.yPos,(uint8_t) motorJoy.zPos,0x78,0x78,0x78,0x78,0x78,
+	uint8_t msgData[16] = {(uint8_t) manipJoy.xPos,(uint8_t) manipJoy.yPos,(uint8_t) manipJoy.zPos,0x78,0x78,0x78,0x78,0x78,
 			0x78,0x78,0x78,0x78,0x78,0x78,0x78,0x78};
 	Eth_Send_Massage(id, msgData);
 	currentReading = 2;
