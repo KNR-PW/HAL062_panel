@@ -19,6 +19,8 @@ uint8_t pinNum = 0x00;
 uint8_t devAddr;
 uint8_t memAddr;
 
+uint8_t boundryLed = 0;
+
 bool i2cLedLineOpen = false;
 
 //FUNCTIONS DEFINITIONS:
@@ -103,6 +105,26 @@ void LED_Set(uint32_t lightCode, uint8_t state) {
 		}
 	}
 	HAL_I2C_Mem_Write_IT(&hi2c1, devAddr, memAddr, 1, &pinNum, 1);
+
+}
+
+void Set_LED_For_Manip_Bounds(uint8_t* states){
+//	switch(boundryLed){
+//	case 0:
+//		LED_Set(LIGHT21, states[0]);
+//		boundryLed = 1;
+//		break;
+//	case 1:
+//		LED_Set(LIGHT22, states[1]);
+//		boundryLed = 2;
+//		break;
+//	case 2:
+//		LED_Set(LIGHT23, states[2]);
+//		boundryLed = 0;
+//		break;
+//	default:
+//		boundryLed = 0;
+//	}
 
 }
 

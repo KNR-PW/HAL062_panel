@@ -9,17 +9,23 @@
 #include "ethernet.h"
 #include "error_handlers/error_handlers.h"
 #include <stdbool.h>
+#include "LED_switch/LED_const.h"
+#include "LED_switch/LED_switch.h"
 
 UART_HandleTypeDef huart3;
 DMA_HandleTypeDef hdma_usart3_rx;
 DMA_HandleTypeDef hdma_usart3_tx;
 
 static uint8_t ethTxBuffer[19];
-static uint8_t ethRxBuffer[19];
+static uint8_t ethRxBuffer;
+
+volatile uint8_t boudryButtonStates[3];
 
 bool ethTxLineOpen = true;
-
-
+bool test = false;
+uint8_t taken = 0;
+bool foundHash;
+bool toSend = false;
 
 void Eth_Init() {
 
@@ -71,8 +77,7 @@ void Eth_Init() {
 
 void Eth_Send_Massage(uint8_t *frameID, uint8_t *msgData) {
 
-	if(ethTxLineOpen){
-		ethTxLineOpen = false;
+	ethTxLineOpen = false;
 
 	ethTxBuffer[0] = '#';
 	for (uint8_t i = 0; i < 2; i++)
@@ -82,27 +87,35 @@ void Eth_Send_Massage(uint8_t *frameID, uint8_t *msgData) {
 
 
 	HAL_UART_Transmit_DMA(&huart3, ethTxBuffer, 19);
-	}
 }
 
+
 void Eth_Receive_Massage() {
-	HAL_UART_Receive_DMA(&huart3, ethRxBuffer, 19);
+	HAL_UART_Receive_DMA(&huart3, &ethRxBuffer, 1);
 
 }
 
 void decode_UART() {
 	// TODO: implement functionality of decoding message
-	if(ethRxBuffer[0] != '#') Error_Handler();
+//	if(ethRxBuffer[0] != '#') Error_Handler();
 }
+
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 
-	decode_UART();
-	HAL_UART_Receive_DMA(&huart3, ethRxBuffer, 19);
+
+	HAL_UART_Receive_DMA(&huart3, &ethRxBuffer, 1);
+
 
 }
 
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
 	huart->gState = HAL_UART_STATE_READY;
+	if(toSend){
+		HAL_UART_Transmit_DMA(&huart3, ethRxBuffer, 19);
+		toSend = false;
+	}else{
 	ethTxLineOpen = true;
+	}
 }
+

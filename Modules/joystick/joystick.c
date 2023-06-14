@@ -13,6 +13,9 @@
 //#include "timers/joystick_timer.h"
 #include "ethernet/ethernet.h"
 #include <stdbool.h>
+#include "buttons/buttons.h"
+#include "buttons/buttons_const.h"
+
 
 //VARIABLES DEFINITIONS:
 I2C_HandleTypeDef hi2c2;
@@ -24,9 +27,12 @@ struct Joystick motorJoy;
 struct Joystick manipJoy;
 struct Joystick gripperJoy;
 
+extern double val;
+
 static uint8_t currentReading = 0;
 //static uint8_t msgData;
 extern bool ethTxLineOpen;
+static uint8_t data;
 
 //FUNCTIONS DEFINITIONS:
 void Joystick_I2C_Init(void) {
@@ -60,7 +66,7 @@ void Joystick_Write_Conditions(void) {
 	data[0] = CONFIG_DATA;
 	data[1] = SETUP_DATA;
 	uint16_t address = SLAVE_ADDRESS << 1;
-	HAL_StatusTypeDef test = HAL_I2C_Master_Transmit_IT(&hi2c2, address, data, 2);
+	HAL_I2C_Master_Transmit_IT(&hi2c2, address, data, 2);
 	HAL_Delay(500);
 }
 
@@ -115,24 +121,25 @@ void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c) {
 				| (uint16_t) receiveData[23];
 
 		//interpreting readings and scaling values down
-		motorJoy.xPos = ((int16_t) motorJoy.midVal - (int16_t) motorJoy.xVal)
-				/ 20;
-		motorJoy.yPos = ((int16_t) motorJoy.midVal - (int16_t) motorJoy.yVal)
-				/ 20;
+		motorJoy.xPos = (int16_t)((int16_t) motorJoy.midVal - (int16_t) motorJoy.xVal)
+				* val;
+		motorJoy.yPos = (int16_t)((int16_t) motorJoy.midVal - (int16_t) motorJoy.yVal)
+				* val;
 
-		manipJoy.xPos = ((int16_t) manipJoy.midVal - (int16_t) manipJoy.xVal)
-				/ 20;
-		manipJoy.yPos = ((int16_t) manipJoy.midVal - (int16_t) manipJoy.yVal)
-				/ 20;
-		manipJoy.zPos = ((int16_t) manipJoy.midVal - (int16_t) manipJoy.zVal)
-				/ 20;
+		manipJoy.xPos = (int16_t)(((int16_t) manipJoy.midVal - (int16_t)manipJoy.xVal)
+				* val);
+		manipJoy.yPos = (int16_t)(((int16_t) manipJoy.midVal - (int16_t)manipJoy.yVal)
+						* val);
+		manipJoy.zPos = (int16_t)(((int16_t) manipJoy.midVal - (int16_t)manipJoy.zVal)
+						* val);
 
-		gripperJoy.yPos = ((int16_t) gripperJoy.midVal
-				- (int16_t) gripperJoy.yVal) / 20;
-		gripperJoy.xPos = ((int16_t) gripperJoy.midVal
-				- (int16_t) gripperJoy.xVal) / 20;
-		gripperJoy.zPos = ((int16_t) gripperJoy.midVal
-				- (int16_t) gripperJoy.zVal) / 20;
+
+		gripperJoy.yPos = (int16_t)( (int16_t) gripperJoy.midVal
+				- (int16_t)(int16_t) gripperJoy.yVal) * val;
+		gripperJoy.xPos = ( (int16_t)gripperJoy.midVal
+				-  (int16_t)(int16_t)gripperJoy.xVal) * val;
+		gripperJoy.zPos = ( (int16_t)gripperJoy.midVal
+				-  (int16_t)gripperJoy.zVal) * val;
 
 
 		//sending joysticks' readings
@@ -146,7 +153,6 @@ void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c) {
 
 void Joystick_Send_Readings(void) {
 	//sending info with speed
-	uint8_t id[2] = { 0x50, 0x49 };
 
 	//differential speed calculating
 	int8_t rightSpeed = motorJoy.xPos + motorJoy.yPos;
@@ -165,23 +171,33 @@ void Joystick_Send_Readings(void) {
 
 	// building frame
 	if(currentReading == 0 && ethTxLineOpen){
-	uint8_t msgData[16] = { (uint8_t)rightSpeed, (uint8_t)rightSpeed,
+		uint8_t msgID[2] = {'2', '0'};
+		uint8_t msgData[16] = { (uint8_t)rightSpeed, (uint8_t)rightSpeed,
 			(uint8_t) rightSpeed, (uint8_t)leftSpeed, (uint8_t)leftSpeed,
 			(uint8_t)leftSpeed, 0x78, 0x78, 0x78, 0x78, 0x78, 0x78, 0x78, 0x78, 0x78,
 			0x78 };
-//	Eth_Send_Massage(id, msgData);
+//	Eth_Send_Massage(msgID, msgData);
 	currentReading = 1;
 	}
 	else if(currentReading == 1 && ethTxLineOpen){
 	uint8_t msgData[16] = {(uint8_t) manipJoy.xPos,(uint8_t) manipJoy.yPos,(uint8_t) manipJoy.zPos,0x78,0x78,0x78,0x78,0x78,
 			0x78,0x78,0x78,0x78,0x78,0x78,0x78,0x78};
-	Eth_Send_Massage(id, msgData);
+	uint8_t msgID[2] = {'2', '1'};
+	Eth_Send_Massage(msgID, msgData);
 	currentReading = 2;
 	}
 	else if(currentReading == 2 && ethTxLineOpen){
-		uint8_t msgData[16] = {0x78,0x78,0x78,0x78,0x78,0x78,0x78,0x78,
+		uint8_t state_fb= HAL_GPIO_ReadPin(BI_BUTTON_RED_2_GPIO_Port, BI_BUTTON_RED_2_Pin);
+		if(state_fb == GPIO_PIN_SET){
+		data = '1';
+		}
+		else{
+		data = '0';
+		}
+		uint8_t msgData[16] = {(uint8_t)gripperJoy.xPos,(uint8_t)gripperJoy.yPos,(uint8_t)gripperJoy.zPos,data,0x78,0x78,0x78,0x78,
 				0x78,0x78,0x78,0x78,0x78,0x78,0x78,0x78};
-//		Eth_Send_Massage(id, msgData);
+		uint8_t msgID[2] = {'2', '2'};
+		Eth_Send_Massage(msgID, msgData);
 		currentReading = 0;
 	}
 

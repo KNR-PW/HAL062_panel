@@ -13,9 +13,9 @@ struct Joystick{
 	uint16_t yVal;
 	uint16_t zVal;
 	uint16_t midVal;
-	int8_t xPos;
-	int8_t yPos;
-	int8_t zPos;
+	int16_t xPos;
+	int16_t yPos;
+	int16_t zPos;
 
 };
 

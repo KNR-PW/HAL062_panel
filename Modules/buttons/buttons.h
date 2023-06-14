@@ -5,4 +5,8 @@ void Buttons_Init(void);
 
 void Set_LED_For_Bistable(void);
 
+void ADC1_Init(void);
+
+void ADC_Try_Read(void);
+
 #endif //BUTTON_BUTTON_H_

@@ -59,6 +59,7 @@ int main(void) {
 	Buttons_Init();
 	Eth_Init();
 	LED_Init();
+	ADC1_Init();
 	Joystick_Timer_Init();
 	Buttons_Timer_Init();
 
@@ -68,7 +69,7 @@ int main(void) {
   
 	//watchdog init
 	MX_IWDG1_Init();
-//	LED_Set(LIGHT1, 1);
+
 	while (1)
 	{
 		// refreshing watchdog to prevent reset

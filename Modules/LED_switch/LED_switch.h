@@ -23,4 +23,6 @@ void LED_Init(void);
 // @returns void
 void LED_Set(uint32_t lightCode, uint8_t state);
 
+void Set_LED_For_Manip_Bounds(uint8_t* states);
+
 #endif //LED_SWITCH_LED_SWITCH_H
