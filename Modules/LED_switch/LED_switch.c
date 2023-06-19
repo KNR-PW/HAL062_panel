@@ -1,29 +1,37 @@
 /**
  ******************************************************************************
- * @file           : LED_switch.c
- * @author         : K. Czechowicz, A. Rybojad, S. Kołodziejczyk
- * @brief          : Switch do LEDs - initialization, function to set/reset LED
+ * @file           LED_switch.c
+ * @author         K. Czechowicz, A. Rybojad, S. Kołodziejczyk
+ * @brief          Switch do LEDs - initialization, function to set/reset LED
+ * @see			   LED_const.h documentation
  ******************************************************************************
  */
 
-//INCLUDATION:
+/* Includes ------------------------------------------------------------ */
 #include "LED_switch.h"
 #include "error_handlers/error_handlers.h"
 #include "LED_const.h"
 #include <stdbool.h>
 
-//VARIABLES DEFINITIONS:
-I2C_HandleTypeDef hi2c1;
-static struct currentLEDstate currentState;
-uint8_t pinNum = 0x00;
-uint8_t devAddr;
-uint8_t memAddr;
+I2C_HandleTypeDef hi2c1; /*!< I2C handler for GPIO expander module*/
+static struct currentLEDstate currentState; /*!< Variable containing current state of a given port*/
+uint8_t pinNum = 0x00; /*!< Initial number of a GPIO pin*/
+uint8_t devAddr; /*!< Adress of an device*/
+uint8_t memAddr; /*!< Addres of a port*/
 
 uint8_t boundryLed = 0;
 
 bool i2cLedLineOpen = false;
 
-//FUNCTIONS DEFINITIONS:
+/**
+ * @brief Initializing LED peripherial. It configures GPIO expander module with proper signals
+ * @param void
+ * @returns void
+ * @attention HAL_Delay() functions, although not desired, are necessary for proper initialization
+ * 			  of the module. Otherwise, the signal on I2C bus is not entirely written and
+ * 			  the configuration sequence is not performed in accordance with expander documentation.
+ * @see GPIO expander documentation
+*/
 void LED_Init(void) {
 
 	hi2c1.Instance = I2C1;
@@ -70,6 +78,19 @@ void LED_Init(void) {
 	HAL_Delay(200);
 }
 
+/**
+ * @brief Setting state of a given LED light
+ * @param lightCode Predefined number of a LIGHT
+ * @param state	Desired state of a given LED light
+ * @details
+ * 		The function takes predefined lightCode address and extracts device address
+ * 		and port address. Then extracted addresses are compared to the relevant device and port
+ * 		names. The pin number, which specifies the high state of a LED light is logically added
+ * 		to the port state remembered in currentState object. Finally, currentState is updated
+ * 		and the new expander state is written to the module via I2C.
+ * @returns void
+ * @verbatim
+*/
 void LED_Set(uint32_t lightCode, uint8_t state) {
 
 	uint8_t devAddr = (lightCode & 0xFF0000) >> 16;
@@ -105,6 +126,6 @@ void LED_Set(uint32_t lightCode, uint8_t state) {
 		}
 	}
 	HAL_I2C_Mem_Write_IT(&hi2c1, devAddr, memAddr, 1, &pinNum, 1);
-
+/** @endverbatim*/
 }
 

@@ -2,27 +2,50 @@
 \label{_l_e_d__switch_8h}\index{C:/Users/ddd/Desktop/driver/HAL-\/062/SUB-\/HAL-\/062-\/panel/HAL062\_panel/Modules/LED\_switch/LED\_switch.h@{C:/Users/ddd/Desktop/driver/HAL-\/062/SUB-\/HAL-\/062-\/panel/HAL062\_panel/Modules/LED\_switch/LED\_switch.h}}
 
 
-\+: Switch do LEDs -\/ headers file  
+LED lights handling -\/ headers file.  
 
 
 {\ttfamily \#include $<$stm32h7xx\+\_\+hal.\+h$>$}\newline
 \doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{_l_e_d__switch_8h_ab3570a8c9e1266519ad1c7e00093812b}\label{_l_e_d__switch_8h_ab3570a8c9e1266519ad1c7e00093812b}} 
-void {\bfseries LED\+\_\+\+Init} (void)
-\item 
+void \mbox{\hyperlink{_l_e_d__switch_8h_ab3570a8c9e1266519ad1c7e00093812b}{LED\+\_\+\+Init}} (void)
+\begin{DoxyCompactList}\small\item\em Initializing LED peripherial. It configures GPIO expander module with proper signals. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{_l_e_d__switch_8h_a3dfad8096bf0f2c2dd19f4ede1f438ba}\label{_l_e_d__switch_8h_a3dfad8096bf0f2c2dd19f4ede1f438ba}} 
 void {\bfseries LED\+\_\+\+Set} (uint32\+\_\+t light\+Code, uint8\+\_\+t state)
-\item 
-\mbox{\Hypertarget{_l_e_d__switch_8h_a7a9bf521e6042d357c01c071cf8ee1c5}\label{_l_e_d__switch_8h_a7a9bf521e6042d357c01c071cf8ee1c5}} 
-void {\bfseries Set\+\_\+\+LED\+\_\+\+For\+\_\+\+Manip\+\_\+\+Bounds} (uint8\+\_\+t $\ast$states)
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
-\+: Switch do LEDs -\/ headers file 
+LED lights handling -\/ headers file. 
 
 \begin{DoxyAuthor}{Author}
-\+: K. Czechowicz, A. Rybojad, S. Kołodziejczyk 
+K. Czechowicz, A. Rybojad, S. Kołodziejczyk 
 \end{DoxyAuthor}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{_l_e_d__switch_8h_ab3570a8c9e1266519ad1c7e00093812b}\label{_l_e_d__switch_8h_ab3570a8c9e1266519ad1c7e00093812b}} 
+\index{LED\_switch.h@{LED\_switch.h}!LED\_Init@{LED\_Init}}
+\index{LED\_Init@{LED\_Init}!LED\_switch.h@{LED\_switch.h}}
+\doxysubsubsection{\texorpdfstring{LED\_Init()}{LED\_Init()}}
+{\footnotesize\ttfamily void LED\+\_\+\+Init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Initializing LED peripherial. It configures GPIO expander module with proper signals. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\begin{DoxyAttention}{Attention}
+HAL\+\_\+\+Delay() functions, although not desired, are necessary for proper initialization of the module. Otherwise, the signal on I2C bus is not entirely written and the configuration sequence is not performed in accordance with expander documentation. 
+\end{DoxyAttention}
+\begin{DoxySeeAlso}{See also}
+GPIO expander documentation 
+\end{DoxySeeAlso}

@@ -2,14 +2,14 @@
 \label{_l_e_d__const_8h}\index{C:/Users/ddd/Desktop/driver/HAL-\/062/SUB-\/HAL-\/062-\/panel/HAL062\_panel/Modules/LED\_switch/LED\_const.h@{C:/Users/ddd/Desktop/driver/HAL-\/062/SUB-\/HAL-\/062-\/panel/HAL062\_panel/Modules/LED\_switch/LED\_const.h}}
 
 
-\+: Switch do LEDs -\/ important constant  
+File containing macro definitions for all GPIO outputs at GPIO expander.  
 
 
 \doxysubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
 struct \mbox{\hyperlink{structcurrent_l_e_dstate}{current\+LEDstate}}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em This structure is used to remember the state of LED light after any action of even system restart. It saves the state of the whole port which is then logically added to the given state of a given LED light in LED\+\_\+\+Set() function. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
@@ -124,8 +124,16 @@ struct \mbox{\hyperlink{structcurrent_l_e_dstate}{current\+LEDstate}}
 
 
 \doxysubsection{Detailed Description}
-\+: Switch do LEDs -\/ important constant 
+File containing macro definitions for all GPIO outputs at GPIO expander. 
 
 \begin{DoxyAuthor}{Author}
-\+: K. Czechowicz, A. Rybojad, S. Kołodziejczyk 
+K. Czechowicz, A. Rybojad, S. Kołodziejczyk
 \end{DoxyAuthor}
+This file contains macro definitions for all GPIO outputs at GPIO expander module. The light is defined according to the description on PCB board (LIGHT1, LIGHT2, etc.) and is associated with slave address of an proper GPIO pin. There are two devices, which have addresses 0x40 and 0x42. The devices have ports A and B, which respectively have addresses 0x12 and 0x13. Finally, pins 0-\/7 at each port at each device have addresses from range 0x01 to 0x80 The construction of the macro is following\+: \begin{DoxyVerb}*               device_address   port     pin_number
+*               [   8 bits  ] [ 8 bits ] [ 8 bits ]
+*               \end{DoxyVerb}
+
+
+\begin{DoxySeeAlso}{See also}
+MCP23017 GPIO expander datasheet 
+\end{DoxySeeAlso}

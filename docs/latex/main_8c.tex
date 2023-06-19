@@ -22,8 +22,7 @@ Rover\textquotesingle{}s operational body main program body version 1.\+0.
 \item 
 void \mbox{\hyperlink{main_8c_a70af21c671abfcc773614a9a4f63d920}{System\+Clock\+\_\+\+Config}} (void)
 \begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{main_8c_a70af21c671abfcc773614a9a4f63d920}{System\+Clock\+\_\+\+Config()}} is the is used to initialize all required clocks for all modules. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{main_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{main_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
-int {\bfseries main} (void)
+int \mbox{\hyperlink{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
 \begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{main()}} is the main program function that is used only to initialize all required modules and to refresh watchdog \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Variables}
 \begin{DoxyCompactItemize}
@@ -54,11 +53,41 @@ Used communication standards and modules\+:
 
 Used modules
 \begin{DoxyItemize}
-\item MAX11616\+EEE+ GPIO expander
+\item MAX11616\+EEE+ ADC converter
 \item MCP23017 GPIO expander 
 \end{DoxyItemize}
 
 \doxysubsection{Function Documentation}
+\mbox{\Hypertarget{main_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{main_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+\index{main.c@{main.c}!main@{main}}
+\index{main@{main}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{\hyperlink{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{main()}} is the main program function that is used only to initialize all required modules and to refresh watchdog 
+
+\begin{DoxyVerb}/* Initializes system and clocks*/
+HAL_Init();
+SystemClock_Config();
+
+/* Initializes all modules*/
+Joystick_I2C_Init();
+Buttons_Init();
+Eth_Init();
+LED_Init();
+ADC1_Init();
+Joystick_Timer_Init();
+Buttons_Timer_Init();
+
+Joystick_Write_Conditions();
+Eth_Receive_Massage();
+
+/* Initializes watchdog*/
+MX_IWDG1_Init();
+
+/** \end{DoxyVerb}
 \mbox{\Hypertarget{main_8c_a70af21c671abfcc773614a9a4f63d920}\label{main_8c_a70af21c671abfcc773614a9a4f63d920}} 
 \index{main.c@{main.c}!SystemClock\_Config@{SystemClock\_Config}}
 \index{SystemClock\_Config@{SystemClock\_Config}!main.c@{main.c}}
@@ -84,7 +113,9 @@ Initializes the CPU, AHB and APB buses clocks
 \doxysubsubsection{\texorpdfstring{hiwdg1}{hiwdg1}}
 {\footnotesize\ttfamily IWDG\+\_\+\+Handle\+Type\+Def hiwdg1\hspace{0.3cm}{\ttfamily [extern]}}
 
-Watchdog handler used for initialization in watchdog.\+c \mbox{\Hypertarget{main_8c_a56a2c12333fc599b9df2f7744ad2f2c1}\label{main_8c_a56a2c12333fc599b9df2f7744ad2f2c1}} 
+Watchdog handler used for initialization in \mbox{\hyperlink{watchdog_8c}{watchdog.\+c}}
+
+Watchdog handler \mbox{\Hypertarget{main_8c_a56a2c12333fc599b9df2f7744ad2f2c1}\label{main_8c_a56a2c12333fc599b9df2f7744ad2f2c1}} 
 \index{main.c@{main.c}!joyInitFinished@{joyInitFinished}}
 \index{joyInitFinished@{joyInitFinished}!main.c@{main.c}}
 \doxysubsubsection{\texorpdfstring{joyInitFinished}{joyInitFinished}}

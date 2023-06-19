@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['zpos_0',['zPos',['../struct_joystick.html#a493ac7825d0297677beb86c461d07c6f',1,'Joystick']]],
-  ['zval_1',['zVal',['../struct_joystick.html#a2512d1606864f69b9617a02289b42e8f',1,'Joystick']]]
+  ['val_0',['val',['../buttons_8c.html#a3c8bc0bb4f045bfe78d1196cb786792c',1,'val():&#160;buttons.c'],['../joystick_8c.html#a3c8bc0bb4f045bfe78d1196cb786792c',1,'val():&#160;buttons.c']]]
 ];

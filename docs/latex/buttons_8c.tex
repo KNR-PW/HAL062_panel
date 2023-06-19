@@ -43,8 +43,7 @@ void {\bfseries HAL\+\_\+\+GPIO\+\_\+\+EXTI\+\_\+\+Callback} (uint16\+\_\+t GPIO
 \mbox{\Hypertarget{buttons_8c_ab27a37dd68a7cbbf68607b093c74768f}\label{buttons_8c_ab27a37dd68a7cbbf68607b093c74768f}} 
 static uint8\+\_\+t {\bfseries buttons\+State} = 0x00
 \item 
-\mbox{\Hypertarget{buttons_8c_af7b2c26e44dadaaa798a5c3d82914ba7}\label{buttons_8c_af7b2c26e44dadaaa798a5c3d82914ba7}} 
-I2\+C\+\_\+\+Handle\+Type\+Def {\bfseries hi2c1}
+I2\+C\+\_\+\+Handle\+Type\+Def \mbox{\hyperlink{buttons_8c_af7b2c26e44dadaaa798a5c3d82914ba7}{hi2c1}}
 \item 
 \mbox{\Hypertarget{buttons_8c_a22b804736f5648d52f639b2647d4ed13}\label{buttons_8c_a22b804736f5648d52f639b2647d4ed13}} 
 ADC\+\_\+\+Handle\+Type\+Def {\bfseries hadc1}
@@ -75,7 +74,13 @@ Sets LED lights state depending on bistable button.
 This functionality is used to indicate on the panel, whether bistable button is pressed. The function uses bit masks to read button state and sets proper I2C signal (according to I2C module documentation) which at the end is being written by the interrupt. 
 
 \doxysubsection{Variable Documentation}
-\mbox{\Hypertarget{buttons_8c_a3c8bc0bb4f045bfe78d1196cb786792c}\label{buttons_8c_a3c8bc0bb4f045bfe78d1196cb786792c}} 
+\mbox{\Hypertarget{buttons_8c_af7b2c26e44dadaaa798a5c3d82914ba7}\label{buttons_8c_af7b2c26e44dadaaa798a5c3d82914ba7}} 
+\index{buttons.c@{buttons.c}!hi2c1@{hi2c1}}
+\index{hi2c1@{hi2c1}!buttons.c@{buttons.c}}
+\doxysubsubsection{\texorpdfstring{hi2c1}{hi2c1}}
+{\footnotesize\ttfamily I2\+C\+\_\+\+Handle\+Type\+Def hi2c1\hspace{0.3cm}{\ttfamily [extern]}}
+
+I2C handler for GPIO expander module \mbox{\Hypertarget{buttons_8c_a3c8bc0bb4f045bfe78d1196cb786792c}\label{buttons_8c_a3c8bc0bb4f045bfe78d1196cb786792c}} 
 \index{buttons.c@{buttons.c}!val@{val}}
 \index{val@{val}!buttons.c@{buttons.c}}
 \doxysubsubsection{\texorpdfstring{val}{val}}

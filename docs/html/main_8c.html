@@ -87,16 +87,15 @@ $(function() {
 <code>#include &quot;timers/joystick_timer.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="buttons_8h_source.html">buttons/buttons.h</a>&quot;</code><br />
 <code>#include &quot;timers/buttons_timer.h&quot;</code><br />
-<code>#include &quot;watchdogs/watchdog.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="watchdog_8h_source.html">watchdogs/watchdog.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a70af21c671abfcc773614a9a4f63d920"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a70af21c671abfcc773614a9a4f63d920">SystemClock_Config</a> (void)</td></tr>
 <tr class="memdesc:a70af21c671abfcc773614a9a4f63d920"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="main_8c.html#a70af21c671abfcc773614a9a4f63d920" title="SystemClock_Config() is the is used to initialize all required clocks for all modules.">SystemClock_Config()</a> is the is used to initialize all required clocks for all modules.  <a href="main_8c.html#a70af21c671abfcc773614a9a4f63d920">More...</a><br /></td></tr>
 <tr class="separator:a70af21c671abfcc773614a9a4f63d920"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a840291bc02cba5474a4cb46a9b9566fe"><td class="memItemLeft" align="right" valign="top"><a id="a840291bc02cba5474a4cb46a9b9566fe" name="a840291bc02cba5474a4cb46a9b9566fe"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> (void)</td></tr>
-<tr class="memdesc:a840291bc02cba5474a4cb46a9b9566fe"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="main_8c.html#a840291bc02cba5474a4cb46a9b9566fe" title="main() is the main program function that is used only to initialize all required modules and to refre...">main()</a> is the main program function that is used only to initialize all required modules and to refresh watchdog <br /></td></tr>
+<tr class="memitem:a840291bc02cba5474a4cb46a9b9566fe"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a840291bc02cba5474a4cb46a9b9566fe">main</a> (void)</td></tr>
+<tr class="memdesc:a840291bc02cba5474a4cb46a9b9566fe"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="main_8c.html#a840291bc02cba5474a4cb46a9b9566fe" title="main() is the main program function that is used only to initialize all required modules and to refre...">main()</a> is the main program function that is used only to initialize all required modules and to refresh watchdog  <a href="main_8c.html#a840291bc02cba5474a4cb46a9b9566fe">More...</a><br /></td></tr>
 <tr class="separator:a840291bc02cba5474a4cb46a9b9566fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
@@ -118,10 +117,49 @@ Variables</h2></td></tr>
 <li>ethernet - W7500S2E-R1</li>
 </ul>
 <p >Used modules</p><ul>
-<li>MAX11616EEE+ GPIO expander</li>
+<li>MAX11616EEE+ ADC converter</li>
 <li>MCP23017 GPIO expander </li>
 </ul>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a840291bc02cba5474a4cb46a9b9566fe" name="a840291bc02cba5474a4cb46a9b9566fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a840291bc02cba5474a4cb46a9b9566fe">&#9670;&nbsp;</a></span>main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><a class="el" href="main_8c.html#a840291bc02cba5474a4cb46a9b9566fe" title="main() is the main program function that is used only to initialize all required modules and to refre...">main()</a> is the main program function that is used only to initialize all required modules and to refresh watchdog </p>
+<pre class="fragment">/* Initializes system and clocks*/
+HAL_Init();
+SystemClock_Config();
+
+/* Initializes all modules*/
+Joystick_I2C_Init();
+Buttons_Init();
+Eth_Init();
+LED_Init();
+ADC1_Init();
+Joystick_Timer_Init();
+Buttons_Timer_Init();
+
+Joystick_Write_Conditions();
+Eth_Receive_Massage();
+
+/* Initializes watchdog*/
+MX_IWDG1_Init();
+
+/** </pre>
+</div>
+</div>
 <a id="a70af21c671abfcc773614a9a4f63d920" name="a70af21c671abfcc773614a9a4f63d920"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a70af21c671abfcc773614a9a4f63d920">&#9670;&nbsp;</a></span>SystemClock_Config()</h2>
 
@@ -166,7 +204,8 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Watchdog handler used for initialization in watchdog.c </p>
+<p >Watchdog handler used for initialization in <a class="el" href="watchdog_8c.html" title="Watchdog header file.">watchdog.c</a></p>
+<p >Watchdog handler </p>
 
 </div>
 </div>

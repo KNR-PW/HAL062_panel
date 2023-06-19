@@ -74,7 +74,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>: Switch do LEDs - initialization, function to set/reset LED  
+<p>Switch do LEDs - initialization, function to set/reset LED.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="_l_e_d__switch_8h_source.html">LED_switch.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="error__handlers_8h_source.html">error_handlers/error_handlers.h</a>&quot;</code><br />
@@ -83,29 +83,21 @@ $(function() {
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ab3570a8c9e1266519ad1c7e00093812b"><td class="memItemLeft" align="right" valign="top"><a id="ab3570a8c9e1266519ad1c7e00093812b" name="ab3570a8c9e1266519ad1c7e00093812b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>LED_Init</b> (void)</td></tr>
+<tr class="memitem:ab3570a8c9e1266519ad1c7e00093812b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l_e_d__switch_8c.html#ab3570a8c9e1266519ad1c7e00093812b">LED_Init</a> (void)</td></tr>
+<tr class="memdesc:ab3570a8c9e1266519ad1c7e00093812b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializing LED peripherial. It configures GPIO expander module with proper signals.  <a href="_l_e_d__switch_8c.html#ab3570a8c9e1266519ad1c7e00093812b">More...</a><br /></td></tr>
 <tr class="separator:ab3570a8c9e1266519ad1c7e00093812b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3dfad8096bf0f2c2dd19f4ede1f438ba"><td class="memItemLeft" align="right" valign="top"><a id="a3dfad8096bf0f2c2dd19f4ede1f438ba" name="a3dfad8096bf0f2c2dd19f4ede1f438ba"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>LED_Set</b> (uint32_t lightCode, uint8_t state)</td></tr>
-<tr class="separator:a3dfad8096bf0f2c2dd19f4ede1f438ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:af7b2c26e44dadaaa798a5c3d82914ba7"><td class="memItemLeft" align="right" valign="top"><a id="af7b2c26e44dadaaa798a5c3d82914ba7" name="af7b2c26e44dadaaa798a5c3d82914ba7"></a>
-I2C_HandleTypeDef&#160;</td><td class="memItemRight" valign="bottom"><b>hi2c1</b></td></tr>
+<tr class="memitem:af7b2c26e44dadaaa798a5c3d82914ba7"><td class="memItemLeft" align="right" valign="top">I2C_HandleTypeDef&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l_e_d__switch_8c.html#af7b2c26e44dadaaa798a5c3d82914ba7">hi2c1</a></td></tr>
 <tr class="separator:af7b2c26e44dadaaa798a5c3d82914ba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8296866128334554c055f758f95d6ef8"><td class="memItemLeft" align="right" valign="top"><a id="a8296866128334554c055f758f95d6ef8" name="a8296866128334554c055f758f95d6ef8"></a>
-static struct <a class="el" href="structcurrent_l_e_dstate.html">currentLEDstate</a>&#160;</td><td class="memItemRight" valign="bottom"><b>currentState</b></td></tr>
+<tr class="memitem:a8296866128334554c055f758f95d6ef8"><td class="memItemLeft" align="right" valign="top">static struct <a class="el" href="structcurrent_l_e_dstate.html">currentLEDstate</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l_e_d__switch_8c.html#a8296866128334554c055f758f95d6ef8">currentState</a></td></tr>
 <tr class="separator:a8296866128334554c055f758f95d6ef8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae076e036e1a6070bc8723e8838b85f64"><td class="memItemLeft" align="right" valign="top"><a id="ae076e036e1a6070bc8723e8838b85f64" name="ae076e036e1a6070bc8723e8838b85f64"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>pinNum</b> = 0x00</td></tr>
+<tr class="memitem:ae076e036e1a6070bc8723e8838b85f64"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l_e_d__switch_8c.html#ae076e036e1a6070bc8723e8838b85f64">pinNum</a> = 0x00</td></tr>
 <tr class="separator:ae076e036e1a6070bc8723e8838b85f64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef9d7f9ccfe8fcda63e76f9541f59700"><td class="memItemLeft" align="right" valign="top"><a id="aef9d7f9ccfe8fcda63e76f9541f59700" name="aef9d7f9ccfe8fcda63e76f9541f59700"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>devAddr</b></td></tr>
+<tr class="memitem:aef9d7f9ccfe8fcda63e76f9541f59700"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l_e_d__switch_8c.html#aef9d7f9ccfe8fcda63e76f9541f59700">devAddr</a></td></tr>
 <tr class="separator:aef9d7f9ccfe8fcda63e76f9541f59700"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af667d718095fce664d864d83590bb75d"><td class="memItemLeft" align="right" valign="top"><a id="af667d718095fce664d864d83590bb75d" name="af667d718095fce664d864d83590bb75d"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>memAddr</b></td></tr>
+<tr class="memitem:af667d718095fce664d864d83590bb75d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l_e_d__switch_8c.html#af667d718095fce664d864d83590bb75d">memAddr</a></td></tr>
 <tr class="separator:af667d718095fce664d864d83590bb75d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac8d90417ab4a2ecfaa4344907ae694a"><td class="memItemLeft" align="right" valign="top"><a id="aac8d90417ab4a2ecfaa4344907ae694a" name="aac8d90417ab4a2ecfaa4344907ae694a"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>boundryLed</b> = 0</td></tr>
@@ -115,9 +107,124 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>i2cLedLineOpen</b> = 
 <tr class="separator:a0ffe1d70e11f5d5cc968f491dbfc4938"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p >: Switch do LEDs - initialization, function to set/reset LED </p>
-<dl class="section author"><dt>Author</dt><dd>: K. Czechowicz, A. Rybojad, S. Kołodziejczyk </dd></dl>
-</div></div><!-- contents -->
+<div class="textblock"><p >Switch do LEDs - initialization, function to set/reset LED. </p>
+<dl class="section author"><dt>Author</dt><dd>K. Czechowicz, A. Rybojad, S. Kołodziejczyk </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="_l_e_d__const_8h.html" title="File containing macro definitions for all GPIO outputs at GPIO expander.">LED_const.h</a> documentation </dd></dl>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="ab3570a8c9e1266519ad1c7e00093812b" name="ab3570a8c9e1266519ad1c7e00093812b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3570a8c9e1266519ad1c7e00093812b">&#9670;&nbsp;</a></span>LED_Init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LED_Init </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initializing LED peripherial. It configures GPIO expander module with proper signals. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">void</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>HAL_Delay() functions, although not desired, are necessary for proper initialization of the module. Otherwise, the signal on I2C bus is not entirely written and the configuration sequence is not performed in accordance with expander documentation. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>GPIO expander documentation </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a8296866128334554c055f758f95d6ef8" name="a8296866128334554c055f758f95d6ef8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8296866128334554c055f758f95d6ef8">&#9670;&nbsp;</a></span>currentState</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="structcurrent_l_e_dstate.html">currentLEDstate</a> currentState</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >Variable containing current state of a given port </p>
+
+</div>
+</div>
+<a id="aef9d7f9ccfe8fcda63e76f9541f59700" name="aef9d7f9ccfe8fcda63e76f9541f59700"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef9d7f9ccfe8fcda63e76f9541f59700">&#9670;&nbsp;</a></span>devAddr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t devAddr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Adress of an device </p>
+
+</div>
+</div>
+<a id="af7b2c26e44dadaaa798a5c3d82914ba7" name="af7b2c26e44dadaaa798a5c3d82914ba7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7b2c26e44dadaaa798a5c3d82914ba7">&#9670;&nbsp;</a></span>hi2c1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">I2C_HandleTypeDef hi2c1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >I2C handler for GPIO expander module </p>
+
+</div>
+</div>
+<a id="af667d718095fce664d864d83590bb75d" name="af667d718095fce664d864d83590bb75d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af667d718095fce664d864d83590bb75d">&#9670;&nbsp;</a></span>memAddr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t memAddr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Addres of a port </p>
+
+</div>
+</div>
+<a id="ae076e036e1a6070bc8723e8838b85f64" name="ae076e036e1a6070bc8723e8838b85f64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae076e036e1a6070bc8723e8838b85f64">&#9670;&nbsp;</a></span>pinNum</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t pinNum = 0x00</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Initial number of a GPIO pin </p>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2

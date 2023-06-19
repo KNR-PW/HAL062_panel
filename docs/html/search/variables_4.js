@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['val_0',['val',['../buttons_8c.html#a3c8bc0bb4f045bfe78d1196cb786792c',1,'val():&#160;buttons.c'],['../joystick_8c.html#a3c8bc0bb4f045bfe78d1196cb786792c',1,'val():&#160;buttons.c']]]
+  ['memaddr_0',['memAddr',['../_l_e_d__switch_8c.html#af667d718095fce664d864d83590bb75d',1,'LED_switch.c']]],
+  ['midval_1',['midVal',['../struct_joystick.html#a6c0c3213e45e741a8953fbe3ec8b572e',1,'Joystick']]]
 ];

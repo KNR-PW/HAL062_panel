@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['xpos_0',['xPos',['../struct_joystick.html#a8215e77ea4bb87e48a1e19425c5cc627',1,'Joystick']]],
-  ['xval_1',['xVal',['../struct_joystick.html#a7e2eecc71794184c3990a98b102cf2a3',1,'Joystick']]]
+  ['transmittedframeerror_0',['TransmittedFrameError',['../error__handlers_8h.html#ab19a8e0fe3ea0ea5c7259400cb389056ac0152f1fa6d5e37ac712609dc880ed27',1,'error_handlers.h']]]
 ];

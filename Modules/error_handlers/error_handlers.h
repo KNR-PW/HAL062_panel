@@ -16,6 +16,9 @@ enum errorCode{
 	CriticalSystemError = 3 /*!< Raises error of any other system malfunction*/
 };
 
+
+void Error_Handler(enum errorCode code);
+
 void Error_Handler(void);
 
 #endif /* ERROR_HANDLERS_ERROR_HANDLERS_H_ */

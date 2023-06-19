@@ -1,5 +1,14 @@
 \hypertarget{structcurrent_l_e_dstate}{}\doxysection{current\+LEDstate Struct Reference}
 \label{structcurrent_l_e_dstate}\index{currentLEDstate@{currentLEDstate}}
+
+
+This structure is used to remember the state of LED light after any action of even system restart. It saves the state of the whole port which is then logically added to the given state of a given LED light in LED\+\_\+\+Set() function.  
+
+
+
+
+{\ttfamily \#include $<$LED\+\_\+const.\+h$>$}
+
 \doxysubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -15,6 +24,14 @@ uint8\+\_\+t {\bfseries dev2portA}
 \mbox{\Hypertarget{structcurrent_l_e_dstate_a5fd0595332294b7e7d6c28dbe18aa832}\label{structcurrent_l_e_dstate_a5fd0595332294b7e7d6c28dbe18aa832}} 
 uint8\+\_\+t {\bfseries dev2portB}
 \end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This structure is used to remember the state of LED light after any action of even system restart. It saves the state of the whole port which is then logically added to the given state of a given LED light in LED\+\_\+\+Set() function. 
+
+\begin{DoxySeeAlso}{See also}
+LED\+\_\+\+Set() documentation 
+\end{DoxySeeAlso}
 
 
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}

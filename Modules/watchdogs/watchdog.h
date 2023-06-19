@@ -1,3 +1,12 @@
+/**
+ ******************************************************************************
+ * @file           watchdog.h
+ * @author         K. Czechowicz, A. Rybojad, S. Kołodziejczyk
+ * @brief          Watchdog header file
+ ******************************************************************************
+ */
+
+
 #ifndef WATCHDOGS_WATCHDOG_H_
 #define WATCHDOGS_WATCHDOG_H_
 

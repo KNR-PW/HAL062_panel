@@ -74,7 +74,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>: Switch do LEDs - important constant  
+<p>File containing macro definitions for all GPIO outputs at GPIO expander.  
 <a href="#details">More...</a></p>
 
 <p><a href="_l_e_d__const_8h_source.html">Go to the source code of this file.</a></p>
@@ -82,6 +82,7 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcurrent_l_e_dstate.html">currentLEDstate</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure is used to remember the state of LED light after any action of even system restart. It saves the state of the whole port which is then logically added to the given state of a given LED light in LED_Set() function.  <a href="structcurrent_l_e_dstate.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
@@ -196,8 +197,11 @@ Macros</h2></td></tr>
 <tr class="separator:ab67535e80c86be4dabdcae0f6028511d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p >: Switch do LEDs - important constant </p>
-<dl class="section author"><dt>Author</dt><dd>: K. Czechowicz, A. Rybojad, S. Kołodziejczyk </dd></dl>
+<div class="textblock"><p >File containing macro definitions for all GPIO outputs at GPIO expander. </p>
+<dl class="section author"><dt>Author</dt><dd>K. Czechowicz, A. Rybojad, S. Kołodziejczyk</dd></dl>
+<p>This file contains macro definitions for all GPIO outputs at GPIO expander module. The light is defined according to the description on PCB board (LIGHT1, LIGHT2, etc.) and is associated with slave address of an proper GPIO pin. There are two devices, which have addresses 0x40 and 0x42. The devices have ports A and B, which respectively have addresses 0x12 and 0x13. Finally, pins 0-7 at each port at each device have addresses from range 0x01 to 0x80 The construction of the macro is following: </p><pre class="fragment">*               device_address   port     pin_number
+*               [   8 bits  ] [ 8 bits ] [ 8 bits ]
+*               </pre><dl class="section see"><dt>See also</dt><dd>MCP23017 GPIO expander datasheet </dd></dl>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
