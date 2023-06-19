@@ -1,3 +1,16 @@
+/**
+ ******************************************************************************
+ * @file           camera_switch.c
+ * @author         K. Czechowicz, A. Rybojad, S. Kołodziejczyk
+ * @brief          Functionality for camera switch
+ ******************************************************************************
+ * @details
+ * 		This 
+ * 		
+ ******************************************************************************
+ */
+
+/* Includes ------------------------ */
 #include "camera_switch.h"
 #include "buttons/buttons_const.h"
 #include "error_handlers/error_handlers.h"
@@ -56,6 +69,13 @@ void Read_Camera_Switch_Value(void){
 
 }
 
+
+/**
+ * @brief Send_Cameras_State() creates a frame that sends
+ * 48 stands for 0 in ASCII code
+ * 78 stands for x in ASCII
+*/
+
 void Send_Cameras_State(void){
 
 	cameraMsgData[0] = (uint8_t)yellowCamera.channel_A+48;
@@ -72,11 +92,11 @@ void Send_Cameras_State(void){
 	cameraMsgData[11] = (uint8_t)redCamera.channel_D+48;
 	cameraMsgData[12] = 0x78;
 	cameraMsgData[13] = 0x78;
-	cameraMsgData[14] = 0x79;
+	cameraMsgData[14] = 0x78;
 	cameraMsgData[15] = 0x78;
 
 	if(ethTxLineOpen){
-//	Eth_Send_Massage(cameraMsgID, cameraMsgData);
+	Eth_Send_Massage(cameraMsgID, cameraMsgData);
 	}
 
 }

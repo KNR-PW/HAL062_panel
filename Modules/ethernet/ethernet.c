@@ -1,8 +1,8 @@
 /**
  ******************************************************************************
- * @file           : error_handlers.h
- * @author         : K. Czechowicz, A. Rybojad, S. Kołodziejczyk
- * @brief          : Ethernet - functionality
+ * @file           ethernet.c
+ * @author         K. Czechowicz, A. Rybojad, S. Kołodziejczyk
+ * @brief          Ethernet - functionality
  ******************************************************************************
  */
 
@@ -93,11 +93,6 @@ void Eth_Send_Massage(uint8_t *frameID, uint8_t *msgData) {
 void Eth_Receive_Massage() {
 	HAL_UART_Receive_DMA(&huart3, &ethRxBuffer, 1);
 
-}
-
-void decode_UART() {
-	// TODO: implement functionality of decoding message
-//	if(ethRxBuffer[0] != '#') Error_Handler();
 }
 
 

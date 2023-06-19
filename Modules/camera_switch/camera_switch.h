@@ -1,7 +1,22 @@
+/**
+ ******************************************************************************
+ * @file           camera_switch.h
+ * @author         K. Czechowicz, A. Rybojad, S. Kołodziejczyk
+ * @brief          Buttons functionality
+ ******************************************************************************
+ */
+
+
 #ifndef CAMERA_SWITCH_CAMERA_SWITCH_H_
 #define CAMERA_SWITCH_CAMERA_SWITCH_H_
 
 #include <stm32h7xx_hal.h>
+
+
+/**
+ * @brief 
+ * abcd to sczytywanie wartosci ze switcha
+*/
 
 struct cameraSwitch{
 	uint8_t cameraNumber;

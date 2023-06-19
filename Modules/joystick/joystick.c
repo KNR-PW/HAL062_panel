@@ -6,19 +6,17 @@
  *************************************************************************************
  */
 
-//INCLUDATION:
+/* Includes ------------------*/
 #include "joystick.h"
 #include "error_handlers/error_handlers.h"
 #include "joystick_const.h"
-//#include "timers/joystick_timer.h"
 #include "ethernet/ethernet.h"
 #include <stdbool.h>
 #include "buttons/buttons.h"
 #include "buttons/buttons_const.h"
 
 
-//VARIABLES DEFINITIONS:
-I2C_HandleTypeDef hi2c2;
+I2C_HandleTypeDef hi2c2; /*!< I2C handler*/
 
 bool receiveIsReady = false;
 bool joyInitFinished = false;
@@ -27,7 +25,7 @@ struct Joystick motorJoy;
 struct Joystick manipJoy;
 struct Joystick gripperJoy;
 
-extern double val;
+extern double val; /*!< */
 
 static uint8_t currentReading = 0;
 //static uint8_t msgData;

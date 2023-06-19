@@ -1,3 +1,11 @@
+/**
+ ******************************************************************************
+ * @file           buttons.c
+ * @author         K. Czechowicz, A. Rybojad, S. Kołodziejczyk
+ * @brief          Buttons functionality
+ ******************************************************************************
+ */
+
 #include "buttons.h"
 #include "buttons_const.h"
 #include "LED_switch/LED_switch.h"
@@ -9,8 +17,10 @@
 static uint8_t buttonsState = 0x00;
 extern I2C_HandleTypeDef hi2c1;
 ADC_HandleTypeDef hadc1;
-//uint8_t val = 16U;
-double val = 0.0625;
+double val = 0.0625; /*!< Upper value for joystick values divider raw value*/
+
+// tu ustala sie czulosc joystick aprzy pomocy potencjometru,
+// na poczatku val 1/16 i zwiekszajac val rosnie podzialka wiec zakres joysticka jest mniejszy
 
 
 void Buttons_Init(void)
@@ -88,6 +98,7 @@ void Buttons_Init(void)
 	  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
 
+	  /* Sets intterupt priority to the highest*/
 	  HAL_NVIC_SetPriority(EXTI4_IRQn, 0, 0);
 	  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
 
@@ -127,9 +138,6 @@ void Set_LED_For_Bistable(void){
 	buttonsState = (buttonsState & 0b11111110) | temp;
 
 	HAL_I2C_Mem_Write_IT(&hi2c1, DEV_2, PORT_B, 1, &buttonsState, 1);
-//	LED_Set(LIGHT1, 1);
-
-
 }
 
 void ADC1_Init(void)

@@ -108,23 +108,3 @@ void LED_Set(uint32_t lightCode, uint8_t state) {
 
 }
 
-void Set_LED_For_Manip_Bounds(uint8_t* states){
-//	switch(boundryLed){
-//	case 0:
-//		LED_Set(LIGHT21, states[0]);
-//		boundryLed = 1;
-//		break;
-//	case 1:
-//		LED_Set(LIGHT22, states[1]);
-//		boundryLed = 2;
-//		break;
-//	case 2:
-//		LED_Set(LIGHT23, states[2]);
-//		boundryLed = 0;
-//		break;
-//	default:
-//		boundryLed = 0;
-//	}
-
-}
-

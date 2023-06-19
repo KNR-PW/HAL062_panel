@@ -1,8 +1,8 @@
 /**
  ******************************************************************************
- * @file           : main.c
- * @author         : K. Czechowicz, A. Rybojad, S. Kołodziejczyk
- * @brief          : Rover's operational body main program body
+ * @file           main.c
+ * @author         K. Czechowicz, A. Rybojad, S. Kołodziejczyk
+ * @brief          Rover's operational body main program body
  * version 1.0
  ******************************************************************************
  * @details
@@ -44,17 +44,22 @@
 #include "watchdogs/watchdog.h"
 
 void SystemClock_Config(void);
-extern bool joyInitFinished;
 
-extern IWDG_HandleTypeDef hiwdg1;
+extern bool joyInitFinished; /*!< Flag used to complete I2C initialization for joysticks */
 
+extern IWDG_HandleTypeDef hiwdg1; /*!< Watchdog handler used for initialization in watchdog.c */
+
+/**
+ * @brief main() is the main program function that is used only to initialize
+ * all required modules and to refresh watchdog
+*/
 int main(void) {
 
-	//system init
+	/* Initializes system and clocks*/
 	HAL_Init();
 	SystemClock_Config();
 
-	//modules init
+	/* Initializes all modules*/
 	Joystick_I2C_Init();
 	Buttons_Init();
 	Eth_Init();
@@ -63,22 +68,24 @@ int main(void) {
 	Joystick_Timer_Init();
 	Buttons_Timer_Init();
 
-	//starting functionality
 	Joystick_Write_Conditions();
 	Eth_Receive_Massage();
   
-	//watchdog init
+	/* Initializes watchdog*/
 	MX_IWDG1_Init();
 
 	while (1)
 	{
-		// refreshing watchdog to prevent reset
+		/* Refreshes watchdog in main loop*/
 		HAL_IWDG_Refresh(&hiwdg1);
 
 	}
 }
 
-// configuration of clock
+/**
+ * @brief SystemClock_Config() is the is used to initialize
+ * all required clocks for all modules
+*/
 void SystemClock_Config(void) {
 	RCC_OscInitTypeDef RCC_OscInitStruct = { 0 };
 	RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };

@@ -1,7 +1,22 @@
+/**
+ ******************************************************************************
+ * @file           buttons_const.h
+ * @author         K. Czechowicz, A. Rybojad, S. Kołodziejczyk
+ * @brief          This a file containing macro definitions for GPIO inputs and outputs
+ *
+ ******************************************************************************
+ * @details
+ *                 This file consists of macro definitions for all modules using GPIO pin, which are
+ *                 buttons, lights and camera switches, each specyfing the GPIO port and GPIO pin number
+ *                 This is used for easier decoding, better readability of the code. 
+ ******************************************************************************    
+ *
+ */
 
 #ifndef BUTTONS_BUTTONS_CONST_H_
 #define BUTTONS_BUTTONS_CONST_H_
 
+/* Includes --------------------------------------------------------- */
 #include <stm32h7xx_hal.h>
 #include <stm32h7xx_hal_gpio.h>
 
