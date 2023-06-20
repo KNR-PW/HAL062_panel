@@ -1,9 +1,20 @@
-//#include <stm32h7xx_hal_tim.h>
+/**
+ ******************************************************************************
+ * @file           buttons_timer.c
+ * @author         K. Czechowicz, A. Rybojad, S. Kołodziejczyk
+ * @brief          Timer used mainly for buttons - initialization function
+ ******************************************************************************
+ */
+/* Includes ------------------------------------------------------------------- */
 #include "buttons_timer.h"
 #include "error_handlers/error_handlers.h"
 
-TIM_HandleTypeDef htim6;
+TIM_HandleTypeDef htim6; /*!< Timer TIM6 handler */
 
+/**
+ * @brief Buttons_Timer_Init() initializes timer TIM6, which is used for handling
+ * 		  interrupts for buttons. The timer is set to cause an interrupt every 100ms.
+ */
 void Buttons_Timer_Init(void){
 
 	  TIM_MasterConfigTypeDef sMasterConfig = {0};

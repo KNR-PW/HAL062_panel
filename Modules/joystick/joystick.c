@@ -1,8 +1,8 @@
 /**
  *************************************************************************************
- * @file           : joystick.c
- * @author         : K. Czechowicz, A. Rybojad, S. Kołodziejczyk
- * @brief          : Joystick module - implementing functionality and initialization
+ * @file           joystick.c
+ * @author         K. Czechowicz, A. Rybojad, S. Kołodziejczyk
+ * @brief          Joystick module - implementing functionality and initialization
  *************************************************************************************
  */
 
@@ -11,14 +11,14 @@
 #include "error_handlers/error_handlers.h"
 #include "joystick_const.h"
 #include "ethernet/ethernet.h"
-#include <stdbool.h>
 #include "buttons/buttons.h"
 #include "buttons/buttons_const.h"
+#include <stdbool.h>
 
 
 I2C_HandleTypeDef hi2c2; /*!< I2C handler (HAL library)*/
 
-bool receiveIsReady = false; /*!< varaible true if we can receive*/
+bool receiveIsReady = false; /*!< variable true if we can receive*/
 bool joyInitFinished = false; /*!< variable true after external ADC converter configuration */
 
 static uint8_t receiveData[24]; /*!< buffer for external adc converter readings
