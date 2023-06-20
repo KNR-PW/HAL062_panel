@@ -5,8 +5,16 @@
  * @brief          Functionality for camera switch
  ******************************************************************************
  * @details
- * 		This 
- * 		
+ * 		This file contains functions to handle camera switch, screens and
+ * 		sending information to rover of witch camera should be activatied.
+ * 		To proper functionality it is required to have ethernet module
+ * 		configured. For any specifics of uart frame and electronical side
+ * 		of camera switch there are separated documentatioms:
+ * 		- UART frame documentation
+ * 		- Mainboard electric schema
+ * 		- Panel electric schema
+ * 		- Mainboard software documentation
+ * 
  ******************************************************************************
  */
 
@@ -20,16 +28,16 @@
 #include <stdbool.h>
 #include <stm32h7xx_hal_gpio.h>
 
-static struct cameraSwitch yellowCamera = {1,0,0,0,0};
-static struct cameraSwitch blueCamera = {2,0,0,0,0};
-static struct cameraSwitch redCamera = {3,0,0,0,0};
+static struct cameraSwitch yellowCamera = {1,0,0,0,0}; /*! cameraSwitch structure represents yellow camera screen*/
+static struct cameraSwitch blueCamera = {2,0,0,0,0}; /*! cameraSwitch structure represents blue camera screen*/
+static struct cameraSwitch redCamera = {3,0,0,0,0}; /*! cameraSwitch structure represents red camera screen*/
 
-extern bool ethTxLineOpen;
+extern bool ethTxLineOpen; /*! contains information of UART trasmition state (true if nothing is being sent)*/
 
-static uint8_t cameraMsgID[2] = {0x53,0x53};
-static uint8_t cameraMsgData[16];
+static uint8_t cameraMsgID[2] = {0x53,0x53}; /*! camera switch message ID - see uart frame documentation */
+static uint8_t cameraMsgData[16]; /*! camera switch message data - see uart frame documentation */
 
-uint8_t currentCameraLight = 0;
+uint8_t currentCameraLight = 0; /*! vairable informing with camera light is currently being set */
 
 HAL_StatusTypeDef Check_Camera_State(struct cameraSwitch camSw){
 	uint8_t pinAlreadySet = 0;
@@ -71,11 +79,10 @@ void Read_Camera_Switch_Value(void){
 
 
 /**
- * @brief Send_Cameras_State() creates a frame that sends
+ * @details Send_Cameras_State() creates a frame that sends
  * 48 stands for 0 in ASCII code
- * 78 stands for x in ASCII
+ * 78 stands for x in ASCII code
 */
-
 void Send_Cameras_State(void){
 
 	cameraMsgData[0] = (uint8_t)yellowCamera.channel_A+48;
@@ -101,6 +108,11 @@ void Send_Cameras_State(void){
 
 }
 
+/**
+ * @details in order not to have i2c line busy during attemption to light up
+ * one led after another this function will set led on at time, so it is required
+ * to use this function in loop with some delay (f.e timer interuption in every 10ms)
+*/
 void Set_Camera_LED(void){
 	switch(currentCameraLight)
 	{
