@@ -21,7 +21,9 @@ ADC_HandleTypeDef hadc1; /*!< ADC converter - handler to struct*/
 double val = 0.0625; /*!< Upper value for joystick raw values devider. Default: 1/16 (max raw value 1600 scaled to 100)*/
 
 
-
+/**
+ * @brief Initializes GPIO ports and inputs for buttons
+ */
 void Buttons_Init(void)
 {
 	  GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -109,12 +111,20 @@ void Buttons_Init(void)
 }
 
 /**
+ * @brief Sets LED lights state depending on bistable button
  * @details
- * 			Basic bit operation to save led state on correct position. 
- * 			First there are AND operatation with mask on correct position, then
- * 			OR operation with 1/0 (SET/RESET) shifted to position that we already check
+ * This functionality is used to indicate on the panel, 
+ * whether bistable button is pressed. \n
+ * The function uses bit masks to read button state and sets proper 
+ * I2C signal (according to I2C module documentation) which at the end 
+ * is being written by the interrupt. \n
+ * There are basic bit operation to save led state on correct position. 
+ * First there are AND operatation with mask on correct position, then 
+ * OR operation with 1/0 (SET/RESET) shifted to position that we already check.
  */
+
 void Set_LED_For_Bistable(void){
+/*doxygen declaration *//** @verbatim */
 
 	uint8_t temp;
 	temp = HAL_GPIO_ReadPin(BI_BUTTON_RED_1_GPIO_Port, BI_BUTTON_RED_1_Pin);
@@ -141,9 +151,14 @@ void Set_LED_For_Bistable(void){
 	temp = HAL_GPIO_ReadPin(BI_BUTTON_GREEN_3_GPIO_Port, BI_BUTTON_GREEN_3_Pin);
 	buttonsState = (buttonsState & 0b11111110) | temp;
 
+ /** @endverbatim *//*end of doxygen declaration*/
+
 	HAL_I2C_Mem_Write_IT(&hi2c1, DEV_2, PORT_B, 1, &buttonsState, 1);
 }
 
+/**
+ * @brief Initializes ADC module to read value from potentiometer.
+ */
 void ADC1_Init(void)
 {
 
@@ -194,6 +209,15 @@ void ADC1_Init(void)
 
 }
 
+/**
+ * @brief Reads value from potentiometer.
+ * @details 
+ * This function will read value from potentiometer and prepered it to use.
+ * Potentiometer is used to change range of joystick. In order to do that
+ * value from potentiometer should be scaled to: \n
+ * 0.0625 - joystick has full range (from -100 to 100)
+ * 0.0125 - joystick has minimum range (from -20 to 20)
+ */
 void ADC_Try_Read(void){
 
 	GPIO_PinState shouldReadPot = HAL_GPIO_ReadPin(BI_BUTTON_RED_1_GPIO_Port, BI_BUTTON_RED_1_Pin);
@@ -207,7 +231,7 @@ void ADC_Try_Read(void){
 		val = 1;
 		}
 		else{
-		val = temp_val_double/(880000); /*!< scaling potetiometr raw value*/
+		val = temp_val_double/(880000); /* scaling potetiometr raw value*/
 		}
 		HAL_ADC_Stop(&hadc1);
 		}
@@ -253,7 +277,7 @@ void EXTI9_5_IRQHandler(void)
   * @brief This function handles EXTI callback for every pin
   * @details 
   * 	-MONO_BUTTON_BLACK_1_Pin - restart button, 
-  * 	pushing causes going to inf loop, that fire watchdog 
+  * 	pushing causes going to inf loop, that fire watchdog \n
   * 
   * 	-MONO_BUTTON_JOY_BLUE_Pin - after pressing, message to mainboard is send
   * 	to make manipulator come to home position

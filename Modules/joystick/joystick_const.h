@@ -12,9 +12,9 @@
 
 #include <stm32h7xx_hal.h>
 
-#define SLAVE_ADDRESS 0x35 /*!< I2C slave address for ADC converter*/
-#define CONFIG_DATA 0x17 /*!< Configuration data for ADC converter */
-#define SETUP_DATA 0x82 /*!< Setup data for ADC converter*/
+#define SLAVE_ADDRESS 0x35 /*!< I2C slave address for ADC converter @see MAX11616EEE+ documentation*/
+#define CONFIG_DATA 0x17 /*!< Configuration data for ADC converter @see MAX11616EEE+ documentation */
+#define SETUP_DATA 0x82 /*!< Setup data for ADC converter @see MAX11616EEE+ documentation*/
 
 struct Joystick{
 	uint8_t number; /*!< Joystick number (1, 2 or 3)*/

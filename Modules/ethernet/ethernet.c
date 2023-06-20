@@ -2,31 +2,45 @@
  ******************************************************************************
  * @file           ethernet.c
  * @author         K. Czechowicz, A. Rybojad, S. Kołodziejczyk
- * @brief          Ethernet - functionality
+ * @brief          Ethernet communication via UART functionality
+ * @details
+ * Ethernet module: W7500S2E-R1\n
+ * Panelboard has pinout connected with external ethernet module. 
+ * This module convert serial data (UART without flow control) to
+ * ethernet standart. This module requires configuration as TCP client (or TCP server
+ * in case of connecting with computer). \n
+ * There are implemented UART using DMA.
+ *  @see W7500S2E-R1 ethernet module documentation
  ******************************************************************************
  */
 
+/* Includes ------------------------------------------------------------ */
 #include "ethernet.h"
 #include "error_handlers/error_handlers.h"
 #include <stdbool.h>
 #include "LED_switch/LED_const.h"
 #include "LED_switch/LED_switch.h"
 
-UART_HandleTypeDef huart3;
-DMA_HandleTypeDef hdma_usart3_rx;
-DMA_HandleTypeDef hdma_usart3_tx;
 
-static uint8_t ethTxBuffer[19];
-static uint8_t ethRxBuffer;
+UART_HandleTypeDef huart3; /*!< uart handler structure (HAL library) */
+DMA_HandleTypeDef hdma_usart3_rx; /*!< uart receive dma handler  (HAL library) */
+DMA_HandleTypeDef hdma_usart3_tx; /*!< uart transmit dma handler (HAL library) */
 
-volatile uint8_t boudryButtonStates[3];
+static uint8_t ethTxBuffer[19]; /*!< buffer to transmittion 19 bytes of data. @see UART frame documentation */
+static uint8_t ethRxBuffer[19]; /*!< buffer to reception 19 bytes of data. @see UART frame documentation */
 
-bool ethTxLineOpen = true;
-bool test = false;
-uint8_t taken = 0;
-bool foundHash;
-bool toSend = false;
+bool ethTxLineOpen = true; /*!< flag to allow data transmition */
 
+/**
+ * @brief 
+ * Function to initialization ethernet module - UART and DMA
+ * 
+ * @details
+ * Used ethernet module W7500S2E-R1 requires data in UART protocol. \n
+ * This function configure this UART and DMA. It also sets NVIC interruptions
+ * 
+ * @see stm32h743 reference manual - additional information about DMA and UART
+*/
 void Eth_Init() {
 
 	/* DMA controller clock enable */
@@ -75,6 +89,24 @@ void Eth_Init() {
 	}
 }
 
+/**
+ * @brief 
+ * Function to send message via ethernet (UART).
+ * 
+ * @param uint8_t *frameID - information of message ID (UART frame documentation)
+ * @param uint8_t *msgData - information of message data (UART frame documentation)
+ * @details
+ * Entire rover software use previously prepared data frame. It contains 2 bytes
+ * of ID connected with concrete rover module (f.e motors, manipulator, etc.) and 16 bytes
+ * of data. If there are fewer data required to send other bytes are field with 'x'.
+ * First byte is always '#' and this function add this at the beggining of message. \n
+ * Example:
+ * @verbatim
+ [#][id1][id2][data1][data2][data3][x][x][x][x][x][x][x][x][x][x][x][x][x]
+ @endverbatim
+ * @see
+ * UART frame documentation (in order to know how frame works and which ID's should be sent)
+*/
 void Eth_Send_Massage(uint8_t *frameID, uint8_t *msgData) {
 
 	ethTxLineOpen = false;
@@ -89,28 +121,37 @@ void Eth_Send_Massage(uint8_t *frameID, uint8_t *msgData) {
 	HAL_UART_Transmit_DMA(&huart3, ethTxBuffer, 19);
 }
 
-
+/**
+ * @brief 
+ * Function to begin listening of data. 
+ * @details
+ * After data arrives, HAL_UART_RxCpltCallback() will be
+ * immediatelly burst. In that callback listening is setting again.
+*/
 void Eth_Receive_Massage() {
-	HAL_UART_Receive_DMA(&huart3, &ethRxBuffer, 1);
-
+	HAL_UART_Receive_DMA(&huart3, ethRxBuffer, 19);
 }
 
-
+/**
+ * @brief 
+ * UART reception complete callback.
+ * @details
+ * After data arrives,this function handles carried information and set listening again.
+*/
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 
-
-	HAL_UART_Receive_DMA(&huart3, &ethRxBuffer, 1);
-
+	HAL_UART_Receive_DMA(&huart3, ethRxBuffer, 19);
 
 }
 
+/**
+ * @brief 
+ * UART transmition complete callback.
+ * @details
+ * After data transmition this function set flags required to transmit other data.
+*/
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
 	huart->gState = HAL_UART_STATE_READY;
-	if(toSend){
-		HAL_UART_Transmit_DMA(&huart3, ethRxBuffer, 19);
-		toSend = false;
-	}else{
 	ethTxLineOpen = true;
-	}
 }
 
