@@ -1,10 +1,26 @@
+/**
+ ******************************************************************************
+ * @file           watchdog.c
+ * @author         K. Czechowicz, A. Rybojad, S. Kołodziejczyk
+ * @brief          Watchdog header file
+ ******************************************************************************
+ */
 
+/* Includes -----------------------------------*/
 #include "error_handlers/error_handlers.h"
 #include "watchdog.h"
 
 
-IWDG_HandleTypeDef hiwdg1;
+IWDG_HandleTypeDef hiwdg1; /*!< Watchdog handler*/
 
+/**
+ * @brief Initializing watchdog module.
+ * @details
+ *        Watchdog is being refreshed provided that the system is not halted for
+ *        more than 3 seconds. Failing this condition causes system reset.
+ * @param void
+ * @returns void
+*/
 void MX_IWDG1_Init(void)
 {
   hiwdg1.Instance = IWDG1;

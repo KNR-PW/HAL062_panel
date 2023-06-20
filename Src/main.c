@@ -22,7 +22,7 @@
  *				- ethernet - W7500S2E-R1
  *
  *			Used modules
- *				- MAX11616EEE+ GPIO expander
+ *				- MAX11616EEE+ ADC converter
  *				- MCP23017 GPIO expander
  *
  ******************************************************************************
@@ -55,6 +55,7 @@ extern IWDG_HandleTypeDef hiwdg1; /*!< Watchdog handler used for initialization 
 */
 int main(void) {
 
+	/** @verbatim
 	/* Initializes system and clocks*/
 	HAL_Init();
 	SystemClock_Config();
@@ -74,6 +75,8 @@ int main(void) {
 	/* Initializes watchdog*/
 	MX_IWDG1_Init();
 
+	/** @endverbatim */
+
 	while (1)
 	{
 		/* Refreshes watchdog in main loop*/
@@ -86,24 +89,22 @@ int main(void) {
  * @brief SystemClock_Config() is the is used to initialize
  * all required clocks for all modules
 */
+
 void SystemClock_Config(void) {
 	RCC_OscInitTypeDef RCC_OscInitStruct = { 0 };
 	RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
 
-	/** Supply configuration update enable
-	 */
+	/** Supply configuration update enable*/
 	HAL_PWREx_ConfigSupply(PWR_LDO_SUPPLY);
 
-	/** Configure the main internal regulator output voltage
-	 */
+	/** Configure the main internal regulator output voltage*/
 	__HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
 
 	while (!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {
 	}
 
 	/** Initializes the RCC Oscillators according to the specified parameters
-	 * in the RCC_OscInitTypeDef structure.
-	 */
+	 * in the RCC_OscInitTypeDef structure. */
 	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
 	RCC_OscInitStruct.HSIState = RCC_HSI_DIV1;
 	RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;

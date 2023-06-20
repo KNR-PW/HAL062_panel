@@ -1,9 +1,24 @@
 /**
- ******************************************************************************
- * @file           : LED_const.h
- * @author         : K. Czechowicz, A. Rybojad, S. Kołodziejczyk
- * @brief          : Switch do LEDs - important constant
- ******************************************************************************
+ ******************************************************************************************
+ * @file           LED_const.h
+ * @author         K. Czechowicz, A. Rybojad, S. Kołodziejczyk
+ * @brief          File containing macro definitions for all GPIO outputs at GPIO expander
+ * @details
+ * 				This file contains macro definitions for all GPIO outputs at GPIO
+ * 				expander module. The light is defined according to the description
+ * 				on PCB board (LIGHT1, LIGHT2, etc.) and is associated with slave address
+ * 				of an proper GPIO pin.
+ * 				There are two devices, which have addresses 0x40 and 0x42. The devices have
+ * 				ports A and B, which respectively have addresses 0x12 and 0x13. Finally,
+ * 				pins 0-7 at each port at each device have addresses from range 0x01 to 0x80
+ * 				The construction of the macro is following:
+ * 				@verbatim
+ * 				device_address	 port     pin_number
+ * 				[	8 bits  ] [ 8 bits ] [ 8 bits ]
+ * 				@endverbatim
+ * 
+ * @see			MCP23017 GPIO expander datasheet
+ *******************************************************************************************
  */
 
 #ifndef LED_CONST_LED_CONST_H_
@@ -60,7 +75,14 @@
 #define PORT_B	0x13
 
 
-//structure to remember state of LED
+/**
+ * @brief This structure is used to remember the state of LED light
+ * 		  after any action of even system restart. It saves the state of the whole port
+ * 		  which is then logically added to the given state of a given LED light in LED_Set()
+ * 		  function.
+ * 
+ * @see LED_Set() documentation
+*/
 struct currentLEDstate{
 	uint8_t dev1portA;
 	uint8_t dev1portB;

@@ -6,21 +6,20 @@
  ******************************************************************************
  */
 
+/* Includes --------------------------------------------------------- */
 #include "buttons.h"
 #include "buttons_const.h"
 #include "LED_switch/LED_switch.h"
 #include "LED_switch/LED_const.h"
 #include <stm32h7xx_hal_gpio.h>
 #include <stdbool.h>
-//#include <stm32h7xx_hal_adc.h>
 
-static uint8_t buttonsState = 0x00;
-extern I2C_HandleTypeDef hi2c1;
-ADC_HandleTypeDef hadc1;
-double val = 0.0625; /*!< Upper value for joystick values divider raw value*/
 
-// tu ustala sie czulosc joystick aprzy pomocy potencjometru,
-// na poczatku val 1/16 i zwiekszajac val rosnie podzialka wiec zakres joysticka jest mniejszy
+static uint8_t buttonsState = 0x00; /*!< 8bit variable contains information of witch LED is set*/
+extern I2C_HandleTypeDef hi2c1; /*!< extern - declared in LED_switch.c*/
+ADC_HandleTypeDef hadc1; /*!< ADC converter - handler to struct*/
+double val = 0.0625; /*!< Upper value for joystick raw values devider. Default: 1/16 (max raw value 1600 scaled to 100)*/
+
 
 
 void Buttons_Init(void)
@@ -109,7 +108,12 @@ void Buttons_Init(void)
 	  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 }
 
-
+/**
+ * @details
+ * 			Basic bit operation to save led state on correct position. 
+ * 			First there are AND operatation with mask on correct position, then
+ * 			OR operation with 1/0 (SET/RESET) shifted to position that we already check
+ */
 void Set_LED_For_Bistable(void){
 
 	uint8_t temp;
@@ -195,26 +199,15 @@ void ADC_Try_Read(void){
 	GPIO_PinState shouldReadPot = HAL_GPIO_ReadPin(BI_BUTTON_RED_1_GPIO_Port, BI_BUTTON_RED_1_Pin);
 	if(shouldReadPot == GPIO_PIN_SET){
 	HAL_ADC_Start(&hadc1);
-//	uint8_t temp_val = 0.0012*HAL_ADC_GetValue(&hadc1)+13;
+
 	uint32_t temp_val = HAL_ADC_GetValue(&hadc1);
 		double temp_val_double = (double)temp_val;
-//		if( temp_val <= 0 ){
-//		val = 1;
-//		}
-//		else{
-//		val = temp_val;
-//		}
-//		HAL_ADC_Stop(&hadc1);
-//		}
-//	else
-//	{
-//		val = 16U;
-//	}
+
 		if( temp_val <= 0 ){
 		val = 1;
 		}
 		else{
-		val = temp_val_double/(880000);
+		val = temp_val_double/(880000); /*!< scaling potetiometr raw value*/
 		}
 		HAL_ADC_Stop(&hadc1);
 		}
@@ -224,6 +217,9 @@ void ADC_Try_Read(void){
 	}
 }
 
+/**
+  * @brief This function handles EXTI line[15:10] interrupts.
+  */
 void EXTI15_10_IRQHandler(void)
 {
   HAL_GPIO_EXTI_IRQHandler(MONO_BUTTON_GREEN_1_Pin);
@@ -234,7 +230,9 @@ void EXTI15_10_IRQHandler(void)
   HAL_GPIO_EXTI_IRQHandler(MONO_BUTTON_BLUE_2_Pin);
 
 }
-
+/**
+  * @brief This function handles EXTI line[4] interrupts.
+  */
 void EXTI4_IRQHandler(void)
 {
   HAL_GPIO_EXTI_IRQHandler(MONO_BUTTON_JOY_RED_Pin);
@@ -251,13 +249,19 @@ void EXTI9_5_IRQHandler(void)
   HAL_GPIO_EXTI_IRQHandler(MONO_BUTTON_BLACK_1_Pin);
 }
 
+/**
+  * @brief This function handles EXTI callback for every pin
+  * @details 
+  * 	-MONO_BUTTON_BLACK_1_Pin - restart button, 
+  * 	pushing causes going to inf loop, that fire watchdog 
+  * 
+  * 	-MONO_BUTTON_JOY_BLUE_Pin - after pressing, message to mainboard is send
+  * 	to make manipulator come to home position
+  * 
+  * @see uart frame documentation
+  */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
-//	if(GPIO_Pin == MONO_BUTTON_JOY_RED_Pin){
-//		LED_Set(LIGHT1, 1);
-//	}
 	if(GPIO_Pin == MONO_BUTTON_BLACK_1_Pin){
-//		LED_Set(LIGHT1, 0);
-//		HAL_Delay(1000);
 		while(1){}
 	}
 	if(GPIO_Pin == MONO_BUTTON_JOY_BLUE_Pin){
