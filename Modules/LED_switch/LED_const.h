@@ -84,10 +84,10 @@
  * @see LED_Set() documentation
 */
 struct currentLEDstate{
-	uint8_t dev1portA;
-	uint8_t dev1portB;
-	uint8_t dev2portA;
-	uint8_t dev2portB;
+	uint8_t dev1portA; /*!< State of port A at the device 1*/
+	uint8_t dev1portB; /*!< State of port B at the device 1*/
+	uint8_t dev2portA; /*!< State of port A at the device 2*/
+	uint8_t dev2portB; /*!< State of port B at the device 2*/
 };
 
 #endif //   LED_CONST_LED_CONST_H_

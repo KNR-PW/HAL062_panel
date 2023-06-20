@@ -1,8 +1,8 @@
 /**
  ******************************************************************************
- * @file           : joystick.h
+ * @file           : joystick_timer.h
  * @author         : K. Czechowicz, A. Rybojad, S. Kołodziejczyk
- * @brief          : Ethernet - headers file
+ * @brief          : Timer for joystick interrupt - headers file
  ******************************************************************************
  */
 
@@ -11,10 +11,6 @@
 
 #include <stm32h7xx_hal.h>
 
-
-// @brief Initializing joystick module timer
-// @param None
-// @returns void
 void Joystick_Timer_Init(void);
 
 

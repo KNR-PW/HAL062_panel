@@ -1,12 +1,26 @@
+/**
+ ******************************************************************************
+ * @file           joystick_timer.c
+ * @author         K. Czechowicz, A. Rybojad, S. Kołodziejczyk
+ * @brief          Timer for joystick interrupt - file for initialization function
+ ******************************************************************************
+ */
+
+/* Includes ----------------------------------------------------------------- */
 #include "joystick_timer.h"
 #include "joystick/joystick.h"
 #include "stdbool.h"
 #include "joystick/joystick_const.h"
 
-TIM_HandleTypeDef htim7;
-//extern I2C_HandleTypeDef hi2c2;
+TIM_HandleTypeDef htim7; /*!< Timer TIM7 handler*/
 
+//10ms
 
+/**
+ * @brief Joystick_Timer_Init() initializes timer TIM7, which is used for handling
+ * 		  interrupts for joystick (it checks their readings every interrupt).
+ * 		  The timer is set to cause an interrupt every 10ms.
+ */
 void Joystick_Timer_Init(void) {
 
 	TIM_MasterConfigTypeDef sMasterConfig = { 0 };

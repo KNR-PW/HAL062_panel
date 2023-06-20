@@ -1,3 +1,12 @@
+/**
+ ******************************************************************************
+ * @file           timer_callbacks.c
+ * @author         K. Czechowicz, A. Rybojad, S. Kołodziejczyk
+ * @brief          File containing functions handling timer interrupts
+ ******************************************************************************
+ */
+
+/* Includes ------------------------------------------------------------------ */
 #include <stdbool.h>
 #include "joystick/joystick_const.h"
 #include "camera_switch/camera_switch.h"
@@ -7,18 +16,10 @@
 #include "ethernet/ethernet.h"
 #include "buttons/buttons_const.h"
 
-extern bool receiveIsReady;
-//uint8_t receiveData[24];
-//extern I2C_HandleTypeDef hi2c2;
-extern struct cameraSwitch yellowCamera;
-extern struct cameraSwitch redCamera;
-extern struct cameraSwitch blueCamera;
-
-extern volatile uint8_t boudryButtonStates[3];
-
-uint8_t currentButtonsRead = 0;
-static uint8_t id[2] = {'3','1'};
-static uint8_t data[16];
+extern bool receiveIsReady; /*!< */
+extern struct cameraSwitch yellowCamera; /*! cameraSwitch structure represents yellow camera screen*/
+extern struct cameraSwitch redCamera; /*! cameraSwitch structure represents red camera screen*/
+extern struct cameraSwitch blueCamera; /*! cameraSwitch structure represents blue camera screen*/
 
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
@@ -33,15 +34,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		Send_Cameras_State();
 
 		ADC_Try_Read();
-
-//		Set_LED_For_Manip_Bounds(boudryButtonStates);
-
-
-		//camera switch handling
-//		Check_Camera_State(yellowCamera);
-//		Check_Camera_State(blueCamera);
-//		Check_Camera_State(redCamera);
-
 
 	}
 }

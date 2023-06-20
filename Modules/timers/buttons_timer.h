@@ -1,3 +1,11 @@
+/**
+ ******************************************************************************
+ * @file           buttons_timer.h
+ * @author         K. Czechowicz, A. Rybojad, S. Kołodziejczyk
+ * @brief          Timer for buttons - header file
+ ******************************************************************************
+ */
+
 #ifndef BUTTONS_BUTTONS_TIMER_H_
 #define BUTTONS_BUTTONS_TIMER_H_
 

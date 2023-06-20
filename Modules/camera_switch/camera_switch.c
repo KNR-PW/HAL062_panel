@@ -9,7 +9,7 @@
  * 		sending information to rover of witch camera should be activatied.
  * 		To proper functionality it is required to have ethernet module
  * 		configured. For any specifics of uart frame and electronical side
- * 		of camera switch there are separated documentatioms:
+ * 		of camera switch there are separated documentations:
  * 		- UART frame documentation
  * 		- Mainboard electric schema
  * 		- Panel electric schema

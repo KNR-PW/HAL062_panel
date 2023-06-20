@@ -1,8 +1,8 @@
 /**
  *************************************************************************************
- * @file           : joystick.c
- * @author         : K. Czechowicz, A. Rybojad, S. Kołodziejczyk
- * @brief          : Joystick module - implementing functionality and initialization
+ * @file           joystick.c
+ * @author         K. Czechowicz, A. Rybojad, S. Kołodziejczyk
+ * @brief          Joystick module - implementing functionality and initialization
  *************************************************************************************
  */
 
@@ -11,9 +11,9 @@
 #include "error_handlers/error_handlers.h"
 #include "joystick_const.h"
 #include "ethernet/ethernet.h"
-#include <stdbool.h>
 #include "buttons/buttons.h"
 #include "buttons/buttons_const.h"
+#include <stdbool.h>
 
 
 I2C_HandleTypeDef hi2c2; /*!< I2C handler*/
@@ -21,16 +21,15 @@ I2C_HandleTypeDef hi2c2; /*!< I2C handler*/
 bool receiveIsReady = false;
 bool joyInitFinished = false;
 static uint8_t receiveData[24];
-struct Joystick motorJoy;
-struct Joystick manipJoy;
-struct Joystick gripperJoy;
+struct Joystick motorJoy; /*!< Object representing motor joystick state*/
+struct Joystick manipJoy; /*!< Object representing manipulator joystick state*/
+struct Joystick gripperJoy; /*!< Object representing gripper joystick state*/
 
-extern double val; /*!< */
+extern double val; /*!< Upper value for joystick raw values devider. Default: 1/16 (max raw value 1600 scaled to 100)*/
 
-static uint8_t currentReading = 0;
-//static uint8_t msgData;
-extern bool ethTxLineOpen;
-static uint8_t data;
+static uint8_t currentReading = 0; /*!< Current reading number - used for sending reading sequence, works as a state number*/
+extern bool ethTxLineOpen; /*!< Flag informing about open transmit line for ethernet protocol*/
+static uint8_t data; /*!< */
 
 //FUNCTIONS DEFINITIONS:
 void Joystick_I2C_Init(void) {

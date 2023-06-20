@@ -19,8 +19,6 @@ DMA_HandleTypeDef hdma_usart3_tx;
 static uint8_t ethTxBuffer[19];
 static uint8_t ethRxBuffer;
 
-volatile uint8_t boudryButtonStates[3];
-
 bool ethTxLineOpen = true;
 bool test = false;
 uint8_t taken = 0;
