@@ -2,7 +2,7 @@
  ******************************************************************************
  * @file           LED_switch.c
  * @author         K. Czechowicz, A. Rybojad, S. Kołodziejczyk
- * @brief          Switch do LEDs - initialization, function to set/reset LED
+ * @brief          LEDs switch handling - initialization, function to set/reset LED
  * @see			   LED_const.h documentation
  ******************************************************************************
  */
