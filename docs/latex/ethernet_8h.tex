@@ -1,17 +1,17 @@
-\hypertarget{ethernet_8h}{}\doxysection{C\+:/\+Users/ddd/\+Desktop/driver/\+HAL-\/062/\+SUB-\/\+HAL-\/062-\/panel/\+HAL062\+\_\+panel/\+Modules/ethernet/ethernet.h File Reference}
-\label{ethernet_8h}\index{C:/Users/ddd/Desktop/driver/HAL-\/062/SUB-\/HAL-\/062-\/panel/HAL062\_panel/Modules/ethernet/ethernet.h@{C:/Users/ddd/Desktop/driver/HAL-\/062/SUB-\/HAL-\/062-\/panel/HAL062\_panel/Modules/ethernet/ethernet.h}}
+\doxysection{C\+:/\+Users/kryst/\+One\+Drive/\+Pulpit/\+KNR\+\_\+\+DRIVERS/\+SUB-\/\+HAL-\/062-\/panel/\+HAL062\+\_\+panel/\+Modules/ethernet/ethernet.h File Reference}
+\hypertarget{ethernet_8h}{}\label{ethernet_8h}\index{C:/Users/kryst/OneDrive/Pulpit/KNR\_DRIVERS/SUB-\/HAL-\/062-\/panel/HAL062\_panel/Modules/ethernet/ethernet.h@{C:/Users/kryst/OneDrive/Pulpit/KNR\_DRIVERS/SUB-\/HAL-\/062-\/panel/HAL062\_panel/Modules/ethernet/ethernet.h}}
 
 
 Ethernet -\/ headers file.  
 
 
 {\ttfamily \#include $<$stm32h7xx\+\_\+hal.\+h$>$}\newline
-\doxysubsection*{Functions}
+\doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 void \mbox{\hyperlink{ethernet_8h_a113451b4276f33032071e226cd4cda7a}{Eth\+\_\+\+Init}} ()
 \begin{DoxyCompactList}\small\item\em Initializing ethernet module\+: GPIO, UART. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{ethernet_8h_af8653d0b7863784254df47bb7783b2fd}{Eth\+\_\+\+Send\+\_\+\+Massage}} (uint8\+\_\+t $\ast$frame\+ID, uint8\+\_\+t $\ast$msg\+Data)
+void \mbox{\hyperlink{ethernet_8h_af8653d0b7863784254df47bb7783b2fd}{Eth\+\_\+\+Send\+\_\+\+Massage}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}frame\+ID, uint8\+\_\+t \texorpdfstring{$\ast$}{*}msg\+Data)
 \begin{DoxyCompactList}\small\item\em sending message using special frame \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{ethernet_8h_aa357534c6ea1a36ef70949e77836cf77}{Eth\+\_\+\+Receive\+\_\+\+Massage}} ()
 \begin{DoxyCompactList}\small\item\em Begins to listening of data. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -21,12 +21,12 @@ void \mbox{\hyperlink{ethernet_8h_aa357534c6ea1a36ef70949e77836cf77}{Eth\+\_\+\+
 Ethernet -\/ headers file. 
 
 \begin{DoxyAuthor}{Author}
-K. Czechowicz, A. Rybojad, S. Kołodziejczyk 
+K. Czechowicz, A. Rybojad, S. Kołodziejczyk  
 \end{DoxyAuthor}
 
 
 \doxysubsection{Function Documentation}
-\mbox{\Hypertarget{ethernet_8h_a113451b4276f33032071e226cd4cda7a}\label{ethernet_8h_a113451b4276f33032071e226cd4cda7a}} 
+\Hypertarget{ethernet_8h_a113451b4276f33032071e226cd4cda7a}\label{ethernet_8h_a113451b4276f33032071e226cd4cda7a} 
 \index{ethernet.h@{ethernet.h}!Eth\_Init@{Eth\_Init}}
 \index{Eth\_Init@{Eth\_Init}!ethernet.h@{ethernet.h}}
 \doxysubsubsection{\texorpdfstring{Eth\_Init()}{Eth\_Init()}}
@@ -44,7 +44,7 @@ Initializing ethernet module\+: GPIO, UART.
 \begin{DoxyReturn}{Returns}
 void 
 \end{DoxyReturn}
-\mbox{\Hypertarget{ethernet_8h_aa357534c6ea1a36ef70949e77836cf77}\label{ethernet_8h_aa357534c6ea1a36ef70949e77836cf77}} 
+\Hypertarget{ethernet_8h_aa357534c6ea1a36ef70949e77836cf77}\label{ethernet_8h_aa357534c6ea1a36ef70949e77836cf77} 
 \index{ethernet.h@{ethernet.h}!Eth\_Receive\_Massage@{Eth\_Receive\_Massage}}
 \index{Eth\_Receive\_Massage@{Eth\_Receive\_Massage}!ethernet.h@{ethernet.h}}
 \doxysubsubsection{\texorpdfstring{Eth\_Receive\_Massage()}{Eth\_Receive\_Massage()}}
@@ -57,11 +57,11 @@ Begins to listening of data.
 \begin{DoxyReturn}{Returns}
 void 
 \end{DoxyReturn}
-\mbox{\Hypertarget{ethernet_8h_af8653d0b7863784254df47bb7783b2fd}\label{ethernet_8h_af8653d0b7863784254df47bb7783b2fd}} 
+\Hypertarget{ethernet_8h_af8653d0b7863784254df47bb7783b2fd}\label{ethernet_8h_af8653d0b7863784254df47bb7783b2fd} 
 \index{ethernet.h@{ethernet.h}!Eth\_Send\_Massage@{Eth\_Send\_Massage}}
 \index{Eth\_Send\_Massage@{Eth\_Send\_Massage}!ethernet.h@{ethernet.h}}
 \doxysubsubsection{\texorpdfstring{Eth\_Send\_Massage()}{Eth\_Send\_Massage()}}
-{\footnotesize\ttfamily void Eth\+\_\+\+Send\+\_\+\+Massage (\begin{DoxyParamCaption}\item[{uint8\+\_\+t $\ast$}]{frame\+ID,  }\item[{uint8\+\_\+t $\ast$}]{msg\+Data }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void Eth\+\_\+\+Send\+\_\+\+Massage (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{frame\+ID,  }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{msg\+Data }\end{DoxyParamCaption})}
 
 
 

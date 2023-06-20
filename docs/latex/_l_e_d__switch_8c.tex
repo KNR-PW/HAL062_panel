@@ -1,45 +1,44 @@
-\hypertarget{_l_e_d__switch_8c}{}\doxysection{C\+:/\+Users/ddd/\+Desktop/driver/\+HAL-\/062/\+SUB-\/\+HAL-\/062-\/panel/\+HAL062\+\_\+panel/\+Modules/\+LED\+\_\+switch/\+LED\+\_\+switch.c File Reference}
-\label{_l_e_d__switch_8c}\index{C:/Users/ddd/Desktop/driver/HAL-\/062/SUB-\/HAL-\/062-\/panel/HAL062\_panel/Modules/LED\_switch/LED\_switch.c@{C:/Users/ddd/Desktop/driver/HAL-\/062/SUB-\/HAL-\/062-\/panel/HAL062\_panel/Modules/LED\_switch/LED\_switch.c}}
+\doxysection{C\+:/\+Users/kryst/\+One\+Drive/\+Pulpit/\+KNR\+\_\+\+DRIVERS/\+SUB-\/\+HAL-\/062-\/panel/\+HAL062\+\_\+panel/\+Modules/\+LED\+\_\+switch/\+LED\+\_\+switch.c File Reference}
+\hypertarget{_l_e_d__switch_8c}{}\label{_l_e_d__switch_8c}\index{C:/Users/kryst/OneDrive/Pulpit/KNR\_DRIVERS/SUB-\/HAL-\/062-\/panel/HAL062\_panel/Modules/LED\_switch/LED\_switch.c@{C:/Users/kryst/OneDrive/Pulpit/KNR\_DRIVERS/SUB-\/HAL-\/062-\/panel/HAL062\_panel/Modules/LED\_switch/LED\_switch.c}}
 
 
 \+: Switch do LEDs -\/ initialization, function to set/reset LED  
 
 
-{\ttfamily \#include \char`\"{}LED\+\_\+switch.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}error\+\_\+handlers/error\+\_\+handlers.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}LED\+\_\+const.\+h\char`\"{}}\newline
+{\ttfamily \#include \"{}LED\+\_\+switch.\+h\"{}}\newline
+{\ttfamily \#include \"{}error\+\_\+handlers/error\+\_\+handlers.\+h\"{}}\newline
+{\ttfamily \#include \"{}LED\+\_\+const.\+h\"{}}\newline
 {\ttfamily \#include $<$stdbool.\+h$>$}\newline
-\doxysubsection*{Functions}
+\doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{_l_e_d__switch_8c_ab3570a8c9e1266519ad1c7e00093812b}\label{_l_e_d__switch_8c_ab3570a8c9e1266519ad1c7e00093812b}} 
+\Hypertarget{_l_e_d__switch_8c_ab3570a8c9e1266519ad1c7e00093812b}\label{_l_e_d__switch_8c_ab3570a8c9e1266519ad1c7e00093812b} 
 void {\bfseries LED\+\_\+\+Init} (void)
 \item 
-\mbox{\Hypertarget{_l_e_d__switch_8c_a3dfad8096bf0f2c2dd19f4ede1f438ba}\label{_l_e_d__switch_8c_a3dfad8096bf0f2c2dd19f4ede1f438ba}} 
+\Hypertarget{_l_e_d__switch_8c_a3dfad8096bf0f2c2dd19f4ede1f438ba}\label{_l_e_d__switch_8c_a3dfad8096bf0f2c2dd19f4ede1f438ba} 
 void {\bfseries LED\+\_\+\+Set} (uint32\+\_\+t light\+Code, uint8\+\_\+t state)
 \end{DoxyCompactItemize}
-\doxysubsection*{Variables}
+\doxysubsubsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{_l_e_d__switch_8c_af7b2c26e44dadaaa798a5c3d82914ba7}\label{_l_e_d__switch_8c_af7b2c26e44dadaaa798a5c3d82914ba7}} 
-I2\+C\+\_\+\+Handle\+Type\+Def {\bfseries hi2c1}
+I2\+C\+\_\+\+Handle\+Type\+Def \mbox{\hyperlink{_l_e_d__switch_8c_af7b2c26e44dadaaa798a5c3d82914ba7}{hi2c1}}
 \item 
-\mbox{\Hypertarget{_l_e_d__switch_8c_a8296866128334554c055f758f95d6ef8}\label{_l_e_d__switch_8c_a8296866128334554c055f758f95d6ef8}} 
+\Hypertarget{_l_e_d__switch_8c_a8296866128334554c055f758f95d6ef8}\label{_l_e_d__switch_8c_a8296866128334554c055f758f95d6ef8} 
 static struct \mbox{\hyperlink{structcurrent_l_e_dstate}{current\+LEDstate}} {\bfseries current\+State}
 \item 
-\mbox{\Hypertarget{_l_e_d__switch_8c_ae076e036e1a6070bc8723e8838b85f64}\label{_l_e_d__switch_8c_ae076e036e1a6070bc8723e8838b85f64}} 
+\Hypertarget{_l_e_d__switch_8c_ae076e036e1a6070bc8723e8838b85f64}\label{_l_e_d__switch_8c_ae076e036e1a6070bc8723e8838b85f64} 
 uint8\+\_\+t {\bfseries pin\+Num} = 0x00
 \item 
-\mbox{\Hypertarget{_l_e_d__switch_8c_aef9d7f9ccfe8fcda63e76f9541f59700}\label{_l_e_d__switch_8c_aef9d7f9ccfe8fcda63e76f9541f59700}} 
+\Hypertarget{_l_e_d__switch_8c_aef9d7f9ccfe8fcda63e76f9541f59700}\label{_l_e_d__switch_8c_aef9d7f9ccfe8fcda63e76f9541f59700} 
 uint8\+\_\+t {\bfseries dev\+Addr}
 \item 
-\mbox{\Hypertarget{_l_e_d__switch_8c_af667d718095fce664d864d83590bb75d}\label{_l_e_d__switch_8c_af667d718095fce664d864d83590bb75d}} 
+\Hypertarget{_l_e_d__switch_8c_af667d718095fce664d864d83590bb75d}\label{_l_e_d__switch_8c_af667d718095fce664d864d83590bb75d} 
 uint8\+\_\+t {\bfseries mem\+Addr}
 \item 
-\mbox{\Hypertarget{_l_e_d__switch_8c_aac8d90417ab4a2ecfaa4344907ae694a}\label{_l_e_d__switch_8c_aac8d90417ab4a2ecfaa4344907ae694a}} 
+\Hypertarget{_l_e_d__switch_8c_aac8d90417ab4a2ecfaa4344907ae694a}\label{_l_e_d__switch_8c_aac8d90417ab4a2ecfaa4344907ae694a} 
 uint8\+\_\+t {\bfseries boundry\+Led} = 0
 \item 
-\mbox{\Hypertarget{_l_e_d__switch_8c_a0ffe1d70e11f5d5cc968f491dbfc4938}\label{_l_e_d__switch_8c_a0ffe1d70e11f5d5cc968f491dbfc4938}} 
+\Hypertarget{_l_e_d__switch_8c_a0ffe1d70e11f5d5cc968f491dbfc4938}\label{_l_e_d__switch_8c_a0ffe1d70e11f5d5cc968f491dbfc4938} 
 bool {\bfseries i2c\+Led\+Line\+Open} = false
 \end{DoxyCompactItemize}
 
@@ -48,5 +47,15 @@ bool {\bfseries i2c\+Led\+Line\+Open} = false
 \+: Switch do LEDs -\/ initialization, function to set/reset LED 
 
 \begin{DoxyAuthor}{Author}
-\+: K. Czechowicz, A. Rybojad, S. Kołodziejczyk 
+\+: K. Czechowicz, A. Rybojad, S. Kołodziejczyk  
 \end{DoxyAuthor}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{_l_e_d__switch_8c_af7b2c26e44dadaaa798a5c3d82914ba7}\label{_l_e_d__switch_8c_af7b2c26e44dadaaa798a5c3d82914ba7} 
+\index{LED\_switch.c@{LED\_switch.c}!hi2c1@{hi2c1}}
+\index{hi2c1@{hi2c1}!LED\_switch.c@{LED\_switch.c}}
+\doxysubsubsection{\texorpdfstring{hi2c1}{hi2c1}}
+{\footnotesize\ttfamily I2\+C\+\_\+\+Handle\+Type\+Def hi2c1}
+
+extern -\/ declared in \doxylink{_l_e_d__switch_8c}{LED\+\_\+switch.\+c} 

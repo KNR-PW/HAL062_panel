@@ -1,53 +1,48 @@
-\hypertarget{buttons_8c}{}\doxysection{C\+:/\+Users/ddd/\+Desktop/driver/\+HAL-\/062/\+SUB-\/\+HAL-\/062-\/panel/\+HAL062\+\_\+panel/\+Modules/buttons/buttons.c File Reference}
-\label{buttons_8c}\index{C:/Users/ddd/Desktop/driver/HAL-\/062/SUB-\/HAL-\/062-\/panel/HAL062\_panel/Modules/buttons/buttons.c@{C:/Users/ddd/Desktop/driver/HAL-\/062/SUB-\/HAL-\/062-\/panel/HAL062\_panel/Modules/buttons/buttons.c}}
+\doxysection{C\+:/\+Users/kryst/\+One\+Drive/\+Pulpit/\+KNR\+\_\+\+DRIVERS/\+SUB-\/\+HAL-\/062-\/panel/\+HAL062\+\_\+panel/\+Modules/buttons/buttons.c File Reference}
+\hypertarget{buttons_8c}{}\label{buttons_8c}\index{C:/Users/kryst/OneDrive/Pulpit/KNR\_DRIVERS/SUB-\/HAL-\/062-\/panel/HAL062\_panel/Modules/buttons/buttons.c@{C:/Users/kryst/OneDrive/Pulpit/KNR\_DRIVERS/SUB-\/HAL-\/062-\/panel/HAL062\_panel/Modules/buttons/buttons.c}}
 
 
 Buttons functionality.  
 
 
-{\ttfamily \#include \char`\"{}buttons.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}buttons\+\_\+const.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}LED\+\_\+switch/\+LED\+\_\+switch.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}LED\+\_\+switch/\+LED\+\_\+const.\+h\char`\"{}}\newline
+{\ttfamily \#include \"{}buttons.\+h\"{}}\newline
+{\ttfamily \#include \"{}buttons\+\_\+const.\+h\"{}}\newline
+{\ttfamily \#include \"{}LED\+\_\+switch/\+LED\+\_\+switch.\+h\"{}}\newline
+{\ttfamily \#include \"{}LED\+\_\+switch/\+LED\+\_\+const.\+h\"{}}\newline
 {\ttfamily \#include $<$stm32h7xx\+\_\+hal\+\_\+gpio.\+h$>$}\newline
 {\ttfamily \#include $<$stdbool.\+h$>$}\newline
-\doxysubsection*{Functions}
+\doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{buttons_8c_adb18d3583167cb98279e029bfe1c696b}\label{buttons_8c_adb18d3583167cb98279e029bfe1c696b}} 
+\Hypertarget{buttons_8c_adb18d3583167cb98279e029bfe1c696b}\label{buttons_8c_adb18d3583167cb98279e029bfe1c696b} 
 void {\bfseries Buttons\+\_\+\+Init} (void)
 \begin{DoxyCompactList}\small\item\em Initializes GPIO ports and inputs for buttons. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{buttons_8c_aa6f14b96c46b9c49fb96af8ff1533dc9}{Set\+\_\+\+LED\+\_\+\+For\+\_\+\+Bistable}} (void)
 \begin{DoxyCompactList}\small\item\em Sets LED lights state depending on bistable button. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{buttons_8c_a4aee6db188db234c1dcf4d17cc24eb03}\label{buttons_8c_a4aee6db188db234c1dcf4d17cc24eb03}} 
+\Hypertarget{buttons_8c_a4aee6db188db234c1dcf4d17cc24eb03}\label{buttons_8c_a4aee6db188db234c1dcf4d17cc24eb03} 
 void {\bfseries ADC1\+\_\+\+Init} (void)
 \begin{DoxyCompactList}\small\item\em Initializes ADC module. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{buttons_8c_aacd13f1f53d923ead9283aa09366ef07}\label{buttons_8c_aacd13f1f53d923ead9283aa09366ef07}} 
-void {\bfseries ADC\+\_\+\+Try\+\_\+\+Read} (void)
+void \mbox{\hyperlink{buttons_8c_aacd13f1f53d923ead9283aa09366ef07}{ADC\+\_\+\+Try\+\_\+\+Read}} (void)
 \begin{DoxyCompactList}\small\item\em Reads value from potentiometer. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{buttons_8c_a738473a5b43f6c92b80ce1d3d6f77ed9}\label{buttons_8c_a738473a5b43f6c92b80ce1d3d6f77ed9}} 
+\Hypertarget{buttons_8c_a738473a5b43f6c92b80ce1d3d6f77ed9}\label{buttons_8c_a738473a5b43f6c92b80ce1d3d6f77ed9} 
 void {\bfseries EXTI15\+\_\+10\+\_\+\+IRQHandler} (void)
-\item 
-\mbox{\Hypertarget{buttons_8c_a290cb997018c8d85d4b965b4a242842f}\label{buttons_8c_a290cb997018c8d85d4b965b4a242842f}} 
+\begin{DoxyCompactList}\small\item\em This function handles EXTI line\mbox{[}15\+:10\mbox{]} interrupts. \end{DoxyCompactList}\item 
+\Hypertarget{buttons_8c_a290cb997018c8d85d4b965b4a242842f}\label{buttons_8c_a290cb997018c8d85d4b965b4a242842f} 
 void {\bfseries EXTI4\+\_\+\+IRQHandler} (void)
-\item 
-\mbox{\Hypertarget{buttons_8c_a7b2096b8b2643286dc3a7e5110e5ae85}\label{buttons_8c_a7b2096b8b2643286dc3a7e5110e5ae85}} 
+\begin{DoxyCompactList}\small\item\em This function handles EXTI line\mbox{[}4\mbox{]} interrupts. \end{DoxyCompactList}\item 
+\Hypertarget{buttons_8c_a7b2096b8b2643286dc3a7e5110e5ae85}\label{buttons_8c_a7b2096b8b2643286dc3a7e5110e5ae85} 
 void {\bfseries EXTI9\+\_\+5\+\_\+\+IRQHandler} (void)
 \begin{DoxyCompactList}\small\item\em This function handles EXTI line\mbox{[}9\+:5\mbox{]} interrupts. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{buttons_8c_a0cd91fd3a9608559c2a87a8ba6cba55f}\label{buttons_8c_a0cd91fd3a9608559c2a87a8ba6cba55f}} 
-void {\bfseries HAL\+\_\+\+GPIO\+\_\+\+EXTI\+\_\+\+Callback} (uint16\+\_\+t GPIO\+\_\+\+Pin)
-\end{DoxyCompactItemize}
-\doxysubsection*{Variables}
+void \mbox{\hyperlink{buttons_8c_a0cd91fd3a9608559c2a87a8ba6cba55f}{HAL\+\_\+\+GPIO\+\_\+\+EXTI\+\_\+\+Callback}} (uint16\+\_\+t GPIO\+\_\+\+Pin)
+\begin{DoxyCompactList}\small\item\em This function handles EXTI callback for every pin. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{buttons_8c_ab27a37dd68a7cbbf68607b093c74768f}\label{buttons_8c_ab27a37dd68a7cbbf68607b093c74768f}} 
-static uint8\+\_\+t {\bfseries buttons\+State} = 0x00
+static uint8\+\_\+t \mbox{\hyperlink{buttons_8c_ab27a37dd68a7cbbf68607b093c74768f}{buttons\+State}} = 0x00
 \item 
-\mbox{\Hypertarget{buttons_8c_af7b2c26e44dadaaa798a5c3d82914ba7}\label{buttons_8c_af7b2c26e44dadaaa798a5c3d82914ba7}} 
-I2\+C\+\_\+\+Handle\+Type\+Def {\bfseries hi2c1}
+I2\+C\+\_\+\+Handle\+Type\+Def \mbox{\hyperlink{buttons_8c_af7b2c26e44dadaaa798a5c3d82914ba7}{hi2c1}}
 \item 
-\mbox{\Hypertarget{buttons_8c_a22b804736f5648d52f639b2647d4ed13}\label{buttons_8c_a22b804736f5648d52f639b2647d4ed13}} 
-ADC\+\_\+\+Handle\+Type\+Def {\bfseries hadc1}
+ADC\+\_\+\+Handle\+Type\+Def \mbox{\hyperlink{buttons_8c_a22b804736f5648d52f639b2647d4ed13}{hadc1}}
 \item 
 double \mbox{\hyperlink{buttons_8c_a3c8bc0bb4f045bfe78d1196cb786792c}{val}} = 0.\+0625
 \end{DoxyCompactItemize}
@@ -57,12 +52,39 @@ double \mbox{\hyperlink{buttons_8c_a3c8bc0bb4f045bfe78d1196cb786792c}{val}} = 0.
 Buttons functionality. 
 
 \begin{DoxyAuthor}{Author}
-K. Czechowicz, A. Rybojad, S. Kołodziejczyk 
+K. Czechowicz, A. Rybojad, S. Kołodziejczyk  
 \end{DoxyAuthor}
 
 
 \doxysubsection{Function Documentation}
-\mbox{\Hypertarget{buttons_8c_aa6f14b96c46b9c49fb96af8ff1533dc9}\label{buttons_8c_aa6f14b96c46b9c49fb96af8ff1533dc9}} 
+\Hypertarget{buttons_8c_aacd13f1f53d923ead9283aa09366ef07}\label{buttons_8c_aacd13f1f53d923ead9283aa09366ef07} 
+\index{buttons.c@{buttons.c}!ADC\_Try\_Read@{ADC\_Try\_Read}}
+\index{ADC\_Try\_Read@{ADC\_Try\_Read}!buttons.c@{buttons.c}}
+\doxysubsubsection{\texorpdfstring{ADC\_Try\_Read()}{ADC\_Try\_Read()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Try\+\_\+\+Read (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Reads value from potentiometer. 
+
+\texorpdfstring{$<$}{<} scaling potetiometr raw value\Hypertarget{buttons_8c_a0cd91fd3a9608559c2a87a8ba6cba55f}\label{buttons_8c_a0cd91fd3a9608559c2a87a8ba6cba55f} 
+\index{buttons.c@{buttons.c}!HAL\_GPIO\_EXTI\_Callback@{HAL\_GPIO\_EXTI\_Callback}}
+\index{HAL\_GPIO\_EXTI\_Callback@{HAL\_GPIO\_EXTI\_Callback}!buttons.c@{buttons.c}}
+\doxysubsubsection{\texorpdfstring{HAL\_GPIO\_EXTI\_Callback()}{HAL\_GPIO\_EXTI\_Callback()}}
+{\footnotesize\ttfamily void HAL\+\_\+\+GPIO\+\_\+\+EXTI\+\_\+\+Callback (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{GPIO\+\_\+\+Pin }\end{DoxyParamCaption})}
+
+
+
+This function handles EXTI callback for every pin. 
+
+-\/MONO\+\_\+\+BUTTON\+\_\+\+BLACK\+\_\+1\+\_\+\+Pin -\/ restart button, pushing causes going to inf loop, that fire watchdog
+
+-\/MONO\+\_\+\+BUTTON\+\_\+\+JOY\+\_\+\+BLUE\+\_\+\+Pin -\/ after pressing, message to mainboard is send to make manipulator come to home position
+
+\begin{DoxySeeAlso}{See also}
+uart frame documentation 
+\end{DoxySeeAlso}
+\Hypertarget{buttons_8c_aa6f14b96c46b9c49fb96af8ff1533dc9}\label{buttons_8c_aa6f14b96c46b9c49fb96af8ff1533dc9} 
 \index{buttons.c@{buttons.c}!Set\_LED\_For\_Bistable@{Set\_LED\_For\_Bistable}}
 \index{Set\_LED\_For\_Bistable@{Set\_LED\_For\_Bistable}!buttons.c@{buttons.c}}
 \doxysubsubsection{\texorpdfstring{Set\_LED\_For\_Bistable()}{Set\_LED\_For\_Bistable()}}
@@ -72,13 +94,31 @@ K. Czechowicz, A. Rybojad, S. Kołodziejczyk
 
 Sets LED lights state depending on bistable button. 
 
-This functionality is used to indicate on the panel, whether bistable button is pressed. The function uses bit masks to read button state and sets proper I2C signal (according to I2C module documentation) which at the end is being written by the interrupt. 
+Basic bit operation to save led state on correct position. First there are AND operatation with mask on correct position, then OR operation with 1/0 (SET/\+RESET) shifted to position that we already check 
 
 \doxysubsection{Variable Documentation}
-\mbox{\Hypertarget{buttons_8c_a3c8bc0bb4f045bfe78d1196cb786792c}\label{buttons_8c_a3c8bc0bb4f045bfe78d1196cb786792c}} 
+\Hypertarget{buttons_8c_ab27a37dd68a7cbbf68607b093c74768f}\label{buttons_8c_ab27a37dd68a7cbbf68607b093c74768f} 
+\index{buttons.c@{buttons.c}!buttonsState@{buttonsState}}
+\index{buttonsState@{buttonsState}!buttons.c@{buttons.c}}
+\doxysubsubsection{\texorpdfstring{buttonsState}{buttonsState}}
+{\footnotesize\ttfamily uint8\+\_\+t buttons\+State = 0x00\hspace{0.3cm}{\ttfamily [static]}}
+
+8bit variable contains information of witch LED is set \Hypertarget{buttons_8c_a22b804736f5648d52f639b2647d4ed13}\label{buttons_8c_a22b804736f5648d52f639b2647d4ed13} 
+\index{buttons.c@{buttons.c}!hadc1@{hadc1}}
+\index{hadc1@{hadc1}!buttons.c@{buttons.c}}
+\doxysubsubsection{\texorpdfstring{hadc1}{hadc1}}
+{\footnotesize\ttfamily ADC\+\_\+\+Handle\+Type\+Def hadc1}
+
+ADC converter -\/ handler to struct \Hypertarget{buttons_8c_af7b2c26e44dadaaa798a5c3d82914ba7}\label{buttons_8c_af7b2c26e44dadaaa798a5c3d82914ba7} 
+\index{buttons.c@{buttons.c}!hi2c1@{hi2c1}}
+\index{hi2c1@{hi2c1}!buttons.c@{buttons.c}}
+\doxysubsubsection{\texorpdfstring{hi2c1}{hi2c1}}
+{\footnotesize\ttfamily I2\+C\+\_\+\+Handle\+Type\+Def hi2c1\hspace{0.3cm}{\ttfamily [extern]}}
+
+extern -\/ declared in \doxylink{_l_e_d__switch_8c}{LED\+\_\+switch.\+c} \Hypertarget{buttons_8c_a3c8bc0bb4f045bfe78d1196cb786792c}\label{buttons_8c_a3c8bc0bb4f045bfe78d1196cb786792c} 
 \index{buttons.c@{buttons.c}!val@{val}}
 \index{val@{val}!buttons.c@{buttons.c}}
 \doxysubsubsection{\texorpdfstring{val}{val}}
 {\footnotesize\ttfamily double val = 0.\+0625}
 
-Upper value for joystick values divider raw value 
+Upper value for joystick raw values devider. Default\+: 1/16 (max raw value 1600 scaled to 100) 

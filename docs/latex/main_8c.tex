@@ -1,5 +1,5 @@
-\hypertarget{main_8c}{}\doxysection{C\+:/\+Users/ddd/\+Desktop/driver/\+HAL-\/062/\+SUB-\/\+HAL-\/062-\/panel/\+HAL062\+\_\+panel/\+Src/main.c File Reference}
-\label{main_8c}\index{C:/Users/ddd/Desktop/driver/HAL-\/062/SUB-\/HAL-\/062-\/panel/HAL062\_panel/Src/main.c@{C:/Users/ddd/Desktop/driver/HAL-\/062/SUB-\/HAL-\/062-\/panel/HAL062\_panel/Src/main.c}}
+\doxysection{C\+:/\+Users/kryst/\+One\+Drive/\+Pulpit/\+KNR\+\_\+\+DRIVERS/\+SUB-\/\+HAL-\/062-\/panel/\+HAL062\+\_\+panel/\+Src/main.c File Reference}
+\hypertarget{main_8c}{}\label{main_8c}\index{C:/Users/kryst/OneDrive/Pulpit/KNR\_DRIVERS/SUB-\/HAL-\/062-\/panel/HAL062\_panel/Src/main.c@{C:/Users/kryst/OneDrive/Pulpit/KNR\_DRIVERS/SUB-\/HAL-\/062-\/panel/HAL062\_panel/Src/main.c}}
 
 
 Rover\textquotesingle{}s operational body main program body version 1.\+0.  
@@ -8,24 +8,24 @@ Rover\textquotesingle{}s operational body main program body version 1.\+0.
 {\ttfamily \#include $<$stm32h7xx\+\_\+hal.\+h$>$}\newline
 {\ttfamily \#include $<$stm32h7xx\+\_\+hal\+\_\+gpio.\+h$>$}\newline
 {\ttfamily \#include $<$stdbool.\+h$>$}\newline
-{\ttfamily \#include \char`\"{}error\+\_\+handlers/error\+\_\+handlers.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}ethernet/ethernet.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}LED\+\_\+switch/\+LED\+\_\+switch.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}LED\+\_\+switch/\+LED\+\_\+const.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}joystick/joystick.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}timers/joystick\+\_\+timer.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}buttons/buttons.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}timers/buttons\+\_\+timer.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}watchdogs/watchdog.\+h\char`\"{}}\newline
-\doxysubsection*{Functions}
+{\ttfamily \#include \"{}error\+\_\+handlers/error\+\_\+handlers.\+h\"{}}\newline
+{\ttfamily \#include \"{}ethernet/ethernet.\+h\"{}}\newline
+{\ttfamily \#include \"{}LED\+\_\+switch/\+LED\+\_\+switch.\+h\"{}}\newline
+{\ttfamily \#include \"{}LED\+\_\+switch/\+LED\+\_\+const.\+h\"{}}\newline
+{\ttfamily \#include \"{}joystick/joystick.\+h\"{}}\newline
+{\ttfamily \#include \"{}timers/joystick\+\_\+timer.\+h\"{}}\newline
+{\ttfamily \#include \"{}buttons/buttons.\+h\"{}}\newline
+{\ttfamily \#include \"{}timers/buttons\+\_\+timer.\+h\"{}}\newline
+{\ttfamily \#include \"{}watchdogs/watchdog.\+h\"{}}\newline
+\doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 void \mbox{\hyperlink{main_8c_a70af21c671abfcc773614a9a4f63d920}{System\+Clock\+\_\+\+Config}} (void)
-\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{main_8c_a70af21c671abfcc773614a9a4f63d920}{System\+Clock\+\_\+\+Config()}} is the is used to initialize all required clocks for all modules. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{main_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{main_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+\begin{DoxyCompactList}\small\item\em \doxylink{main_8c_a70af21c671abfcc773614a9a4f63d920}{System\+Clock\+\_\+\+Config()} is the is used to initialize all required clocks for all modules. \end{DoxyCompactList}\item 
+\Hypertarget{main_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{main_8c_a840291bc02cba5474a4cb46a9b9566fe} 
 int {\bfseries main} (void)
-\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{main()}} is the main program function that is used only to initialize all required modules and to refresh watchdog \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsection*{Variables}
+\begin{DoxyCompactList}\small\item\em \doxylink{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{main()} is the main program function that is used only to initialize all required modules and to refresh watchdog \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
 bool \mbox{\hyperlink{main_8c_a56a2c12333fc599b9df2f7744ad2f2c1}{joy\+Init\+Finished}}
@@ -38,7 +38,7 @@ IWDG\+\_\+\+Handle\+Type\+Def \mbox{\hyperlink{main_8c_a7a969d652dd84ecba778cf39
 Rover\textquotesingle{}s operational body main program body version 1.\+0. 
 
 \begin{DoxyAuthor}{Author}
-K. Czechowicz, A. Rybojad, S. Kołodziejczyk
+K. Czechowicz, A. Rybojad, S. Kołodziejczyk 
 \end{DoxyAuthor}
 This is the main program body of HAL-\/062 rover\textquotesingle{}s operational panel. The panel constitutes of several switches, potentiometers, lights and 3 joysticks. The system uses communications standards like I2C, CAN, UART, and bluetooth and ethernet modules, which are supposed to engage communication with the rover.
 
@@ -59,7 +59,7 @@ Used modules
 \end{DoxyItemize}
 
 \doxysubsection{Function Documentation}
-\mbox{\Hypertarget{main_8c_a70af21c671abfcc773614a9a4f63d920}\label{main_8c_a70af21c671abfcc773614a9a4f63d920}} 
+\Hypertarget{main_8c_a70af21c671abfcc773614a9a4f63d920}\label{main_8c_a70af21c671abfcc773614a9a4f63d920} 
 \index{main.c@{main.c}!SystemClock\_Config@{SystemClock\_Config}}
 \index{SystemClock\_Config@{SystemClock\_Config}!main.c@{main.c}}
 \doxysubsubsection{\texorpdfstring{SystemClock\_Config()}{SystemClock\_Config()}}
@@ -67,7 +67,7 @@ Used modules
 
 
 
-\mbox{\hyperlink{main_8c_a70af21c671abfcc773614a9a4f63d920}{System\+Clock\+\_\+\+Config()}} is the is used to initialize all required clocks for all modules. 
+\doxylink{main_8c_a70af21c671abfcc773614a9a4f63d920}{System\+Clock\+\_\+\+Config()} is the is used to initialize all required clocks for all modules. 
 
 Supply configuration update enable
 
@@ -78,13 +78,13 @@ Initializes the RCC Oscillators according to the specified parameters in the RCC
 Initializes the CPU, AHB and APB buses clocks
 
 \doxysubsection{Variable Documentation}
-\mbox{\Hypertarget{main_8c_a7a969d652dd84ecba778cf39bfc2dbdb}\label{main_8c_a7a969d652dd84ecba778cf39bfc2dbdb}} 
+\Hypertarget{main_8c_a7a969d652dd84ecba778cf39bfc2dbdb}\label{main_8c_a7a969d652dd84ecba778cf39bfc2dbdb} 
 \index{main.c@{main.c}!hiwdg1@{hiwdg1}}
 \index{hiwdg1@{hiwdg1}!main.c@{main.c}}
 \doxysubsubsection{\texorpdfstring{hiwdg1}{hiwdg1}}
 {\footnotesize\ttfamily IWDG\+\_\+\+Handle\+Type\+Def hiwdg1\hspace{0.3cm}{\ttfamily [extern]}}
 
-Watchdog handler used for initialization in watchdog.\+c \mbox{\Hypertarget{main_8c_a56a2c12333fc599b9df2f7744ad2f2c1}\label{main_8c_a56a2c12333fc599b9df2f7744ad2f2c1}} 
+Watchdog handler used for initialization in watchdog.\+c \Hypertarget{main_8c_a56a2c12333fc599b9df2f7744ad2f2c1}\label{main_8c_a56a2c12333fc599b9df2f7744ad2f2c1} 
 \index{main.c@{main.c}!joyInitFinished@{joyInitFinished}}
 \index{joyInitFinished@{joyInitFinished}!main.c@{main.c}}
 \doxysubsubsection{\texorpdfstring{joyInitFinished}{joyInitFinished}}

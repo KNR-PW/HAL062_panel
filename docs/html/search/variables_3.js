@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['number_0',['number',['../struct_joystick.html#a619db073e493c893324090eefdaed6c7',1,'Joystick']]]
+  ['midval_0',['midVal',['../struct_joystick.html#a6c0c3213e45e741a8953fbe3ec8b572e',1,'Joystick']]]
 ];

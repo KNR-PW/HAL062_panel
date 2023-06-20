@@ -8,5 +8,7 @@ var searchData=
   ['eth_5fsend_5fmassage_5',['Eth_Send_Massage',['../ethernet_8c.html#af8653d0b7863784254df47bb7783b2fd',1,'Eth_Send_Massage(uint8_t *frameID, uint8_t *msgData):&#160;ethernet.c'],['../ethernet_8h.html#af8653d0b7863784254df47bb7783b2fd',1,'Eth_Send_Massage(uint8_t *frameID, uint8_t *msgData):&#160;ethernet.c']]],
   ['ethernet_2ec_6',['ethernet.c',['../ethernet_8c.html',1,'']]],
   ['ethernet_2eh_7',['ethernet.h',['../ethernet_8h.html',1,'']]],
-  ['exti9_5f5_5firqhandler_8',['EXTI9_5_IRQHandler',['../buttons_8c.html#a7b2096b8b2643286dc3a7e5110e5ae85',1,'buttons.c']]]
+  ['exti15_5f10_5firqhandler_8',['EXTI15_10_IRQHandler',['../buttons_8c.html#a738473a5b43f6c92b80ce1d3d6f77ed9',1,'buttons.c']]],
+  ['exti4_5firqhandler_9',['EXTI4_IRQHandler',['../buttons_8c.html#a290cb997018c8d85d4b965b4a242842f',1,'buttons.c']]],
+  ['exti9_5f5_5firqhandler_10',['EXTI9_5_IRQHandler',['../buttons_8c.html#a7b2096b8b2643286dc3a7e5110e5ae85',1,'buttons.c']]]
 ];

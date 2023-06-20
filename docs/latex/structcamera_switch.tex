@@ -1,37 +1,39 @@
-\hypertarget{structcamera_switch}{}\doxysection{camera\+Switch Struct Reference}
-\label{structcamera_switch}\index{cameraSwitch@{cameraSwitch}}
+\doxysection{camera\+Switch Struct Reference}
+\hypertarget{structcamera_switch}{}\label{structcamera_switch}\index{cameraSwitch@{cameraSwitch}}
 
 
-abcd to sczytywanie wartosci ze switcha  
+Struct representing single camera screen with switch to changing image (one screen handles 3 cam).  
 
 
 
 
 {\ttfamily \#include $<$camera\+\_\+switch.\+h$>$}
 
-\doxysubsection*{Public Attributes}
+\doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{structcamera_switch_a4b92f7d0f6b47ee36a15b4e4c2f5ad48}\label{structcamera_switch_a4b92f7d0f6b47ee36a15b4e4c2f5ad48}} 
+\Hypertarget{structcamera_switch_a4b92f7d0f6b47ee36a15b4e4c2f5ad48}\label{structcamera_switch_a4b92f7d0f6b47ee36a15b4e4c2f5ad48} 
 uint8\+\_\+t {\bfseries camera\+Number}
 \item 
-\mbox{\Hypertarget{structcamera_switch_ad2ed87ffd879a1ed0f7b96bdff01ce3c}\label{structcamera_switch_ad2ed87ffd879a1ed0f7b96bdff01ce3c}} 
+\Hypertarget{structcamera_switch_ad2ed87ffd879a1ed0f7b96bdff01ce3c}\label{structcamera_switch_ad2ed87ffd879a1ed0f7b96bdff01ce3c} 
 GPIO\+\_\+\+Pin\+State {\bfseries channel\+\_\+A}
 \item 
-\mbox{\Hypertarget{structcamera_switch_af5a7e046da2cd596e322441035130430}\label{structcamera_switch_af5a7e046da2cd596e322441035130430}} 
+\Hypertarget{structcamera_switch_af5a7e046da2cd596e322441035130430}\label{structcamera_switch_af5a7e046da2cd596e322441035130430} 
 GPIO\+\_\+\+Pin\+State {\bfseries channel\+\_\+B}
 \item 
-\mbox{\Hypertarget{structcamera_switch_a77840faa1ecaaf86b277c85972a9f51d}\label{structcamera_switch_a77840faa1ecaaf86b277c85972a9f51d}} 
+\Hypertarget{structcamera_switch_a77840faa1ecaaf86b277c85972a9f51d}\label{structcamera_switch_a77840faa1ecaaf86b277c85972a9f51d} 
 GPIO\+\_\+\+Pin\+State {\bfseries channel\+\_\+C}
 \item 
-\mbox{\Hypertarget{structcamera_switch_a99fa47940afaa1927b1edcb1ce48e000}\label{structcamera_switch_a99fa47940afaa1927b1edcb1ce48e000}} 
+\Hypertarget{structcamera_switch_a99fa47940afaa1927b1edcb1ce48e000}\label{structcamera_switch_a99fa47940afaa1927b1edcb1ce48e000} 
 GPIO\+\_\+\+Pin\+State {\bfseries channel\+\_\+D}
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
-abcd to sczytywanie wartosci ze switcha 
+Struct representing single camera screen with switch to changing image (one screen handles 3 cam). 
+
+A,B,C,D channels are simply read pin state connected with 4-\/position switch. It allows to contain information with camera image is currently shown on screen. camera\+Number -\/ number of screen that struct is connected to 
 
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/ddd/\+Desktop/driver/\+HAL-\/062/\+SUB-\/\+HAL-\/062-\/panel/\+HAL062\+\_\+panel/\+Modules/camera\+\_\+switch/\mbox{\hyperlink{camera__switch_8h}{camera\+\_\+switch.\+h}}\end{DoxyCompactItemize}
+C\+:/\+Users/kryst/\+One\+Drive/\+Pulpit/\+KNR\+\_\+\+DRIVERS/\+SUB-\/\+HAL-\/062-\/panel/\+HAL062\+\_\+panel/\+Modules/camera\+\_\+switch/\mbox{\hyperlink{camera__switch_8h}{camera\+\_\+switch.\+h}}\end{DoxyCompactItemize}
