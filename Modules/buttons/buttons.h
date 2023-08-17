@@ -18,4 +18,6 @@ void ADC1_Init(void);
 
 void ADC_Try_Read(void);
 
+void MotorLauncherState(void);
+
 #endif //BUTTON_BUTTON_H_

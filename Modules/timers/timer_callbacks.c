@@ -25,13 +25,14 @@ extern struct cameraSwitch blueCamera; /*! cameraSwitch structure represents blu
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	if (htim->Instance == TIM7) {
 		if (receiveIsReady) {
-		Jostick_Read_value_Done();
+			Jostick_Read_Value();
 		}
 	}
 	if(htim->Instance == TIM6) {
 		Set_LED_For_Bistable();
 		Read_Camera_Switch_Value();
 		Send_Cameras_State();
+		MotorLauncherState();
 
 		ADC_Try_Read();
 

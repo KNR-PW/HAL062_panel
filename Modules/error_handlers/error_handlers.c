@@ -20,7 +20,7 @@
  * @returns void
  */
 
-void Error_Handler(enum errorCode code) {
+/*void Error_Handler(enum errorCode code) {
 	switch(code){
 	case ReceivedFrameError:
 		continue;
@@ -37,6 +37,7 @@ void Error_Handler(enum errorCode code) {
 	while (1) {
 	}
 }
+*/
 
 /**
  * @brief Function for handling general errors.

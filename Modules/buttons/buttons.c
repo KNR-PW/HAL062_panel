@@ -19,7 +19,7 @@ static uint8_t buttonsState = 0x00; /*!< 8bit variable contains information of w
 extern I2C_HandleTypeDef hi2c1; /*!< extern - declared in LED_switch.c*/
 ADC_HandleTypeDef hadc1; /*!< ADC converter - handler to struct*/
 double val = 0.0625; /*!< Upper value for joystick raw values devider. Default: 1/16 (max raw value 1600 scaled to 100)*/
-
+uint8_t switchState;
 
 /**
  * @brief Initializes GPIO ports and inputs for buttons
@@ -38,7 +38,7 @@ void Buttons_Init(void)
 	  /*Configure GPIO pins : BI_BUTTON_GREEN_3_Pin BI_BUTTON_GREEN_1_Pin BI_BUTTON_GREEN_2_Pin */
 	  GPIO_InitStruct.Pin = BI_BUTTON_GREEN_3_Pin|BI_BUTTON_GREEN_1_Pin|BI_BUTTON_GREEN_2_Pin;
 	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+	  GPIO_InitStruct.Pull = GPIO_PULLUP;
 	  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
 	  /*Configure GPIO pins :  BI_BUTTON_RED_1_Pin BI_BUTTON_RED_2_Pin BI_BUTTON_BLUE_1_Pin
@@ -46,14 +46,14 @@ void Buttons_Init(void)
 	  GPIO_InitStruct.Pin = BI_BUTTON_RED_1_Pin|BI_BUTTON_RED_2_Pin|BI_BUTTON_BLUE_1_Pin
 	                         |BI_BUTTON_BLUE_2_Pin|BI_BUTTON_BLUE_3_Pin;
 	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+	  GPIO_InitStruct.Pull = GPIO_PULLUP;
 	  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 
 	  /*Configure GPIO pins : MONO_BUTTON_JOY_RED_Pin MONO_BUTTON_JOY_BLUE_Pin MONO_BUTTON_JOY_GREEN_Pin MONO_BUTTON_RED_1_Pin */
 	  GPIO_InitStruct.Pin = MONO_BUTTON_JOY_RED_Pin|MONO_BUTTON_JOY_BLUE_Pin|MONO_BUTTON_JOY_GREEN_Pin|MONO_BUTTON_RED_1_Pin;
 	  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-	  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+	  GPIO_InitStruct.Pull = GPIO_PULLUP;
 	  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
 	  /*Configure GPIO pins : MONO_BUTTON_BLACK_1_Pin MONO_BUTTON_GREEN_1_Pin MONO_BUTTON_BLUE_1_Pin MONO_BUTTON_RED_2_Pin
@@ -61,7 +61,7 @@ void Buttons_Init(void)
 	  GPIO_InitStruct.Pin = MONO_BUTTON_BLACK_1_Pin|MONO_BUTTON_GREEN_1_Pin|MONO_BUTTON_BLUE_1_Pin|MONO_BUTTON_RED_2_Pin
 	                          |MONO_BUTTON_BLACK_2_Pin|MONO_BUTTON_GREEN_2_Pin|MONO_BUTTON_BLUE_2_Pin;
 	  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-	  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+	  GPIO_InitStruct.Pull = GPIO_PULLUP;
 	  HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
 	  //cameras switches:
@@ -69,13 +69,13 @@ void Buttons_Init(void)
 	  /*Configure GPIO pin : CAM_SWITCH_3_A_Pin */
 	  GPIO_InitStruct.Pin = CAM_SWITCH_3_A_Pin;
 	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+	  GPIO_InitStruct.Pull = GPIO_PULLUP;
 	  HAL_GPIO_Init(CAM_SWITCH_3_A_GPIO_Port, &GPIO_InitStruct);
 
 	  /*Configure GPIO pins : CAM_SWITCH_3_B_Pin CAM_SWITCH_3_C_Pin */
 	  GPIO_InitStruct.Pin = CAM_SWITCH_3_B_Pin|CAM_SWITCH_3_C_Pin;
 	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+	  GPIO_InitStruct.Pull = GPIO_PULLUP;
 	  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
 	  /*Configure GPIO pins : CAM_SWITCH_3_D_Pin CAM_SWITCH_2_A_Pin CAM_SWITCH_2_B_Pin CAM_SWITCH_2_C_Pin
@@ -83,19 +83,19 @@ void Buttons_Init(void)
 	  GPIO_InitStruct.Pin = CAM_SWITCH_3_D_Pin|CAM_SWITCH_2_A_Pin|CAM_SWITCH_2_B_Pin|CAM_SWITCH_2_C_Pin
 	                          |CAM_SWITCH_2_D_Pin|CAM_SWITCH_1_A_Pin|CAM_SWITCH_1_B_Pin;
 	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+	  GPIO_InitStruct.Pull = GPIO_PULLUP;
 	  HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
 	  /*Configure GPIO pins : CAM_SWITCH_1_C_Pin CAM_SWITCH_1_D_Pin */
 	  GPIO_InitStruct.Pin = CAM_SWITCH_1_C_Pin|CAM_SWITCH_1_D_Pin;
 	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+	  GPIO_InitStruct.Pull = GPIO_PULLUP;
 	  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
 	  /*Configure GPIO pins : PF6 - 12V switch 1*/
 	  GPIO_InitStruct.Pin = GPIO_PIN_6;
 	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+	  GPIO_InitStruct.Pull = GPIO_PULLUP;
 	  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
 
@@ -108,6 +108,12 @@ void Buttons_Init(void)
 
 	  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
 	  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+}
+
+
+
+void MotorLauncherState(void){
+	 switchState = HAL_GPIO_ReadPin(MOTOR_LAUNCHER_GPIO_Port, MOTOR_LAUNCHER);
 }
 
 /**
