@@ -40,6 +40,8 @@ static uint8_t gripperMode; /*!< Additional data sent with gripper joystick to k
 							If gripper should keep the level this data is '1', otherwise, if joystick steer
 							gripper this data is '0' */
 
+static volatile uint8_t coded_left_speed[2];
+static volatile uint8_t coded_right_speed[2];
 /**
  * @brief Function for initializing I2C in interruption mode.
  */
@@ -200,8 +202,8 @@ void Joystick_Send_Readings(void) {
 
 	if(currentReading == 0 && ethTxLineOpen){
 		//differential speed calculating
-		int8_t rightSpeed = motorJoy.xPos + motorJoy.yPos;
-		int8_t leftSpeed = motorJoy.xPos - motorJoy.yPos;
+		int8_t rightSpeed = 0.5*motorJoy.yPos - 0.5*motorJoy.xPos;
+		int8_t leftSpeed = 0.5*motorJoy.yPos + 0.5*motorJoy.xPos;
 
 		//checking if values are in range
 		if (rightSpeed > 100)
@@ -214,10 +216,25 @@ void Joystick_Send_Readings(void) {
 		if (leftSpeed < -100)
 			leftSpeed = -100;
 
-		uint8_t msgID[2] = {'2', '0'};
-		uint8_t msgData[16] = { (uint8_t)rightSpeed, (uint8_t)rightSpeed,(uint8_t) rightSpeed,
-								(uint8_t)leftSpeed, (uint8_t)leftSpeed, (uint8_t)leftSpeed,
-								0x78, 0x78, 0x78, 0x78, 0x78, 0x78, 0x78, 0x78, 0x78, 0x78 };
+		uint8_t msgID[2] = {0x31,0x34};
+		uint8_t msgData[16];
+
+		//coding right motors velocity acording to UART fame
+
+		ETH_Code_UART(rightSpeed,coded_right_speed);
+		msgData[0] = coded_right_speed[0];
+		msgData[1] = coded_right_speed[1];
+
+		//coding left motors velocity acordnig to UART frame
+
+		ETH_Code_UART(leftSpeed,coded_left_speed);
+		msgData[2] = coded_left_speed[0];
+		msgData[3] = coded_left_speed[1];
+
+		for(uint8_t i = 4; i<16; i++){
+			msgData[i] = 'X';
+		}
+
 		Eth_Send_Massage(msgID, msgData);
 		currentReading = 1;
 	}
@@ -226,7 +243,7 @@ void Joystick_Send_Readings(void) {
 		uint8_t msgData[16] = {(uint8_t) manipJoy.xPos,(uint8_t) manipJoy.yPos,(uint8_t) manipJoy.zPos,
 								0x78,0x78,0x78,0x78,0x78,0x78,0x78,0x78,0x78,0x78,0x78,0x78,0x78};
 		uint8_t msgID[2] = {'2', '1'};
-		Eth_Send_Massage(msgID, msgData);
+//		Eth_Send_Massage(msgID, msgData);
 		currentReading = 2;
 	}
 
@@ -246,11 +263,13 @@ void Joystick_Send_Readings(void) {
 		0x78,0x78,0x78,0x78,
 				0x78,0x78,0x78,0x78,0x78,0x78,0x78,0x78};
 		uint8_t msgID[2] = {'2', '2'};
-		Eth_Send_Massage(msgID, msgData);
+//		Eth_Send_Massage(msgID, msgData);
 		currentReading = 0;
 	}
 
 }
+
+
 
 
 

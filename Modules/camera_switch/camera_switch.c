@@ -131,13 +131,13 @@ void Send_Cameras_State(void){
 	cameraMsgData[9] = (uint8_t)redCamera.channel_B+48;
 	cameraMsgData[10] = (uint8_t)redCamera.channel_C+48;
 	cameraMsgData[11] = (uint8_t)redCamera.channel_D+48;
-	cameraMsgData[12] = 0x78;
-	cameraMsgData[13] = 0x78;
-	cameraMsgData[14] = 0x78;
-	cameraMsgData[15] = 0x78;
+	cameraMsgData[12] = 'X';
+	cameraMsgData[13] = 'X';
+	cameraMsgData[14] = 'X';
+	cameraMsgData[15] = 'X';
 
 	if(ethTxLineOpen){
-	Eth_Send_Massage(cameraMsgID, cameraMsgData);
+//	Eth_Send_Massage(cameraMsgID, cameraMsgData);
 	}
 
 }

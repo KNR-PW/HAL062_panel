@@ -21,5 +21,6 @@ void Eth_Send_Massage(uint8_t *frameID, uint8_t *msgData);
 
 void Eth_Receive_Massage();
 
+void ETH_Code_UART(const uint8_t number, uint8_t* hex_in_ascii);
 
 #endif /* ETHERNET_ETHERNET_H_ */

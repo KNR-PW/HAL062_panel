@@ -155,3 +155,24 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
 	ethTxLineOpen = true;
 }
 
+void ETH_Code_UART(const uint8_t number, uint8_t* hex_in_ascii){
+	uint8_t first_hex = (uint8_t)(((number & 0xF0)>>4) & 0x0F);
+	uint8_t second_hex = (uint8_t)(number & 0x0F);
+
+
+	if (first_hex >= 0x00 && first_hex <= 0x09){
+		hex_in_ascii[0] = first_hex + 48;
+	}
+	else if (first_hex >= 0x0A && first_hex <= 0x0F){
+		hex_in_ascii[0] = first_hex + 55;
+	}
+
+	if (second_hex >= 0x00 && second_hex <= 0x09){
+		hex_in_ascii[1] = second_hex + 48;
+	}
+	else if (first_hex >= 0x0A && first_hex <= 0x0F){
+		hex_in_ascii[1] = second_hex + 55;
+		}
+
+}
+
