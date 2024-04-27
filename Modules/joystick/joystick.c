@@ -49,6 +49,8 @@ static volatile uint8_t coded_right_speed[2];
 union F2I speedDoF1, speedDoF2, speedDoF3, speedDoF4, speedDoF5, speedDoF6;
 struct manipData dataDoF1, dataDoF2, dataDoF3, dataDoF4, dataDoF5, dataDoF6;
 
+extern int on, off;
+
 /**
  * @brief Function for initializing I2C in interruption mode.
  */
@@ -518,6 +520,26 @@ void Joystick_Send_Readings(void) {
 
 			buttonOpt++;
 		}
+		currentReading = 4;
+		maniOrMotor = 0;
+	}
+	else if(currentReading == 4 && maniOrMotor % 2 == 1 && ethTxLineOpen){
+
+		 if (on == 1){
+			uint8_t msgData[16] = {0x30, 0x33, 0x33, 0x32, 0x30,0x30, 0x30, 0x30,0x33,
+								0x32,0x78,0x78,0x78,0x78,0x78,0x78};
+			uint8_t msgID[2] = {0x43, 0x32};
+		    Eth_Send_Massage(msgID, msgData);
+			on = 0;
+		}
+		else if(off == 1){
+		    uint8_t msgData[16] = {0x30, 0x33, 0x30, 0x30, 0x30,0x30,0x30,0x30,0x30,
+								0x30,0x78,0x78,0x78,0x78,0x78,0x78};
+			uint8_t msgID[2] = {0x43, 0x32};
+			Eth_Send_Massage(msgID, msgData);
+			off = 0;
+		}
+
 		currentReading = 0;
 		maniOrMotor = 0;
 	}

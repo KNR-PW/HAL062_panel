@@ -19,7 +19,7 @@ static uint8_t buttonsState = 0x00; /*!< 8bit variable contains information of w
 extern I2C_HandleTypeDef hi2c1; /*!< extern - declared in LED_switch.c*/
 ADC_HandleTypeDef hadc1; /*!< ADC converter - handler to struct*/
 double val = 0.0625; /*!< Upper value for joystick raw values devider. Default: 1/16 (max raw value 1600 scaled to 100)*/
-
+int on, off = 0;
 
 /**
  * @brief Initializes GPIO ports and inputs for buttons
@@ -288,11 +288,19 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 	if(GPIO_Pin == MONO_BUTTON_BLACK_1_Pin){
 		while(1){}
 	}
-	if(GPIO_Pin == MONO_BUTTON_JOY_BLUE_Pin){
+	else if(GPIO_Pin == MONO_BUTTON_JOY_BLUE_Pin){
 		uint8_t msgData[16] = {0x49, 0x78, 0x78, 0x78, 0x78,0x78,0x78,0x78,0x78,
 				0x78,0x78,0x78,0x78,0x78,0x78,0x78};
 		uint8_t msgID[2] = {'3', '0'};
-//		Eth_Send_Massage(msgID, msgData);
-
 	}
+	if(GPIO_Pin == MONO_BUTTON_JOY_RED_Pin){
+		off = 1;
+		LED_Set(LIGHT1, 0);
+	}
+	if(GPIO_Pin == MONO_BUTTON_JOY_BLUE_Pin){
+		on = 1;
+		LED_Set(LIGHT1, 1);
+	}
+
+//		Eth_Send_Massage(msgID, msgData);
 }
