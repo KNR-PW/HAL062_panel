@@ -11,6 +11,18 @@
 
 #include <stm32h7xx_hal.h>
 
+union F2I{
+	uint32_t uint;
+	float f;
+};
+
+struct manipData{
+	uint8_t byte0;
+	uint8_t byte1;
+	uint8_t byte2;
+	uint8_t byte3;
+};
+
 void Joystick_I2C_Init(void);
 
 void Joystick_Write_Conditions(void);

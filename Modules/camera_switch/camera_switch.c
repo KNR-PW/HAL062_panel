@@ -34,7 +34,7 @@ static struct cameraSwitch redCamera = {3,0,0,0,0}; /*!< cameraSwitch structure 
 
 extern bool ethTxLineOpen; /*!< contains information of UART trasmition state (true if nothing is being sent)*/
 
-static uint8_t cameraMsgID[2] = {0x53,0x53}; /*!< camera switch message ID - see uart frame documentation */
+static uint8_t cameraMsgID[2] = {0x32,0x44}; /*!< camera switch message ID - see uart frame documentation */
 static uint8_t cameraMsgData[16]; /*!< camera switch message data - see uart frame documentation */
 
 uint8_t currentCameraLight = 0; /*!< vairable informing with camera light is currently being set */
@@ -111,30 +111,69 @@ void Read_Camera_Switch_Value(void){
  * As rover has to know with camera image should be transmitted to screens,
  * this function send that information in previously defined frame. \n
  * Send_Cameras_State() creates a frame that sends \n
- * 48 stands for 0 in ASCII code \n
- * 78 stands for x in ASCII code
  * 
  * @see 
  * UART frame documentation (camera switch message frame).
 */
 void Send_Cameras_State(void){
 
-	cameraMsgData[0] = (uint8_t)yellowCamera.channel_A+48;
-	cameraMsgData[1] = (uint8_t)yellowCamera.channel_B+48;
-	cameraMsgData[2] = (uint8_t)yellowCamera.channel_C+48;
-	cameraMsgData[3] = (uint8_t)yellowCamera.channel_D+48;
-	cameraMsgData[4] = (uint8_t)blueCamera.channel_A+48;
-	cameraMsgData[5] = (uint8_t)blueCamera.channel_B+48;
-	cameraMsgData[6] = (uint8_t)blueCamera.channel_C+48;
-	cameraMsgData[7] = (uint8_t)blueCamera.channel_D+48;
-	cameraMsgData[8] = (uint8_t)redCamera.channel_A+48;
-	cameraMsgData[9] = (uint8_t)redCamera.channel_B+48;
-	cameraMsgData[10] = (uint8_t)redCamera.channel_C+48;
-	cameraMsgData[11] = (uint8_t)redCamera.channel_D+48;
-	cameraMsgData[12] = 'X';
-	cameraMsgData[13] = 'X';
-	cameraMsgData[14] = 'X';
-	cameraMsgData[15] = 'X';
+	// camera red
+	if(redCamera.channel_A == GPIO_PIN_SET){
+		cameraMsgData[0] = 0x30;
+		cameraMsgData[1] = 0x31;
+	}
+	else if(redCamera.channel_B == GPIO_PIN_SET){
+		cameraMsgData[0] = 0x30;
+		cameraMsgData[1] = 0x32;
+	}
+	else if(redCamera.channel_C == GPIO_PIN_SET){
+		cameraMsgData[0] = 0x30;
+		cameraMsgData[1] = 0x33;
+	}
+	else{
+		cameraMsgData[0] = 0x30;
+		cameraMsgData[1] = 0x30;
+	}
+
+	// camera blue
+	if(blueCamera.channel_A == GPIO_PIN_SET){
+		cameraMsgData[2] = 0x30;
+		cameraMsgData[3] = 0x31;
+	}
+	else if(blueCamera.channel_B == GPIO_PIN_SET){
+		cameraMsgData[2] = 0x30;
+		cameraMsgData[3] = 0x32;
+	}
+	else if(blueCamera.channel_C == GPIO_PIN_SET){
+		cameraMsgData[2] = 0x30;
+		cameraMsgData[3] = 0x33;
+	}
+	else{
+		cameraMsgData[2] = 0x30;
+		cameraMsgData[3] = 0x30;
+	}
+
+	// camera yellow
+	if(yellowCamera.channel_A == GPIO_PIN_SET){
+		cameraMsgData[4] = 0x30;
+		cameraMsgData[5] = 0x31;
+	}
+	else if(yellowCamera.channel_B == GPIO_PIN_SET){
+		cameraMsgData[4] = 0x30;
+		cameraMsgData[5] = 0x32;
+	}
+	else if(yellowCamera.channel_C == GPIO_PIN_SET){
+		cameraMsgData[4] = 0x30;
+		cameraMsgData[5] = 0x33;
+	}
+	else{
+		cameraMsgData[4] = 0x30;
+		cameraMsgData[5] = 0x30;
+	}
+
+	for(int i = 6; i<16; ++i){
+	cameraMsgData[i] = 'X';
+	}
 
 	if(ethTxLineOpen){
 //	Eth_Send_Massage(cameraMsgID, cameraMsgData);

@@ -33,7 +33,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		Read_Camera_Switch_Value();
 		Send_Cameras_State();
 
-		ADC_Try_Read();
+//		ADC_Try_Read();
 
 	}
 }

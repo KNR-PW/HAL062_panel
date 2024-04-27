@@ -55,7 +55,7 @@ extern IWDG_HandleTypeDef hiwdg1; /*!< Watchdog handler used for initialization 
 */
 int main(void) {
 
-	/** @verbatim
+	/** @verbatim */
 	/* Initializes system and clocks*/
 	HAL_Init();
 	SystemClock_Config();

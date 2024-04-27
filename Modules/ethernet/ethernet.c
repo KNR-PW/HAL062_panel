@@ -46,6 +46,16 @@ void Eth_Init() {
 	/* DMA controller clock enable */
 	__HAL_RCC_GPIOD_CLK_ENABLE();
 	__HAL_RCC_DMA1_CLK_ENABLE();
+	__HAL_RCC_GPIOA_CLK_ENABLE();
+
+	/* ETH send LED init */
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+	GPIO_InitStruct.Pin = GPIO_PIN_8;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 	/* DMA interrupt init */
 
@@ -153,6 +163,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
 	huart->gState = HAL_UART_STATE_READY;
 	ethTxLineOpen = true;
+	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_8);
 }
 
 void ETH_Code_UART(const uint8_t number, uint8_t* hex_in_ascii){

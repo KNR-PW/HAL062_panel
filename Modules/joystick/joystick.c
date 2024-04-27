@@ -33,6 +33,9 @@ extern double val; /*!< raw value devider to shorten range of sent joystick valu
 
 static uint8_t currentReading = 0; /*!< Variable using to know which joystick is currently read. \n
 										It is important to form correct UART frame */
+static uint8_t maniOrMotor = 0;
+
+static uint8_t buttonOpt = 0;
 
 extern bool ethTxLineOpen; /*!< Flag to allow data transmition. @see ethernet.c file documentation. */
 
@@ -42,6 +45,10 @@ static uint8_t gripperMode; /*!< Additional data sent with gripper joystick to k
 
 static volatile uint8_t coded_left_speed[2];
 static volatile uint8_t coded_right_speed[2];
+
+union F2I speedDoF1, speedDoF2, speedDoF3, speedDoF4, speedDoF5, speedDoF6;
+struct manipData dataDoF1, dataDoF2, dataDoF3, dataDoF4, dataDoF5, dataDoF6;
+
 /**
  * @brief Function for initializing I2C in interruption mode.
  */
@@ -200,10 +207,18 @@ void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c) {
  */
 void Joystick_Send_Readings(void) {
 
-	if(currentReading == 0 && ethTxLineOpen){
+	if(maniOrMotor % 2 == 0 && ethTxLineOpen){
 		//differential speed calculating
-		int8_t rightSpeed = 0.5*motorJoy.yPos - 0.5*motorJoy.xPos;
-		int8_t leftSpeed = 0.5*motorJoy.yPos + 0.5*motorJoy.xPos;
+		float V = (float)motorJoy.yPos/100.0; //max metr na sekunde
+		float Omega = (float)motorJoy.xPos/100.0;  //max pół radiana na sekunde
+
+		float coeff = 100.0/6.45;
+		float rightSpeedFloat = coeff*(6.45*V + 2.97*Omega);
+		float leftSpeedFloat = coeff*(6.45*V - 2.97*Omega);
+
+		int rightSpeed = (int)rightSpeedFloat;
+		int leftSpeed = (int)leftSpeedFloat;
+
 
 		//checking if values are in range
 		if (rightSpeed > 100)
@@ -215,6 +230,9 @@ void Joystick_Send_Readings(void) {
 			rightSpeed = -100;
 		if (leftSpeed < -100)
 			leftSpeed = -100;
+
+		leftSpeed = (int8_t)leftSpeed;
+		rightSpeed = (int8_t)rightSpeed;
 
 		uint8_t msgID[2] = {0x31,0x34};
 		uint8_t msgData[16];
@@ -234,37 +252,274 @@ void Joystick_Send_Readings(void) {
 		for(uint8_t i = 4; i<16; i++){
 			msgData[i] = 'X';
 		}
+//		if(((rightSpeed > 50||rightSpeed < -50) && (leftSpeed > 50 || leftSpeed < -50))||rightSpeed==0||leftSpeed==0){
+		Eth_Send_Massage(msgID, msgData);
+//		}
+		maniOrMotor = 1;
+	}
+
+	else if(currentReading == 0 && maniOrMotor % 2 == 1 && ethTxLineOpen){
+		uint8_t codedData[2];
+		uint8_t msgData[16];
+		uint8_t msgID[2];
+
+		speedDoF1.f = -1.0*(float)manipJoy.yPos/1.0;
+
+		dataDoF1.byte0 = (speedDoF1.uint & 0xFF000000)>>24;
+		ETH_Code_UART(dataDoF1.byte0, codedData);
+		msgData[0] = codedData[0];
+		msgData[1] = codedData[1];
+
+		dataDoF1.byte1 = (speedDoF1.uint & 0x00FF0000)>>16;
+		ETH_Code_UART(dataDoF1.byte1, codedData);
+		msgData[2] = codedData[0];
+		msgData[3] = codedData[1];
+
+		dataDoF1.byte2 = (speedDoF1.uint & 0x0000FF00)>>8;
+		ETH_Code_UART(dataDoF1.byte2, codedData);
+		msgData[4] = codedData[0];
+		msgData[5] = codedData[1];
+
+		dataDoF1.byte3 = (speedDoF1.uint & 0x000000FF);
+		ETH_Code_UART(dataDoF1.byte3, codedData);
+		msgData[6] = codedData[0];
+		msgData[7] = codedData[1];
+
+
+		speedDoF2.f = -1.0*(float)manipJoy.xPos/1.0;
+
+		dataDoF2.byte0 = (speedDoF2.uint & 0xFF000000)>>24;
+		ETH_Code_UART(dataDoF2.byte0, codedData);
+		msgData[8] = codedData[0];
+		msgData[9] = codedData[1];
+
+		dataDoF2.byte1 = (speedDoF2.uint & 0x00FF0000)>>16;
+		ETH_Code_UART(dataDoF2.byte1, codedData);
+		msgData[10] = codedData[0];
+		msgData[11] = codedData[1];
+
+		dataDoF2.byte2 = (speedDoF2.uint & 0x0000FF00)>>8;
+		ETH_Code_UART(dataDoF2.byte2, codedData);
+		msgData[12] = codedData[0];
+		msgData[13] = codedData[1];
+
+		dataDoF2.byte3 = (speedDoF2.uint & 0x000000FF);
+		ETH_Code_UART(dataDoF2.byte3, codedData);
+		msgData[14] = codedData[0];
+		msgData[15] = codedData[1];
+
+		ETH_Code_UART(129, msgID);
 
 		Eth_Send_Massage(msgID, msgData);
+
 		currentReading = 1;
+		maniOrMotor = 0;
 	}
 
-	else if(currentReading == 1 && ethTxLineOpen){
-		uint8_t msgData[16] = {(uint8_t) manipJoy.xPos,(uint8_t) manipJoy.yPos,(uint8_t) manipJoy.zPos,
-								0x78,0x78,0x78,0x78,0x78,0x78,0x78,0x78,0x78,0x78,0x78,0x78,0x78};
-		uint8_t msgID[2] = {'2', '1'};
-//		Eth_Send_Massage(msgID, msgData);
+	else if(currentReading == 1 && maniOrMotor % 2 == 1 && ethTxLineOpen){
+		uint8_t codedData[2];
+		uint8_t msgData[16];
+		uint8_t msgID[2];
+
+		speedDoF3.f = -1.0*(float)manipJoy.zPos/1.0;
+
+		dataDoF3.byte0 = (speedDoF3.uint & 0xFF000000)>>24;
+		ETH_Code_UART(dataDoF3.byte0, codedData);
+		msgData[0] = codedData[0];
+		msgData[1] = codedData[1];
+
+		dataDoF3.byte1 = (speedDoF3.uint & 0x00FF0000)>>16;
+		ETH_Code_UART(dataDoF3.byte1, codedData);
+		msgData[2] = codedData[0];
+		msgData[3] = codedData[1];
+
+		dataDoF3.byte2 = (speedDoF3.uint & 0x0000FF00)>>8;
+		ETH_Code_UART(dataDoF3.byte2, codedData);
+		msgData[4] = codedData[0];
+		msgData[5] = codedData[1];
+
+		dataDoF3.byte3 = (speedDoF3.uint & 0x000000FF);
+		ETH_Code_UART(dataDoF3.byte3, codedData);
+		msgData[6] = codedData[0];
+		msgData[7] = codedData[1];
+
+
+		speedDoF4.f = (float)gripperJoy.xPos/1.0;
+
+		dataDoF4.byte0 = (speedDoF4.uint & 0xFF000000)>>24;
+		ETH_Code_UART(dataDoF4.byte0, codedData);
+		msgData[8] = codedData[0];
+		msgData[9] = codedData[1];
+
+		dataDoF4.byte1 = (speedDoF4.uint & 0x00FF0000)>>16;
+		ETH_Code_UART(dataDoF4.byte1, codedData);
+		msgData[10] = codedData[0];
+		msgData[11] = codedData[1];
+
+		dataDoF4.byte2 = (speedDoF4.uint & 0x0000FF00)>>8;
+		ETH_Code_UART(dataDoF4.byte2, codedData);
+		msgData[12] = codedData[0];
+		msgData[13] = codedData[1];
+
+		dataDoF4.byte3 = (speedDoF4.uint & 0x000000FF);
+		ETH_Code_UART(dataDoF4.byte3, codedData);
+		msgData[14] = codedData[0];
+		msgData[15] = codedData[1];
+
+		ETH_Code_UART(130, msgID);
+
+		Eth_Send_Massage(msgID, msgData);
+
+
 		currentReading = 2;
+		maniOrMotor = 0;
 	}
+	else if(currentReading == 2 && maniOrMotor % 2 == 1 && ethTxLineOpen){
+		uint8_t codedData[2];
+		uint8_t msgData[16];
+		uint8_t msgID[2];
 
-	else if(currentReading == 2 && ethTxLineOpen){
-		// reading if gripper should keep level (button is pressed)
-		uint8_t state_fb= HAL_GPIO_ReadPin(BI_BUTTON_RED_2_GPIO_Port, BI_BUTTON_RED_2_Pin);
+		speedDoF5.f = (float)gripperJoy.yPos/1.0;
 
-		// creating correct data
-		if(state_fb == GPIO_PIN_SET){
-		gripperMode = '1';
+		dataDoF5.byte0 = (speedDoF5.uint & 0xFF000000)>>24;
+		ETH_Code_UART(dataDoF5.byte0, codedData);
+		msgData[0] = codedData[0];
+		msgData[1] = codedData[1];
+
+		dataDoF5.byte1 = (speedDoF5.uint & 0x00FF0000)>>16;
+		ETH_Code_UART(dataDoF5.byte1, codedData);
+		msgData[2] = codedData[0];
+		msgData[3] = codedData[1];
+
+		dataDoF5.byte2 = (speedDoF5.uint & 0x0000FF00)>>8;
+		ETH_Code_UART(dataDoF5.byte2, codedData);
+		msgData[4] = codedData[0];
+		msgData[5] = codedData[1];
+
+		dataDoF5.byte3 = (speedDoF5.uint & 0x000000FF);
+		ETH_Code_UART(dataDoF5.byte3, codedData);
+		msgData[6] = codedData[0];
+		msgData[7] = codedData[1];
+
+
+		speedDoF6.f = -1.0*(float)gripperJoy.zPos/1.0;
+
+		dataDoF6.byte0 = (speedDoF6.uint & 0xFF000000)>>24;
+		ETH_Code_UART(dataDoF6.byte0, codedData);
+		msgData[8] = codedData[0];
+		msgData[9] = codedData[1];
+
+		dataDoF6.byte1 = (speedDoF6.uint & 0x00FF0000)>>16;
+		ETH_Code_UART(dataDoF6.byte1, codedData);
+		msgData[10] = codedData[0];
+		msgData[11] = codedData[1];
+
+		dataDoF6.byte2 = (speedDoF6.uint & 0x0000FF00)>>8;
+		ETH_Code_UART(dataDoF6.byte2, codedData);
+		msgData[12] = codedData[0];
+		msgData[13] = codedData[1];
+
+		dataDoF6.byte3 = (speedDoF6.uint & 0x000000FF);
+		ETH_Code_UART(dataDoF6.byte3, codedData);
+		msgData[14] = codedData[0];
+		msgData[15] = codedData[1];
+
+		ETH_Code_UART(131, msgID);
+
+		Eth_Send_Massage(msgID, msgData);
+
+		currentReading = 3;
+		maniOrMotor = 0;
+	}
+	else if(currentReading == 3 && maniOrMotor % 2 == 1 && ethTxLineOpen){
+		if(buttonOpt % 4 == 0){
+		GPIO_PinState manipState;
+		manipState = HAL_GPIO_ReadPin(BI_BUTTON_GREEN_3_GPIO_Port, BI_BUTTON_GREEN_3_Pin);
+		if(manipState == GPIO_PIN_RESET){
+			uint8_t msgID[2];
+			uint8_t msgData[16];
+			uint8_t codedData[2];
+
+			ETH_Code_UART(128, msgID);
+			msgData[0] = 0x30; msgData[1] = 0x31;
+			msgData[2] = 0x30; msgData[3] = 0x31;
+			msgData[4] = 0x30; msgData[5] = 0x32;
+			msgData[6] = 0x30; msgData[7] = 0x32;
+			msgData[8] = 0x30; msgData[9] = 0x30;
+			msgData[10] = 0x30; msgData[11] = 0x30;
+			for(uint8_t i = 12; i<16;i++){
+				msgData[i] = 'X';
+			}
+			Eth_Send_Massage(msgID, msgData);
 		}
-		else{
-		gripperMode = '0';
-		}
+		else if (manipState == GPIO_PIN_SET) {
+			uint8_t msgID[2];
+			uint8_t msgData[16];
+			uint8_t codedData[2];
 
-		uint8_t msgData[16] = {(uint8_t)gripperJoy.xPos,(uint8_t)gripperJoy.yPos,(uint8_t)gripperJoy.zPos,gripperMode,
-		0x78,0x78,0x78,0x78,
-				0x78,0x78,0x78,0x78,0x78,0x78,0x78,0x78};
-		uint8_t msgID[2] = {'2', '2'};
-//		Eth_Send_Massage(msgID, msgData);
+			ETH_Code_UART(128, msgID);
+			msgData[0] = 0x30; msgData[1] = 0x31;
+			msgData[2] = 0x30; msgData[3] = 0x31;
+			msgData[4] = 0x30; msgData[5] = 0x33;
+			msgData[6] = 0x30; msgData[7] = 0x33;
+			msgData[8] = 0x30; msgData[9] = 0x30;
+			msgData[10] = 0x30; msgData[11] = 0x30;
+			for(uint8_t i = 12; i<16;i++){
+				msgData[i] = 'X';
+			}
+			Eth_Send_Massage(msgID, msgData);
+		}
+		buttonOpt=1;
+		}
+		else
+		{
+			GPIO_PinState gripperClose;
+			gripperClose = HAL_GPIO_ReadPin(BI_BUTTON_GREEN_2_GPIO_Port, BI_BUTTON_GREEN_2_Pin);
+			GPIO_PinState gripperOpen;
+			gripperOpen = HAL_GPIO_ReadPin(BI_BUTTON_GREEN_1_GPIO_Port, BI_BUTTON_GREEN_1_Pin);
+			if((gripperClose == GPIO_PIN_RESET && gripperOpen == GPIO_PIN_RESET)||(gripperClose == GPIO_PIN_SET && gripperOpen == GPIO_PIN_SET)){
+				uint8_t msgID[2];
+				uint8_t msgData[16];
+				uint8_t codedData[2];
+
+				ETH_Code_UART(157, msgID);
+				msgData[0] = 0x30; msgData[1] = 0x30;
+				for(uint8_t i = 2; i<16;i++){
+					msgData[i] = 'X';
+				}
+				Eth_Send_Massage(msgID, msgData);
+			}
+			else if(gripperClose == GPIO_PIN_SET){
+				uint8_t msgID[2];
+				uint8_t msgData[16];
+				uint8_t codedData[2];
+
+				ETH_Code_UART(157, msgID);
+				msgData[0] = 0x30; msgData[1] = 0x31;
+				for(uint8_t i = 2; i<16;i++){
+					msgData[i] = 'X';
+				}
+				Eth_Send_Massage(msgID, msgData);
+			}
+			else if(gripperOpen == GPIO_PIN_SET){
+
+				uint8_t msgID[2];
+				uint8_t msgData[16];
+				uint8_t codedData[2];
+
+				ETH_Code_UART(157, msgID);
+				msgData[0] = 0x30; msgData[1] = 0x32;
+				for(uint8_t i = 2; i<16;i++){
+					msgData[i] = 'X';
+				}
+				Eth_Send_Massage(msgID, msgData);
+			}
+
+
+			buttonOpt++;
+		}
 		currentReading = 0;
+		maniOrMotor = 0;
 	}
 
 }
