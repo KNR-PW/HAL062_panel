@@ -127,7 +127,10 @@ void Eth_Send_Massage(uint8_t *frameID, uint8_t *msgData) {
 	for (uint8_t i = 0; i < 16; i++)
 		ethTxBuffer[i + 3] = msgData[i];
 
-
+	static uint8_t toggle;
+	LED_Set(LIGHT1, toggle);
+	if(toggle == 0) toggle = 1;
+	else toggle = 0;
 	HAL_UART_Transmit_DMA(&huart3, ethTxBuffer, 19);
 }
 

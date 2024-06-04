@@ -35,13 +35,13 @@ static uint8_t currentReading = 0; /*!< Variable using to know which joystick is
 										It is important to form correct UART frame */
 static uint8_t maniOrMotor = 0;
 
-static uint8_t buttonOpt = 0;
+static uint8_t buttonOpt;
 
 extern bool ethTxLineOpen; /*!< Flag to allow data transmition. @see ethernet.c file documentation. */
 
-static uint8_t gripperMode; /*!< Additional data sent with gripper joystick to know gripper mode. \n
-							If gripper should keep the level this data is '1', otherwise, if joystick steer
-							gripper this data is '0' */
+//static uint8_t gripperMode; /*!< Additional data sent with gripper joystick to know gripper mode. \n
+//							If gripper should keep the level this data is '1', otherwise, if joystick steer
+//							gripper this data is '0' */
 
 static volatile uint8_t coded_left_speed[2];
 static volatile uint8_t coded_right_speed[2];
@@ -265,7 +265,7 @@ void Joystick_Send_Readings(void) {
 		uint8_t msgData[16];
 		uint8_t msgID[2];
 
-		speedDoF1.f = -1.0*(float)manipJoy.yPos/1.0;
+		speedDoF1.f = -1.0*(float)manipJoy.xPos/0.25;
 
 		dataDoF1.byte0 = (speedDoF1.uint & 0xFF000000)>>24;
 		ETH_Code_UART(dataDoF1.byte0, codedData);
@@ -288,7 +288,7 @@ void Joystick_Send_Readings(void) {
 		msgData[7] = codedData[1];
 
 
-		speedDoF2.f = -1.0*(float)manipJoy.xPos/1.0;
+		speedDoF2.f = -1.0*(float)manipJoy.yPos/0.25;
 
 		dataDoF2.byte0 = (speedDoF2.uint & 0xFF000000)>>24;
 		ETH_Code_UART(dataDoF2.byte0, codedData);
@@ -323,7 +323,7 @@ void Joystick_Send_Readings(void) {
 		uint8_t msgData[16];
 		uint8_t msgID[2];
 
-		speedDoF3.f = -1.0*(float)manipJoy.zPos/1.0;
+		speedDoF3.f = -1.0*(float)manipJoy.zPos/0.25;
 
 		dataDoF3.byte0 = (speedDoF3.uint & 0xFF000000)>>24;
 		ETH_Code_UART(dataDoF3.byte0, codedData);
@@ -346,7 +346,7 @@ void Joystick_Send_Readings(void) {
 		msgData[7] = codedData[1];
 
 
-		speedDoF4.f = (float)gripperJoy.xPos/1.0;
+		speedDoF4.f = 0.0314*(float)gripperJoy.xPos/20.0;
 
 		dataDoF4.byte0 = (speedDoF4.uint & 0xFF000000)>>24;
 		ETH_Code_UART(dataDoF4.byte0, codedData);
@@ -381,7 +381,7 @@ void Joystick_Send_Readings(void) {
 		uint8_t msgData[16];
 		uint8_t msgID[2];
 
-		speedDoF5.f = (float)gripperJoy.yPos/1.0;
+		speedDoF5.f = 0.0314*(float)gripperJoy.yPos/20.0;
 
 		dataDoF5.byte0 = (speedDoF5.uint & 0xFF000000)>>24;
 		ETH_Code_UART(dataDoF5.byte0, codedData);
@@ -404,7 +404,7 @@ void Joystick_Send_Readings(void) {
 		msgData[7] = codedData[1];
 
 
-		speedDoF6.f = -1.0*(float)gripperJoy.zPos/1.0;
+		speedDoF6.f = 0.0314*(float)gripperJoy.zPos/20.0;
 
 		dataDoF6.byte0 = (speedDoF6.uint & 0xFF000000)>>24;
 		ETH_Code_UART(dataDoF6.byte0, codedData);
@@ -434,6 +434,7 @@ void Joystick_Send_Readings(void) {
 		maniOrMotor = 0;
 	}
 	else if(currentReading == 3 && maniOrMotor % 2 == 1 && ethTxLineOpen){
+
 		if(buttonOpt % 4 == 0){
 		GPIO_PinState manipState;
 		manipState = HAL_GPIO_ReadPin(BI_BUTTON_GREEN_3_GPIO_Port, BI_BUTTON_GREEN_3_Pin);
@@ -462,10 +463,10 @@ void Joystick_Send_Readings(void) {
 			ETH_Code_UART(128, msgID);
 			msgData[0] = 0x30; msgData[1] = 0x31;
 			msgData[2] = 0x30; msgData[3] = 0x31;
-			msgData[4] = 0x30; msgData[5] = 0x33;
-			msgData[6] = 0x30; msgData[7] = 0x33;
-			msgData[8] = 0x30; msgData[9] = 0x30;
-			msgData[10] = 0x30; msgData[11] = 0x30;
+			msgData[4] = 0x30; msgData[5] = 0x35;
+			msgData[6] = 0x30; msgData[7] = 0x35;
+			msgData[8] = 0x30; msgData[9] = 0x32;
+			msgData[10] = 0x30; msgData[11] = 0x32;
 			for(uint8_t i = 12; i<16;i++){
 				msgData[i] = 'X';
 			}
@@ -484,7 +485,9 @@ void Joystick_Send_Readings(void) {
 				uint8_t msgData[16];
 				uint8_t codedData[2];
 
-				ETH_Code_UART(157, msgID);
+//				ETH_Code_UART(157, msgID);
+				msgID[0] = 0x39;
+				msgID[1] = 0x44;
 				msgData[0] = 0x30; msgData[1] = 0x30;
 				for(uint8_t i = 2; i<16;i++){
 					msgData[i] = 'X';
@@ -496,7 +499,10 @@ void Joystick_Send_Readings(void) {
 				uint8_t msgData[16];
 				uint8_t codedData[2];
 
-				ETH_Code_UART(157, msgID);
+//				ETH_Code_UART(157, msgID);
+				//				ETH_Code_UART(157, msgID);
+				msgID[0] = 0x39;
+				msgID[1] = 0x44;
 				msgData[0] = 0x30; msgData[1] = 0x31;
 				for(uint8_t i = 2; i<16;i++){
 					msgData[i] = 'X';
@@ -509,16 +515,18 @@ void Joystick_Send_Readings(void) {
 				uint8_t msgData[16];
 				uint8_t codedData[2];
 
-				ETH_Code_UART(157, msgID);
+//				ETH_Code_UART(157, msgID);
+				//				ETH_Code_UART(157, msgID);
+				msgID[0] = 0x39;
+				msgID[1] = 0x44;
 				msgData[0] = 0x30; msgData[1] = 0x32;
 				for(uint8_t i = 2; i<16;i++){
 					msgData[i] = 'X';
 				}
 				Eth_Send_Massage(msgID, msgData);
 			}
-
-
 			buttonOpt++;
+			if(buttonOpt == 3) buttonOpt = 0;
 		}
 		currentReading = 4;
 		maniOrMotor = 0;
