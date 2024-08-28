@@ -51,6 +51,9 @@ struct manipData dataDoF1, dataDoF2, dataDoF3, dataDoF4, dataDoF5, dataDoF6;
 
 extern int on, off;
 
+extern uint8_t cameraMsgID[2];/*!< camera switch message ID - see uart frame documentation */
+extern uint8_t cameraMsgData[16]; /*!< camera switch message data - see uart frame documentation */
+
 /**
  * @brief Function for initializing I2C in interruption mode.
  */
@@ -170,9 +173,9 @@ void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c) {
 		//interpreting readings and scaling values down
 
 		motorJoy.xPos = (int16_t)((int16_t) motorJoy.midVal - (int16_t) motorJoy.xVal)
-				* val;
+				* 0.0625;
 		motorJoy.yPos = (int16_t)((int16_t) motorJoy.midVal - (int16_t) motorJoy.yVal)
-				* val;
+				* 0.0625;
 
 		manipJoy.xPos = (int16_t)(((int16_t) manipJoy.midVal - (int16_t)manipJoy.xVal)
 				* val);
@@ -265,7 +268,10 @@ void Joystick_Send_Readings(void) {
 		uint8_t msgData[16];
 		uint8_t msgID[2];
 
-		speedDoF1.f = -1.0*(float)manipJoy.xPos/0.25;
+		if(gripperJoy.yPos<=10&&gripperJoy.yPos>=-10){
+			gripperJoy.yPos=0;
+		}
+		speedDoF1.f = -0.5*(float)gripperJoy.yPos;
 
 		dataDoF1.byte0 = (speedDoF1.uint & 0xFF000000)>>24;
 		ETH_Code_UART(dataDoF1.byte0, codedData);
@@ -287,8 +293,10 @@ void Joystick_Send_Readings(void) {
 		msgData[6] = codedData[0];
 		msgData[7] = codedData[1];
 
-
-		speedDoF2.f = -1.0*(float)manipJoy.yPos/0.25;
+		if(gripperJoy.xPos<=10&&gripperJoy.xPos>=-10){
+			gripperJoy.xPos=0;
+		}
+		speedDoF2.f = -0.5*(float)gripperJoy.xPos;
 
 		dataDoF2.byte0 = (speedDoF2.uint & 0xFF000000)>>24;
 		ETH_Code_UART(dataDoF2.byte0, codedData);
@@ -323,7 +331,10 @@ void Joystick_Send_Readings(void) {
 		uint8_t msgData[16];
 		uint8_t msgID[2];
 
-		speedDoF3.f = -1.0*(float)manipJoy.zPos/0.25;
+		if(gripperJoy.zPos<=10&&gripperJoy.zPos>=-10){
+			gripperJoy.zPos=0;
+		}
+		speedDoF3.f = -0.5*(float)gripperJoy.zPos;
 
 		dataDoF3.byte0 = (speedDoF3.uint & 0xFF000000)>>24;
 		ETH_Code_UART(dataDoF3.byte0, codedData);
@@ -345,8 +356,10 @@ void Joystick_Send_Readings(void) {
 		msgData[6] = codedData[0];
 		msgData[7] = codedData[1];
 
-
-		speedDoF4.f = 0.0314*(float)gripperJoy.xPos/20.0;
+		if(manipJoy.xPos<=10&&manipJoy.xPos>=-10){
+			manipJoy.xPos=0;
+		}
+		speedDoF4.f = ((float)manipJoy.xPos)/4.0;
 
 		dataDoF4.byte0 = (speedDoF4.uint & 0xFF000000)>>24;
 		ETH_Code_UART(dataDoF4.byte0, codedData);
@@ -381,7 +394,10 @@ void Joystick_Send_Readings(void) {
 		uint8_t msgData[16];
 		uint8_t msgID[2];
 
-		speedDoF5.f = 0.0314*(float)gripperJoy.yPos/20.0;
+		if(manipJoy.yPos<=10&&manipJoy.yPos>=-10){
+			manipJoy.yPos=0;
+		}
+		speedDoF5.f = ((float)manipJoy.yPos)/4.0;
 
 		dataDoF5.byte0 = (speedDoF5.uint & 0xFF000000)>>24;
 		ETH_Code_UART(dataDoF5.byte0, codedData);
@@ -403,8 +419,10 @@ void Joystick_Send_Readings(void) {
 		msgData[6] = codedData[0];
 		msgData[7] = codedData[1];
 
-
-		speedDoF6.f = 0.0314*(float)gripperJoy.zPos/20.0;
+		if(manipJoy.zPos<=10&&manipJoy.zPos>=-10){
+			manipJoy.zPos=0;
+		}
+		speedDoF6.f = -1.0*((float)manipJoy.zPos)/4.0;
 
 		dataDoF6.byte0 = (speedDoF6.uint & 0xFF000000)>>24;
 		ETH_Code_UART(dataDoF6.byte0, codedData);
@@ -463,10 +481,10 @@ void Joystick_Send_Readings(void) {
 			ETH_Code_UART(128, msgID);
 			msgData[0] = 0x30; msgData[1] = 0x31;
 			msgData[2] = 0x30; msgData[3] = 0x31;
-			msgData[4] = 0x30; msgData[5] = 0x35;
-			msgData[6] = 0x30; msgData[7] = 0x35;
-			msgData[8] = 0x30; msgData[9] = 0x32;
-			msgData[10] = 0x30; msgData[11] = 0x32;
+			msgData[4] = 0x30; msgData[5] = 0x33;
+			msgData[6] = 0x30; msgData[7] = 0x33;
+			msgData[8] = 0x30; msgData[9] = 0x30;
+			msgData[10] = 0x30; msgData[11] = 0x30;
 			for(uint8_t i = 12; i<16;i++){
 				msgData[i] = 'X';
 			}
@@ -547,6 +565,15 @@ void Joystick_Send_Readings(void) {
 			Eth_Send_Massage(msgID, msgData);
 			off = 0;
 		}
+
+		currentReading = 5;
+		maniOrMotor = 0;
+	}
+	else if(currentReading == 5 && maniOrMotor % 2 == 1 && ethTxLineOpen){
+
+
+		    Eth_Send_Massage(cameraMsgID, cameraMsgData);
+
 
 		currentReading = 0;
 		maniOrMotor = 0;

@@ -28,14 +28,14 @@
 #include <stdbool.h>
 #include <stm32h7xx_hal_gpio.h>
 
-static struct cameraSwitch yellowCamera = {1,0,0,0,0}; /*!< cameraSwitch structure represents yellow camera screen*/
-static struct cameraSwitch blueCamera = {2,0,0,0,0}; /*!< cameraSwitch structure represents blue camera screen*/
-static struct cameraSwitch redCamera = {3,0,0,0,0}; /*!< cameraSwitch structure represents red camera screen*/
+struct cameraSwitch yellowCamera = {1,0,0,0,0}; /*!< cameraSwitch structure represents yellow camera screen*/
+struct cameraSwitch blueCamera = {2,0,0,0,0}; /*!< cameraSwitch structure represents blue camera screen*/
+struct cameraSwitch redCamera = {3,0,0,0,0}; /*!< cameraSwitch structure represents red camera screen*/
 
 extern bool ethTxLineOpen; /*!< contains information of UART trasmition state (true if nothing is being sent)*/
 
-static uint8_t cameraMsgID[2] = {0x32,0x44}; /*!< camera switch message ID - see uart frame documentation */
-static uint8_t cameraMsgData[16]; /*!< camera switch message data - see uart frame documentation */
+uint8_t cameraMsgID[2] = {0x34,0x35}; /*!< camera switch message ID - see uart frame documentation */
+uint8_t cameraMsgData[16]; /*!< camera switch message data - see uart frame documentation */
 
 uint8_t currentCameraLight = 0; /*!< vairable informing with camera light is currently being set */
 
